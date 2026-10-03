@@ -1,0 +1,6 @@
+{
+  "appId": "com.calligraphy.app",
+  "appName": "CalligraphyApp",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
