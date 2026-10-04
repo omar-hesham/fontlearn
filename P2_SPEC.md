@@ -13,7 +13,15 @@
 - **Structure:**
   - `lessons/` directory containing JSON files for each pack.
   - A pack defines a sequence of lessons.
-  - Each lesson specifies the text, font, required tool, and minimum passing score.
+  - Each lesson MUST specify:
+    - `text`: the string to draw
+    - `font`: the target font
+    - `requiredTool`: the tool mechanism forced for this lesson
+    - `minPassingScore`: the threshold for completion
+    - `goals` and `steps`: detailed instructional steps and objectives
+    - `criteria`: what specific points to check (e.g. angle, width)
+    - `source` and `review`: metadata marking origin and review status (e.g. "DRAFT")
+    - `idealStrokes`: detailed trace paths containing X/Y coordinates, start/end boundaries, stroke order, and lift points.
 
 ## 3. 12 Starter Lessons
 **Goal:** 6 Arabic + 6 English lessons with explicit review status.

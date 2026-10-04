@@ -3,8 +3,8 @@
 ## 1. Pointer Calibration & Provenance
 **Goal:** Display real pointer/pressure/tilt data and its source (fallback if unsupported).
 - **UI:** A "Calibration & Diagnostics" modal.
-- **Data to capture per event:** `pointerType` (pen, touch, mouse), `pressure` (0.0 to 1.0), `tiltX` / `tiltY` (degrees), and `timestamp`.
-- **Fallback logic:** If `pointerType === 'touch'` and pressure is always 1.0 or 0.5 (depending on OS fallback), flag as "Simulated Pressure". If tilt is exactly 0 continuously, flag as "Tilt Unsupported".
+- **Data to capture per event:** `pointerType` (pen, touch, mouse), raw `pressure` reading, raw `tiltX` / `tiltY` readings, and `timestamp`.
+- **Fallback logic:** Do not infer unsupported or simulated state strictly from values (e.g. pressure=0.5 or 1, tilt=0). Instead, separate the raw reading from the fallback state. Record "unknown / not observed" initially. Require an intentional change calibration (e.g., asking the user to press harder or tilt the pen) to confirm support. If no variance is observed during calibration, flag as "Support Inconclusive" and fall back gracefully without overriding raw measured values.
 
 ## 2. Tool Settings (Adjustable Pressure/Width/Angle/Smoothing)
 **Goal:** Allow users to override or adjust tool behavior.
@@ -33,11 +33,19 @@
     "toolId": "flexible_pen",
     "color": "#000000",
     "startTime": 1696420000000,
+    "rendererVersion": 1,
+    "brushSettings": {
+      "baseWidth": 20,
+      "pressureCurve": "linear",
+      "nibAngle": 45,
+      "smoothingFactor": "low"
+    },
     "points": [
       { "x": 120, "y": 150, "pressure": 0.4, "tiltX": 15, "tiltY": 0, "timeOffset": 12 }
     ]
   }
   ```
+- **Validation:** When loading a saved project or restoring strokes after settings change, the rendering algorithm must strictly use the historical `brushSettings` and `rendererVersion` stored within the stroke profile. Changing current UI settings must never mutate the rendering of already completed strokes.
 
 ## 5. Eight Intentional Local Licensed Fonts
 **Goal:** 8 licensed fonts with previews.
@@ -54,8 +62,8 @@
 
 *Assets for the 4 new fonts will be downloaded to `fonts/` directory and their OFL licenses copied to `public/font-licenses/` before P1 implementation.*
 
-## 6. Tablet Frame / Handler Measurements
-**Goal:** Ensure UI fits well in real tablet physical frames without palm rejection issues at edges.
-- Measure physical bezel sizes and apply CSS safe-area padding accordingly.
-- Ensure the drawer handle and toolbars are at least 48x48dp for touch targets.
-- Disable multi-touch system gestures on the `#workspace` to prevent accidental OS-level back/home actions while drawing near edges.
+## 6. Tablet Performance / Handler Measurements
+**Goal:** Measure drawing performance (frame rendering and event handler speed) on the actual device (Huawei tablet).
+- **Metrics:** Record drawing event handler execution time and frame intervals. Report summaries including p50, p95, and p99 metrics.
+- **Testing Scope:** Measure load across different tools, tracking both the software overhead (tool complexity) and hardware performance.
+- **Independence:** These measurements focus strictly on rendering and input pipeline performance. Safe-area containment and OS-gesture rejection (such as edge swipes) are handled in separate, dedicated tests rather than relying solely on CSS rules.
