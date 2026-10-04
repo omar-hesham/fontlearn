@@ -1,0 +1,27 @@
+{
+  "method": "Obsolete font-load rejection race, frozen candidate",
+  "webRoot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\p0-dist-round03",
+  "passed": false,
+  "sourceBefore": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourceAfter": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourcesUnchanged": true,
+  "checks": [
+    {
+      "name": "Obsolete font rejection cannot alert, roll back, or publish readiness while newer load is pending",
+      "passed": false,
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'بسم الله الرحمن الرحيم'\n- 'New reference ABC 123'\n",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\round03\\obsolete-font-race\\failure-0.png"
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "startupErrors": []
+}

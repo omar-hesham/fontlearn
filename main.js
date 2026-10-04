@@ -22,9 +22,17 @@ const templateBtns = document.querySelectorAll('.template-btn');
 const scorePopup = document.getElementById('scorePopup');
 const closeScoreBtn = document.getElementById('closeScoreBtn');
 const angleDisplay = document.getElementById('angleDisplay');
+const fitViewBtn = document.getElementById('fitViewBtn');
+const resetViewBtn = document.getElementById('resetViewBtn');
+const statusMessage = document.getElementById('statusMessage');
+
+const WORLD_WIDTH = 1200;
+const WORLD_HEIGHT = 800;
+const MARGIN = 64;
+const MAX_FONT = 150;
+const TEXT_LIMIT = 500;
 
 let currentFont = 'Aref Ruqaa';
-let currentText = practiceTextInput.value;
 let isEnglishFlex = false;
 let defaultNibAngle = -45 * (Math.PI / 180);
 let baseSize = parseInt(brushSize.value);
@@ -47,40 +55,118 @@ let lastPressure = null;
 let templateDrawId = 0;
 let scoreJobId = 0;
 
+let currentActiveButtonIndex = 0;
+let lastValidState = null;
+let layoutVersion = 0;
+let templateLayout = {
+  ready: false,
+  version: 0,
+  font: '',
+  fontSize: 0,
+  direction: 'rtl',
+  textAlign: 'center',
+  textBaseline: 'middle',
+  lines: [],
+  worldWidth: WORLD_WIDTH,
+  worldHeight: WORLD_HEIGHT,
+  contentBounds: { left: 0, right: 0, top: 0, bottom: 0 }
+};
+let scoringImageData = null;
+
+window.getTemplateLayout = () => {
+  return JSON.parse(JSON.stringify(templateLayout));
+};
+
 function invalidateScore() {
   scoreJobId++;
   if (!scorePopup.classList.contains('hidden')) {
     scorePopup.classList.add('hidden');
-    hCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    hCtx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
   }
+}
+
+function updateCamera() {
+  canvasContainer.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+}
+
+function fitView() {
+  const rect = workspace.getBoundingClientRect();
+  if (rect.width === 0 || rect.height === 0) return;
+  const scaleX = rect.width / WORLD_WIDTH;
+  const scaleY = rect.height / WORLD_HEIGHT;
+  scale = Math.min(scaleX, scaleY);
+  translateX = (rect.width - WORLD_WIDTH * scale) / 2;
+  translateY = (rect.height - WORLD_HEIGHT * scale) / 2;
+  updateCamera();
+}
+
+function resetView() {
+  const rect = workspace.getBoundingClientRect();
+  if (rect.width === 0 || rect.height === 0) return;
+  scale = 1;
+  translateX = (rect.width - WORLD_WIDTH) / 2;
+  translateY = (rect.height - WORLD_HEIGHT) / 2;
+  updateCamera();
+}
+
+if (fitViewBtn) fitViewBtn.addEventListener('click', () => { interruptGestures(); fitView(); });
+if (resetViewBtn) resetViewBtn.addEventListener('click', () => { interruptGestures(); resetView(); });
+
+function interruptGestures() {
+  if (activePointerId !== null) {
+    try { workspace.releasePointerCapture(activePointerId); } catch(e){}
+  }
+  isDrawing = false;
+  activePointerId = null;
+  activePointerType = null;
+  activeIsStylus = false;
+  pointerCache = [];
+  initialPinchDist = null;
+  pinchLogicalMidpoint = null;
 }
 
 function resizeCanvases() {
   const dpr = window.devicePixelRatio || 1;
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  [drawingCanvas, templateCanvas, gridCanvas, heatmapCanvas].forEach(canvas => {
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-  });
-  dCtx.scale(dpr, dpr);
-  tCtx.scale(dpr, dpr);
-  gCtx.scale(dpr, dpr);
-  hCtx.scale(dpr, dpr);
+  const currentDprW = WORLD_WIDTH * dpr;
+  
+  if (drawingCanvas.width !== currentDprW) {
+    [drawingCanvas, templateCanvas, gridCanvas, heatmapCanvas].forEach(canvas => {
+      canvas.width = WORLD_WIDTH * dpr;
+      canvas.height = WORLD_HEIGHT * dpr;
+    });
+    dCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    tCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    gCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    hCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-  drawGrid();
-  drawTemplate();
-  redrawAllStrokes();
+    drawGrid();
+    renderTemplate();
+    redrawAllStrokes();
+  }
+  fitView();
 }
 
 let resizeTimeout;
-window.addEventListener('resize', () => {
-  invalidateScore();
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(resizeCanvases, 50);
-});
+function handleGeometryChange() {
+  interruptGestures();
+  
+  if (window.visualViewport) {
+    document.getElementById('layout-root').style.height = window.visualViewport.height + 'px';
+  }
 
-resizeCanvases();
+  if (resizeTimeout) cancelAnimationFrame(resizeTimeout);
+  resizeTimeout = requestAnimationFrame(() => {
+    resizeCanvases();
+    invalidateScore();
+    resizeTimeout = null;
+  });
+}
+
+const resizeObserver = new ResizeObserver(handleGeometryChange);
+resizeObserver.observe(workspace);
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', handleGeometryChange);
+}
 
 function updateAngleDisplay(angle) {
   const newAngleStr = `${Math.round(angle * 180 / Math.PI)}°`;
@@ -90,14 +176,14 @@ function updateAngleDisplay(angle) {
 }
 
 function drawGrid() {
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  gCtx.clearRect(0, 0, w, h);
+  gCtx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
   const type = gridSelect.value;
   if (type === 'none') return;
   gCtx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
   gCtx.lineWidth = 1;
-  const cy = h / 2;
+  const cy = WORLD_HEIGHT / 2;
+  const w = WORLD_WIDTH;
+  const h = WORLD_HEIGHT;
   gCtx.beginPath();
   gCtx.moveTo(0, cy + 50);
   gCtx.lineTo(w, cy + 50);
@@ -120,35 +206,372 @@ function drawGrid() {
   gCtx.stroke();
 }
 
-async function drawTemplate() {
-  const w = window.innerWidth;
-  const h = window.innerHeight;
+async function measureAndLayoutText(text, fontName, maxFont, width, height, direction) {
+  const offCanvas = document.createElement('canvas');
+  const offCtx = offCanvas.getContext('2d');
+  offCtx.direction = direction;
+  offCtx.textAlign = 'center';
+  offCtx.textBaseline = 'alphabetic';
+  
+  const maxHalfW = (width / 2) - MARGIN;
+  const maxH = height - MARGIN * 2;
+  
+  let fontSize = maxFont;
+  let layout = null;
+  
+  while(fontSize >= 10) {
+    offCtx.font = `${fontSize}px "${fontName}"`;
+    const paragraphs = text.split('\n');
+    let lines = [];
+    let willFit = true;
+    
+    for (let p of paragraphs) {
+      if (p.trim() === '') {
+        lines.push('');
+        continue;
+      }
+      const words = p.split(' ');
+      let currentLine = words[0];
+      let lineMetrics = offCtx.measureText(currentLine);
+      
+      if (lineMetrics.actualBoundingBoxLeft > maxHalfW || lineMetrics.actualBoundingBoxRight > maxHalfW) {
+        willFit = false;
+        break;
+      }
+      
+      for (let i = 1; i < words.length; i++) {
+        const word = words[i];
+        const testLine = currentLine + ' ' + word;
+        const metrics = offCtx.measureText(testLine);
+        
+        if (metrics.actualBoundingBoxLeft > maxHalfW || metrics.actualBoundingBoxRight > maxHalfW) {
+          lines.push(currentLine);
+          currentLine = word;
+          const wordMetrics = offCtx.measureText(word);
+          if (wordMetrics.actualBoundingBoxLeft > maxHalfW || wordMetrics.actualBoundingBoxRight > maxHalfW) {
+            willFit = false;
+            break;
+          }
+        } else {
+          currentLine = testLine;
+        }
+      }
+      
+      if (!willFit) break;
+      lines.push(currentLine);
+    }
+    
+    if (!willFit) {
+      fontSize -= 5;
+      continue;
+    }
+    
+    let blockMetrics = [];
+    let totalBlockHeight = 0;
+    
+    for (let line of lines) {
+      if (line === '') {
+        blockMetrics.push({ text: line, metrics: null, height: fontSize });
+        totalBlockHeight += fontSize + fontSize * 0.2;
+      } else {
+        const m = offCtx.measureText(line);
+        const h = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+        blockMetrics.push({ text: line, metrics: m, height: h });
+        totalBlockHeight += h + fontSize * 0.2;
+      }
+    }
+    
+    if (totalBlockHeight > maxH) {
+      fontSize -= 5;
+      continue;
+    }
+    
+    let startY = (height - totalBlockHeight) / 2;
+    layout = {
+      ready: true,
+      version: ++layoutVersion,
+      font: fontName,
+      fontSize: fontSize,
+      direction: direction,
+      textAlign: 'center',
+      textBaseline: 'alphabetic',
+      lines: [],
+      worldWidth: width,
+      worldHeight: height,
+      contentBounds: { left: Infinity, right: -Infinity, top: Infinity, bottom: -Infinity }
+    };
+    
+    let y = startY;
+    for (let i = 0; i < lines.length; i++) {
+      const lineText = lines[i];
+      const metricsInfo = blockMetrics[i];
+      
+      if (lineText === '') {
+        y += metricsInfo.height + fontSize * 0.2;
+        continue;
+      }
+      const m = metricsInfo.metrics;
+      y += m.actualBoundingBoxAscent;
+      
+      const lineX = width / 2;
+      const lineY = y;
+      const boundLeft = lineX - m.actualBoundingBoxLeft;
+      const boundRight = lineX + m.actualBoundingBoxRight;
+      const boundTop = lineY - m.actualBoundingBoxAscent;
+      const boundBottom = lineY + m.actualBoundingBoxDescent;
+      
+      layout.contentBounds.left = Math.min(layout.contentBounds.left, boundLeft);
+      layout.contentBounds.right = Math.max(layout.contentBounds.right, boundRight);
+      layout.contentBounds.top = Math.min(layout.contentBounds.top, boundTop);
+      layout.contentBounds.bottom = Math.max(layout.contentBounds.bottom, boundBottom);
+      
+      layout.lines.push({
+        text: lineText,
+        x: lineX,
+        y: lineY,
+        bounds: { left: boundLeft, right: boundRight, top: boundTop, bottom: boundBottom }
+      });
+      
+      y += m.actualBoundingBoxDescent + fontSize * 0.2;
+    }
+    break;
+  }
+  
+  if (!layout) {
+    throw new Error("Text too long to fit");
+  }
+  return layout;
+}
+
+function setStatusMessage(msg, isError = false) {
+  if (msg) {
+    statusMessage.innerText = msg;
+    statusMessage.style.display = 'block';
+    statusMessage.style.color = isError ? '#d32f2f' : '#1976d2';
+  } else {
+    statusMessage.style.display = 'none';
+  }
+}
+
+function restoreLastValidState() {
+  if (lastValidState) {
+    practiceTextInput.value = lastValidState.text;
+    practiceTextInput.dir = lastValidState.direction;
+    currentFont = lastValidState.font;
+    
+    isEnglishFlex = lastValidState.isEnglishFlex;
+    defaultNibAngle = lastValidState.defaultNibAngle;
+    gridSelect.value = lastValidState.gridValue;
+    currentActiveButtonIndex = lastValidState.activeButtonIndex;
+    
+    templateBtns.forEach((b, i) => {
+      if (i === currentActiveButtonIndex) b.classList.add('active');
+      else b.classList.remove('active');
+    });
+    
+    updateAngleDisplay(isEnglishFlex ? 45 * (Math.PI / 180) : defaultNibAngle);
+    drawGrid();
+
+    if (lastValidState.layout) {
+      templateLayout = JSON.parse(JSON.stringify(lastValidState.layout));
+      templateCanvas.setAttribute('data-layout-ready', 'true');
+      templateCanvas.setAttribute('data-layout-version', templateLayout.version.toString());
+      renderTemplate();
+      scoreBtn.disabled = false;
+      scoreBtn.title = "التطابق الحراري";
+    } else {
+      // Intentional blank state
+      templateLayout = {
+        ready: false,
+        version: ++layoutVersion,
+        font: currentFont,
+        fontSize: 0,
+        direction: practiceTextInput.dir,
+        textAlign: 'center',
+        textBaseline: 'alphabetic',
+        lines: [],
+        worldWidth: WORLD_WIDTH,
+        worldHeight: WORLD_HEIGHT,
+        contentBounds: { left: 0, right: 0, top: 0, bottom: 0 }
+      };
+      templateCanvas.setAttribute('data-layout-ready', 'false');
+      tCtx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+      scoringImageData = null;
+      scoreBtn.disabled = true;
+      scoreBtn.title = "التقييم معطل (النص فارغ)";
+    }
+  } else {
+    templateLayout = {
+      ready: false,
+      version: ++layoutVersion,
+      font: currentFont,
+      fontSize: 0,
+      direction: practiceTextInput.dir || (isEnglishFlex ? 'ltr' : 'rtl'),
+      textAlign: 'center',
+      textBaseline: 'alphabetic',
+      lines: [],
+      worldWidth: WORLD_WIDTH,
+      worldHeight: WORLD_HEIGHT,
+      contentBounds: { left: 0, right: 0, top: 0, bottom: 0 }
+    };
+    templateCanvas.setAttribute('data-layout-ready', 'false');
+    tCtx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+    scoringImageData = null;
+    setStatusMessage('لا يوجد مرجع متاح. (التقييم معطل)', true);
+    scoreBtn.disabled = true;
+    scoreBtn.title = "التقييم معطل (لا يوجد مرجع)";
+  }
+}
+
+async function updateTemplateLayout() {
   const currentId = ++templateDrawId;
-  const fontSize = Math.min(w / 4, 150);
-  const fontStr = `${fontSize}px "${currentFont}"`;
+  const reqDir = practiceTextInput.dir || (isEnglishFlex ? 'ltr' : 'rtl');
+  const reqText = practiceTextInput.value;
+  const reqFont = currentFont;
+  
+  templateLayout.ready = false;
+  templateCanvas.setAttribute('data-layout-ready', 'false');
+  invalidateScore();
+  setStatusMessage('جاري التحميل...');
+  scoreBtn.disabled = true;
+  scoreBtn.title = "جاري التحميل...";
 
+  if (reqText.trim() === '') {
+    tCtx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+    // Explicit blank non-exercise state. Keep valid UI baseline but no readiness/raster.
+    scoringImageData = null;
+    setStatusMessage('النص فارغ. (التقييم معطل)');
+    scoreBtn.title = "التقييم معطل (النص فارغ)";
+    
+    templateLayout = {
+      ready: false,
+      version: ++layoutVersion,
+      font: reqFont,
+      fontSize: 0,
+      direction: reqDir,
+      textAlign: 'center',
+      textBaseline: 'alphabetic',
+      lines: [],
+      worldWidth: WORLD_WIDTH,
+      worldHeight: WORLD_HEIGHT,
+      contentBounds: { left: 0, right: 0, top: 0, bottom: 0 }
+    };
+    
+    lastValidState = { 
+      text: reqText, 
+      font: reqFont, 
+      direction: reqDir, 
+      layout: null,
+      activeButtonIndex: currentActiveButtonIndex,
+      isEnglishFlex: isEnglishFlex,
+      defaultNibAngle: defaultNibAngle,
+      gridValue: gridSelect.value
+    };
+    return;
+  }
+
+  if (reqText.length > TEXT_LIMIT) {
+    if (currentId !== templateDrawId) return;
+    setStatusMessage('النص طويل جداً.', true);
+    restoreLastValidState();
+    return;
+  }
+  
+  const fontStrMax = `${MAX_FONT}px "${reqFont}"`;
+  
   try {
-    if (document.fonts) await document.fonts.load(fontStr);
-  } catch(e) {}
-
+    if (document.fonts) {
+      await document.fonts.load(fontStrMax);
+      if (currentId !== templateDrawId) return;
+      if (!document.fonts.check(fontStrMax)) {
+        throw new Error("Font not loaded");
+      }
+    }
+  } catch(e) {
+    if (currentId !== templateDrawId) return;
+    setStatusMessage('تعذر تحميل الخط المطلوب.', true);
+    restoreLastValidState();
+    return;
+  }
+  
   if (currentId !== templateDrawId) return;
 
-  tCtx.clearRect(0, 0, w, h);
-  const op = ghostOpacityInput.value / 100;
-  if (!currentText.trim() || op <= 0) return;
+  try {
+    const layout = await measureAndLayoutText(reqText, reqFont, MAX_FONT, WORLD_WIDTH, WORLD_HEIGHT, reqDir);
+    if (currentId !== templateDrawId) return;
+    
+    templateLayout = layout;
+    lastValidState = { 
+      text: reqText, 
+      font: reqFont, 
+      direction: reqDir, 
+      layout: JSON.parse(JSON.stringify(layout)),
+      activeButtonIndex: currentActiveButtonIndex,
+      isEnglishFlex: isEnglishFlex,
+      defaultNibAngle: defaultNibAngle,
+      gridValue: gridSelect.value
+    };
+    
+    templateCanvas.setAttribute('data-layout-ready', 'true');
+    templateCanvas.setAttribute('data-layout-version', layout.version.toString());
+    
+    renderTemplate();
+    setStatusMessage(null); // Clear loading status
+    scoreBtn.disabled = false;
+    scoreBtn.title = "التطابق الحراري";
+  } catch (e) {
+    if (currentId !== templateDrawId) return;
+    console.error(e);
+    setStatusMessage('لا يمكن عرض النص بالكامل في المساحة المتاحة.', true);
+    restoreLastValidState();
+  }
+}
 
-  tCtx.fillStyle = `rgba(150, 150, 150, ${op})`;
-  tCtx.textAlign = 'center';
-  tCtx.textBaseline = 'middle';
-  tCtx.direction = practiceTextInput.dir || (isEnglishFlex ? 'ltr' : 'rtl');
-  tCtx.font = fontStr;
-  tCtx.fillText(currentText, w / 2, h / 2);
+function renderTemplate() {
+  tCtx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+  scoringImageData = null;
+
+  if (!templateLayout.ready) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  const w = WORLD_WIDTH * dpr;
+  const h = WORLD_HEIGHT * dpr;
+
+  const off = document.createElement('canvas');
+  off.width = w;
+  off.height = h;
+  const oCtx = off.getContext('2d', { willReadFrequently: true });
+  oCtx.scale(dpr, dpr);
+
+  oCtx.fillStyle = 'black';
+  oCtx.textAlign = templateLayout.textAlign;
+  oCtx.textBaseline = templateLayout.textBaseline;
+  oCtx.direction = templateLayout.direction;
+  oCtx.font = `${templateLayout.fontSize}px "${templateLayout.font}"`;
+  
+  for (let line of templateLayout.lines) {
+    oCtx.fillText(line.text, line.x, line.y);
+  }
+
+  scoringImageData = oCtx.getImageData(0, 0, w, h);
+
+  const op = ghostOpacityInput.value / 100;
+  if (op > 0) {
+    tCtx.save();
+    tCtx.setTransform(1, 0, 0, 1, 0, 0);
+    tCtx.globalAlpha = op;
+    tCtx.drawImage(off, 0, 0);
+    tCtx.restore();
+  }
 }
 
 function getPointerPos(e) {
+  const rect = workspace.getBoundingClientRect();
+  const ex = e.clientX - rect.left;
+  const ey = e.clientY - rect.top;
   return {
-    x: (e.clientX - translateX) / scale,
-    y: (e.clientY - translateY) / scale
+    x: (ex - translateX) / scale,
+    y: (ey - translateY) / scale
   };
 }
 
@@ -171,9 +594,7 @@ function lerpAngle(a, b, t) {
 }
 
 function redrawAllStrokes() {
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  dCtx.clearRect(0, 0, w, h);
+  dCtx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
   for (const stroke of strokes) {
     let prevPt = null;
     for (const pt of stroke.points) {
@@ -203,7 +624,7 @@ function redrawAllStrokes() {
 function checkIsStylus(e) {
   if (e.pointerType === 'pen' || e.pointerType === 'mouse') return true;
   if (e.pointerType === 'touch') {
-    if (e.pressure > 0 && e.pressure !== 0.5 && e.pressure !== 1) return true;
+    if (e.pressure > 0 && e.pressure !== 0.5) return true;
     if (e.tiltX !== undefined && e.tiltY !== undefined && (e.tiltX !== 0 || e.tiltY !== 0)) return true;
   }
   return false;
@@ -266,8 +687,12 @@ function addPointToStroke(e, pt, prevPt = null) {
   return rawPt;
 }
 
-function updateTransform() {
-  canvasContainer.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+function getMinScale() {
+  const rect = workspace.getBoundingClientRect();
+  if (rect.width === 0) return 0.1;
+  const scaleX = rect.width / WORLD_WIDTH;
+  const scaleY = rect.height / WORLD_HEIGHT;
+  return Math.min(0.2, scaleX * 0.5, scaleY * 0.5);
 }
 
 function initPinch(p1, p2) {
@@ -276,9 +701,10 @@ function initPinch(p1, p2) {
   initialPinchDist = Math.hypot(dx, dy);
   const cx = (p1.clientX + p2.clientX) / 2;
   const cy = (p1.clientY + p2.clientY) / 2;
+  const rect = workspace.getBoundingClientRect();
   pinchLogicalMidpoint = {
-    x: (cx - translateX) / scale,
-    y: (cy - translateY) / scale
+    x: (cx - rect.left - translateX) / scale,
+    y: (cy - rect.top - translateY) / scale
   };
 }
 
@@ -288,15 +714,17 @@ function handlePinch(p1, p2) {
   const dist = Math.hypot(dx, dy);
   const cx = (p1.clientX + p2.clientX) / 2;
   const cy = (p1.clientY + p2.clientY) / 2;
+  const rect = workspace.getBoundingClientRect();
 
   if (initialPinchDist && pinchLogicalMidpoint) {
     const scaleChange = dist / initialPinchDist;
-    const newScale = Math.min(Math.max(0.5, scale * scaleChange), 5);
-    translateX = cx - pinchLogicalMidpoint.x * newScale;
-    translateY = cy - pinchLogicalMidpoint.y * newScale;
+    const minS = getMinScale();
+    const newScale = Math.min(Math.max(minS, scale * scaleChange), 5);
+    translateX = (cx - rect.left) - pinchLogicalMidpoint.x * newScale;
+    translateY = (cy - rect.top) - pinchLogicalMidpoint.y * newScale;
     scale = newScale;
     initialPinchDist = dist;
-    updateTransform();
+    updateCamera();
   } else {
     initPinch(p1, p2);
   }
@@ -305,13 +733,14 @@ function handlePinch(p1, p2) {
 workspace.addEventListener('pointerdown', (e) => {
   if (e.target.closest('#drawer') || e.target.closest('#topBar') || e.target.closest('#scorePopup')) return;
   
+  if (checkIsPalm(e)) return;
+
   pointerCache.push(e);
   const isCurrentStylus = checkIsStylus(e);
-  const isPalm = checkIsPalm(e);
 
   if (pointerCache.length > 1) {
     if (activePointerId !== null) {
-      if (activeIsStylus || isPalm) {
+      if (activeIsStylus) {
         return;
       } else {
         isDrawing = false;
@@ -390,51 +819,27 @@ workspace.addEventListener('pointercancel', removePointer);
 workspace.addEventListener('lostpointercapture', removePointer);
 
 window.addEventListener('blur', () => {
-  pointerCache = [];
-  isDrawing = false;
-  activePointerId = null;
-  activePointerType = null;
-  activeIsStylus = false;
-  initialPinchDist = null;
-  pinchLogicalMidpoint = null;
+  interruptGestures();
   invalidateScore();
 });
 
-scoreBtn.addEventListener('click', async () => {
+scoreBtn.addEventListener('click', () => {
   const currentJob = ++scoreJobId;
-  const dpr = window.devicePixelRatio || 1;
-  const textSnapshot = currentText;
-  const fontSnapshot = currentFont;
-  const dirSnapshot = practiceTextInput.dir || (isEnglishFlex ? 'ltr' : 'rtl');
   
-  const fontSize = Math.min(window.innerWidth / 4, 150);
-  const fontStr = `${fontSize}px "${fontSnapshot}"`;
-
-  try {
-    if (document.fonts) await document.fonts.load(fontStr);
-  } catch(e) {}
-
-  if (currentJob !== scoreJobId) return;
+  if (templateCanvas.getAttribute('data-layout-ready') !== 'true' || !templateLayout.ready || !scoringImageData) {
+    setStatusMessage('التقييم غير متاح للنموذج الحالي.', true);
+    return;
+  }
 
   const w = drawingCanvas.width;
   const h = drawingCanvas.height;
+  
+  if (scoringImageData.width !== w || scoringImageData.height !== h) return;
+
   const drawData = dCtx.getImageData(0, 0, w, h).data;
+  const tempData = scoringImageData.data;
 
-  const offCanvas = document.createElement('canvas');
-  offCanvas.width = w;
-  offCanvas.height = h;
-  const offCtx = offCanvas.getContext('2d', { willReadFrequently: true });
-  offCtx.scale(dpr, dpr);
-
-  offCtx.fillStyle = 'black';
-  offCtx.textAlign = 'center';
-  offCtx.textBaseline = 'middle';
-  offCtx.direction = dirSnapshot;
-  offCtx.font = fontStr;
-  offCtx.fillText(textSnapshot, window.innerWidth / 2, window.innerHeight / 2);
-
-  const tempData = offCtx.getImageData(0, 0, w, h).data;
-  hCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  hCtx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
   const heatImg = hCtx.createImageData(w, h);
   const hData = heatImg.data;
 
@@ -476,31 +881,29 @@ scoreBtn.addEventListener('click', async () => {
 closeScoreBtn.addEventListener('click', invalidateScore);
 
 clearBtn.addEventListener('click', () => {
+  interruptGestures();
   strokes = [];
   currentStroke = null;
-  isDrawing = false;
-  activePointerId = null;
-  pointerCache = [];
-  activeIsStylus = false;
   redrawAllStrokes();
   invalidateScore();
 });
 
 brushSize.addEventListener('input', (e) => baseSize = parseInt(e.target.value));
-ghostOpacityInput.addEventListener('input', drawTemplate);
-gridSelect.addEventListener('change', drawGrid);
-menuBtn.addEventListener('click', () => drawer.classList.add('open'));
-closeDrawerBtn.addEventListener('click', () => drawer.classList.remove('open'));
+ghostOpacityInput.addEventListener('input', renderTemplate);
+gridSelect.addEventListener('change', () => { drawGrid(); updateTemplateLayout(); });
+menuBtn.addEventListener('click', () => { interruptGestures(); drawer.classList.add('open'); });
+closeDrawerBtn.addEventListener('click', () => { interruptGestures(); drawer.classList.remove('open'); });
 practiceTextInput.addEventListener('input', (e) => { 
-  currentText = e.target.value; 
   invalidateScore();
-  drawTemplate(); 
+  updateTemplateLayout(); 
 });
 
-templateBtns.forEach(btn => {
+templateBtns.forEach((btn, index) => {
   btn.addEventListener('click', () => {
+    interruptGestures();
     templateBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    currentActiveButtonIndex = index;
     currentFont = btn.getAttribute('data-font');
     defaultNibAngle = parseInt(btn.getAttribute('data-angle')) * (Math.PI / 180);
     isEnglishFlex = btn.getAttribute('data-flex') === 'true';
@@ -517,12 +920,14 @@ templateBtns.forEach(btn => {
       if(currentFont === 'Aref Ruqaa') gridSelect.value = "ruqaa";
       else gridSelect.value = "naskh";
     }
-    currentText = practiceTextInput.value;
     invalidateScore();
-    drawTemplate();
+    updateTemplateLayout();
     drawGrid();
     drawer.classList.remove('open');
   });
 });
 
+// Initialization
+resizeCanvases();
 updateAngleDisplay(defaultNibAngle);
+updateTemplateLayout();

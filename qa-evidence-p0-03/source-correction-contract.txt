@@ -1,0 +1,60 @@
+# Round03 — independent frozen-source review
+
+2026-10-04. **Correction required for async rejection/rollback; geometry and raster changes are present but need root gates.** Read frozen `work/main.js`, round02→round03 source diff, round03 manifest, prior round02 review and run05 result/events. No app edits, provider, browser or build; no actual5/16-stroke archives inspected.
+
+Frozen main SHA256: `5AC00E4D5E6083B3E78304DEB2AFCB919CC8E655DB771203645D0A237F3BDC57`. Manifest style SHA256 remains `E713376063D060BC94E6F0BAC240F078E2750087332296856024B94C046A2C12`. Run05's actual content delta is main.js only; its summary repeats older CSS changes and does not establish fresh style work. `work/qa-evidence-p0-02/source-review.md` contains the older round02/AA928107 review, so it is not acceptance of this frozen revision.
+
+## Required corrections
+
+**1. Stale font rejection can mutate and re-enable a newer pending revision.** main.js357 records currentId, but font catch387-390 alerts and restores without checking it. The successful path checks393 only after the catch. `restoreLastValidState`341-347 changes input, direction, currentFont, installed layout/version/readiness and cached raster. Concrete sequence:
+
+1. C is an accepted reference. RequestA starts a delayed font load.
+2. RequestB starts, increments templateDrawId and remains pending.
+3. A rejects. Its catch restores C and advertises ready=true even though B is still pending; the scoring guard712 now permits the restored C reference.
+4. B resolves. Its currentId still matches, but line396 measures its captured rawText/dir with the globally rolled-back currentFont. It can publish B text with C font, while the textbox was already rolled back to C.
+
+Guard the epoch before every async failure alert/rollback or publication. Freeze requested font/text/direction/selection in the revision rather than reading a mutable global font after await. The layout catch406-409 also lacks an epoch guard and should follow the same rule. Root fixture: separately controlled A/B font promises; reject A while B is pending, assert no alert/UI/readiness mutation from A, then resolve B and verify its exact input/font/direction/layout/mask/version.
+
+**2. Rollback restores the reference but not the coupled font/tool UI state.** `lastValidState`400 stores text/font/direction/layout only; restore339-353 reinstalls only those. The selector781-805 also changes active button classes784-785, defaultNibAngle787, isEnglishFlex788, compass790, grid795/799-800 and rendered grid804. Those values remain from the failed choice. A failed English selection after accepted Arabic can therefore display Arabic text/font/RTL while the English button/grid/compass and flex pen remain selected. A fresh stroke649 uses the remaining flex flag for ratio, and the unchanged brush engine also uses it for width/angle.
+
+Either commit the complete coupled selection only after revision acceptance or snapshot/restore it completely, including visible controls. Never modify completed stroke points/styles to match rollback. Root fixture: accepted Arabic→failing English and reverse; compare active button, text/dir/font, grid, flex/angle/compass, readiness/version/raster and next-stroke geometry. Existing ink must remain exact.
+
+Narrow UI acceptance expectations, using synthetic reference states only:
+
+| Transition | Required coherent outcome |
+|---|---|
+| Accepted Arabic C→failed English B | C text/font/RTL/layout/version/raster restored; Arabic selection active, English inactive; flex=false; accepted Arabic nib angle/compass and prior accepted grid restored. Ready only for C, with a visible failure explanation for B. Next stroke uses C's broad-nib settings. |
+| Accepted English C→failed Arabic B | C text/font/LTR/layout/version/raster restored; English selection active; flex=true and its effective45degree nib/compass, plus prior grid, restored. Next stroke uses the accepted flex profile. The stored default angle and effective flex angle must be distinguished correctly. |
+| Accepted C→intentional blank | Visible reference and scoring raster absent; both readiness signals false; score action disabled or explicitly identified as unavailable for an empty reference. Keep the current accepted font/tool/grid preference; do not erase ink. |
+| Blank→failing new font/text | Do not resurrect the C reference intentionally cleared by the user. Preserve the accepted empty-state UI/preferences and blank text, or show an explicitly failed/unaccepted request with readiness=false. Do not silently label failed font B accepted. |
+| First-load failure with no accepted state | No installed reference, false readiness and null raster. Explicit failure/unavailable-score state; no fabricated previously accepted revision. Input remains usable for retry. |
+
+Current blank branch365-369 sets lastValidState=null. This correctly prevents resurrecting C, but also loses the rollback UI baseline: a later failed selection leaves its changed controls/preset text because the no-state restore348-353 only clears readiness/raster. Distinguish an accepted empty state from never having an accepted state, or keep a separate accepted UI baseline. Restoring it must not reinstall old nonempty pixels. Preserve unrelated current size/color preferences, and the accepted pre-transaction grid preference, rather than rolling back arbitrary user settings. This remains P0 selection coherence; it does not introduce P1 tool independence.
+
+## Source changes that are real
+
+| Area | Frozen lines | Independent source finding |
+|---|---|---|
+| External view commands |110-111,774-775,783 | Fit/Reset/drawer/font selection now interrupt before changing camera/layout UI. |
+| Geometry scheduling |113-124,148-162 | Ownership/capture/cache/pinch cleared immediately in the geometry callback; workspace ResizeObserver and visualViewport resize added; RAF replaces50ms debounce. |
+| Ink retention |113-124 plus unchanged stroke/replay diff | Interruption does not pop or rewrite the current stroke's recorded samples. Later same-pointer updates are blocked by671. No new terminal point is injected by interruption. |
+| Shared raster |413-447,712-720 | Full-opacity offscreen text is sampled into scoringImageData, then copied to visible template. Score uses the cached pixels instead of repainting text independently. |
+| Ghost0 |439 before441-446 | Raster exists even when visible drawImage is skipped. Runtime exact-score proof remains root's task. |
+| First-load failure |348-353,387-390 | With no accepted state, layout and DOM marker remain false and raster is null. With a valid state, rollback exists but has the defects above. |
+| Empty reference |361-369,712 | Whitespace clears template and raster, leaves readiness false and blocks grading. It also discards lastValidState deliberately. |
+
+The round02→03 diff does not change accepted pressure0/1 mapping, palm threshold/early rejection, stylus latch, minimum ellipse radii, stroke color/ratio or sampled replay geometry. Those behaviors still require the root regression run, not a provider-preservation claim.
+
+## Native read-only review claims versus actual coverage
+
+Run05 events records real reviewer dispatch IDs `25f8365a-87ff-40ac-8e9a-0a8dcdf79ecd` (template/raster) and `ca7f57fe-f844-4ce3-a306-2c04a1926807` (input/geometry), each tasked to use view_file on main.js. Parent result reports completed findings. The mechanisms they describe are present above; their completion is not independent runtime acceptance.
+
+- ResizeObserver observes size, not every origin-only movement. The frozen code has no visualViewport scroll listener or per-input geometry comparison. Window.resize was removed. Do not turn API presence into a claim that all viewport/orientation/keyboard effects are covered; root should exercise origin/visible-area changes as well as ordinary resize.
+- The previous50ms race is removed for callback handling, and explicit drawer actions interrupt early. ResizeObserver delivery itself remains asynchronous relative to a layout change. Test immediate movement between changed geometry and observer delivery; no source-only guarantee of every event ordering is justified.
+- No CSS bounds allocation was changed in run05. Earlier style34-40 still has min-height200, parent28-32 clips overflow, topBar wraps and narrow drawer requests50vh. The actual visible workspace at360x340/keyboard height remains a browser/native gate. A large getBoundingClientRect alone can include clipped area.
+- Empty reference is blocked internally, but source does not set scoreBtn.disabled or provide an explicit non-exercise status message. The provider claim that the exercise field is disabled is stronger than the code. Treat visible-state clarity as pending, not a false-score bug.
+- Shared raster is a sound consistency change; the reviewer/provider statement that Dancing Script99 is permanently solved must be backed by exact native/browser font+DPR tests, including Ghost0. No such test was run by this source review.
+
+Root reports its26 core browser gates pass; this reviewer did not run them. Their evidence and QA extras must be recorded against this manifest. Passing ordinary font-load tests does not cover the rejected-A/pending-B race, full selection rollback or blank-clear boundary above.
+
+

@@ -1,0 +1,32 @@
+[
+  {
+    "path": "main.js",
+    "bytes": 29655,
+    "sha256": "B7EB4107FF05266F361E9F317B0CE7567C66399B406D651FA1753147C37A7EFF"
+  },
+  {
+    "path": "style.css",
+    "bytes": 4883,
+    "sha256": "2A0E78BD94C403E893EBB95B9C11117E8567AC6DEA6215D6B05EACA9BCAC883B"
+  },
+  {
+    "path": "index.html",
+    "bytes": 3344,
+    "sha256": "9D018618AF6ACE8144EE2A79D2AD513DB34CA50F2796E9783719D44916E48473"
+  },
+  {
+    "path": "capacitor.config.json",
+    "bytes": 243,
+    "sha256": "C3497D910A99128AFB9CB5326DDD90817E19CD1A8CF155852300E5ECF319D6F0"
+  },
+  {
+    "path": "package.json",
+    "bytes": 413,
+    "sha256": "0DEA8FA46F9E33A7E4003A3946E6D70C73AD1F9BA7FD5B6FD1D302559E8B1048"
+  },
+  {
+    "path": "vite.config.js",
+    "bytes": 164,
+    "sha256": "7B3E5C10565E7EBFF905FDF4EB96509294389054D8EAC87CFFF7A2C7E7A216BC"
+  }
+]

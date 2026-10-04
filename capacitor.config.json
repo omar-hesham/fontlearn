@@ -2,5 +2,11 @@
   "appId": "com.calligraphy.app",
   "appName": "CalligraphyApp",
   "webDir": "dist",
-  "bundledWebRuntime": false
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "native",
+      "initialViewportFitValueHint": "cover"
+    }
+  }
 }

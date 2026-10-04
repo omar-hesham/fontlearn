@@ -1,0 +1,39 @@
+{
+  "method": "Focused independent CDP camera regression tests, frozen candidate",
+  "webRoot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\p0-dist",
+  "passed": false,
+  "sourceBefore": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "cb677b8415dbb717ea0265e9b98b9aa4d34387288827b6533ce8e621c5bc0f8d"
+  },
+  "sourceAfter": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "cb677b8415dbb717ea0265e9b98b9aa4d34387288827b6533ce8e621c5bc0f8d"
+  },
+  "sourcesUnchanged": true,
+  "checks": [
+    {
+      "name": "Visible pen tap deposits ink under its actual client position",
+      "passed": false,
+      "error": "{\"defect\":\"Ink is displaced from visible pen tip\",\"tip\":{\"x\":531.9512329101562,\"y\":291.62249755859375},\"actual\":{\"x\":504.3314338723696,\"y\":236.80101848394546,\"alphaTotal\":40756,\"canvas\":{\"x\":101,\"y\":56,\"width\":861.9024658203125,\"height\":471.2449951171875}},\"distance\":61.38605596403651}",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\focused-results\\failure-0.png"
+    },
+    {
+      "name": "Inward pinch from a small fitted view cannot zoom the page in",
+      "passed": false,
+      "error": "{\"defect\":\"Inward pinch enlarged page\",\"initialScale\":0.3,\"afterScale\":0.5,\"fingerDistanceRatio\":0.75}",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\focused-results\\failure-1.png"
+    },
+    {
+      "name": "Resize during an active stationary pen adds no long connector",
+      "passed": false,
+      "error": "{\"defect\":\"Stationary pen gained connector after camera resize\",\"before\":{\"x\":467.7524429967427,\"y\":448.2084690553746,\"rx\":10,\"ry\":1,\"angle\":-0.7853981633974483},\"after\":{\"x\":823.8805970149253,\"y\":18.507462686567237,\"rx\":10,\"ry\":1,\"angle\":-0.7853981633974483},\"newStampCount\":1117,\"worldSpan\":557.5955307983397,\"nibWidth\":20}",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\focused-results\\failure-2.png"
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "startupErrors": []
+}

@@ -1,0 +1,278 @@
+{
+  "method": "Independent supplemental installed-Chrome CDP/pixel tests; native Huawei keyboard and SystemBars acceptance remain separate",
+  "webRoot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\p0-dist-round03",
+  "passed": false,
+  "sourceBefore": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourceAfter": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourcesUnchanged": true,
+  "checks": [
+    {
+      "name": "Template layout snapshot is detached down to individual line records",
+      "passed": true,
+      "evidence": {
+        "detached": true
+      }
+    },
+    {
+      "name": "Sequential finger-to-pinch transition preserves prior ink and suppresses remaining-finger drawing",
+      "passed": true,
+      "evidence": {
+        "count": 7208,
+        "hash": 2374175585,
+        "width": 2625,
+        "height": 1750
+      }
+    },
+    {
+      "name": "Standalone broad palm creates no ink and subsequent pen recovers",
+      "passed": true,
+      "evidence": {
+        "recovered": true
+      }
+    },
+    {
+      "name": "Touch stylus survives palm-only release at pressure 0.7",
+      "passed": true,
+      "evidence": {
+        "last": {
+          "x": 550,
+          "y": 400,
+          "rx": 10,
+          "ry": 1,
+          "angle": -0.7853981633974483
+        }
+      }
+    },
+    {
+      "name": "Touch stylus survives palm-only release at pressure 1",
+      "passed": true,
+      "evidence": {
+        "last": {
+          "x": 550,
+          "y": 400,
+          "rx": 10,
+          "ry": 1,
+          "angle": -0.7853981633974483
+        }
+      }
+    },
+    {
+      "name": "Narrow pressure1 touch stylus retains ownership with an ordinary24px contact",
+      "passed": true,
+      "evidence": {
+        "last": {
+          "x": 550,
+          "y": 400,
+          "rx": 10,
+          "ry": 1,
+          "angle": -0.7853981633974483
+        }
+      }
+    },
+    {
+      "name": "Pointer maps to world coordinates after translated pinch",
+      "passed": true,
+      "evidence": {
+        "transformed": {
+          "mid": {
+            "x": 484.75,
+            "y": 363
+          },
+          "anchored": {
+            "x": 504.7500406901042,
+            "y": 373
+          }
+        },
+        "last": {
+          "x": 520,
+          "y": 450.00000764659865,
+          "rx": 10,
+          "ry": 1,
+          "angle": -0.7853981633974483
+        }
+      }
+    },
+    {
+      "name": "All bundled fonts and mixed-direction text score identically after zoom at DPR 1",
+      "passed": true,
+      "evidence": [
+        {
+          "family": "Aref Ruqaa",
+          "score": 100,
+          "direction": "rtl"
+        },
+        {
+          "family": "Amiri",
+          "score": 100,
+          "direction": "rtl"
+        },
+        {
+          "family": "Reem Kufi",
+          "score": 100,
+          "direction": "rtl"
+        },
+        {
+          "family": "Dancing Script",
+          "score": 100,
+          "direction": "ltr"
+        }
+      ]
+    },
+    {
+      "name": "All bundled fonts and mixed-direction text score identically after zoom at DPR 2.1875",
+      "passed": true,
+      "evidence": [
+        {
+          "family": "Aref Ruqaa",
+          "score": 100,
+          "direction": "rtl"
+        },
+        {
+          "family": "Amiri",
+          "score": 100,
+          "direction": "rtl"
+        },
+        {
+          "family": "Reem Kufi",
+          "score": 100,
+          "direction": "rtl"
+        },
+        {
+          "family": "Dancing Script",
+          "score": 100,
+          "direction": "ltr"
+        }
+      ]
+    },
+    {
+      "name": "Blank references disable grading and recover to a valid exercise",
+      "passed": false,
+      "error": "{\"failures\":[{\"name\":\"Blank reference visibly disables grading button\",\"state\":{\"layout\":{\"ready\":false,\"version\":1,\"font\":\"Aref Ruqaa\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[{\"text\":\"بسم الله الرحمن الرحيم\",\"x\":600,\"y\":434.87500762939453,\"bounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}}],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}},\"datasetReady\":\"false\",\"input\":\"\",\"scoreDisabled\":false,\"popupHidden\":true}},{\"name\":\"Blank reference visibly disables grading button\",\"state\":{\"layout\":{\"ready\":false,\"version\":1,\"font\":\"Aref Ruqaa\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[{\"text\":\"بسم الله الرحمن الرحيم\",\"x\":600,\"y\":434.87500762939453,\"bounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}}],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}},\"datasetReady\":\"false\",\"input\":\"   \\n  \",\"scoreDisabled\":false,\"popupHidden\":true}}],\"obligations\":[{\"name\":\"Blank reference does not advertise ready exercise\",\"passed\":true},{\"name\":\"Blank reference visibly disables grading button\",\"passed\":false},{\"name\":\"Blank reference paints no exercise\",\"passed\":true},{\"name\":\"Blanking invalidates prior completed score\",\"passed\":true},{\"name\":\"Blanking clears stale heatmap\",\"passed\":true},{\"name\":\"Blank grading attempt produces no popup\",\"passed\":true},{\"name\":\"Blank grading attempt produces no heatmap\",\"passed\":true},{\"name\":\"Blank reference does not advertise ready exercise\",\"passed\":true},{\"name\":\"Blank reference visibly disables grading button\",\"passed\":false},{\"name\":\"Blank reference paints no exercise\",\"passed\":true},{\"name\":\"Blanking invalidates prior completed score\",\"passed\":true},{\"name\":\"Blanking clears stale heatmap\",\"passed\":true},{\"name\":\"Blank grading attempt produces no popup\",\"passed\":true},{\"name\":\"Blank grading attempt produces no heatmap\",\"passed\":true}],\"rows\":[{\"layout\":{\"ready\":false,\"version\":1,\"font\":\"Aref Ruqaa\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[{\"text\":\"بسم الله الرحمن الرحيم\",\"x\":600,\"y\":434.87500762939453,\"bounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}}],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}},\"datasetReady\":\"false\",\"input\":\"\",\"scoreDisabled\":false,\"popupHidden\":true},{\"layout\":{\"ready\":false,\"version\":1,\"font\":\"Aref Ruqaa\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[{\"text\":\"بسم الله الرحمن الرحيم\",\"x\":600,\"y\":434.87500762939453,\"bounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}}],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}},\"datasetReady\":\"false\",\"input\":\"   \\n  \",\"scoreDisabled\":false,\"popupHidden\":true}],\"recovery\":{\"layout\":{\"ready\":true,\"version\":2,\"font\":\"Aref Ruqaa\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[{\"text\":\"عودة صحيحة ABC\",\"x\":600,\"y\":410.12500762939453,\"bounds\":{\"left\":160.64999389648438,\"right\":1036.3500061035156,\"top\":216.87499237060547,\"bottom\":413.12500762939453}},{\"text\":\"123\",\"x\":600,\"y\":550.1250076293945,\"bounds\":{\"left\":500.5,\"right\":705.5,\"top\":443.12500762939453,\"bottom\":553.1250076293945}}],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":160.64999389648438,\"right\":1036.3500061035156,\"top\":216.87499237060547,\"bottom\":553.1250076293945}},\"datasetReady\":\"true\",\"scoreDisabled\":false},\"recoveryScore\":100}\n\n2 !== 0\n",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\round03\\supplemental\\failure-9.png"
+    },
+    {
+      "name": "Changing reference after completed score invalidates popup and heatmap",
+      "passed": true,
+      "evidence": {
+        "textAndFontInvalidate": true
+      }
+    },
+    {
+      "name": "Clear during active pen cannot draw again until a new pointerdown",
+      "passed": true,
+      "evidence": {
+        "recovered": true
+      }
+    },
+    {
+      "name": "Keyboard-sized viewport excludes toolbar and open drawer 1123x340",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 1123,
+          "height": 340
+        },
+        "workspace": {
+          "x": 320,
+          "y": 56,
+          "right": 1123,
+          "bottom": 340,
+          "width": 803,
+          "height": 284
+        },
+        "toolbar": {
+          "x": 0,
+          "y": 0,
+          "right": 1123,
+          "bottom": 56,
+          "width": 1123,
+          "height": 56
+        },
+        "drawer": {
+          "x": 0,
+          "y": 56,
+          "right": 320,
+          "bottom": 340,
+          "width": 320,
+          "height": 284
+        },
+        "page": {
+          "x": 508.5,
+          "y": 56,
+          "right": 934.5,
+          "bottom": 340,
+          "width": 426,
+          "height": 284
+        }
+      }
+    },
+    {
+      "name": "Keyboard-sized viewport excludes toolbar and open drawer 360x340",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 360,
+          "height": 340
+        },
+        "workspace": {
+          "x": 0,
+          "y": 190,
+          "right": 360,
+          "bottom": 390,
+          "width": 360,
+          "height": 200
+        },
+        "toolbar": {
+          "x": 0,
+          "y": 0,
+          "right": 360,
+          "bottom": 190,
+          "width": 360,
+          "height": 190
+        },
+        "drawer": {
+          "x": 0,
+          "y": 390,
+          "right": 360,
+          "bottom": 390,
+          "width": 360,
+          "height": 0
+        },
+        "page": {
+          "x": 30,
+          "y": 190,
+          "right": 330,
+          "bottom": 390,
+          "width": 300,
+          "height": 200
+        }
+      }
+    },
+    {
+      "name": "Native touch scrolling reaches lower drawer controls",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "scrollTop": 0,
+          "scrollHeight": 595,
+          "clientHeight": 166,
+          "x": 180,
+          "startY": 615,
+          "endY": 499
+        },
+        "after": 101
+      }
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "startupErrors": []
+}

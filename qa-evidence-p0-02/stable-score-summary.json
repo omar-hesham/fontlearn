@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Stable exact-reference scores at DPR1, zoom=false",
+    "passed": false,
+    "fonts": [
+      {
+        "family": "Aref Ruqaa",
+        "score": 100
+      },
+      {
+        "family": "Amiri",
+        "score": 100
+      },
+      {
+        "family": "Reem Kufi",
+        "score": 100
+      },
+      {
+        "family": "Dancing Script",
+        "score": 99
+      }
+    ]
+  },
+  {
+    "name": "Stable exact-reference scores at DPR1, zoom=true",
+    "passed": false,
+    "fonts": [
+      {
+        "family": "Aref Ruqaa",
+        "score": 100
+      },
+      {
+        "family": "Amiri",
+        "score": 100
+      },
+      {
+        "family": "Reem Kufi",
+        "score": 100
+      },
+      {
+        "family": "Dancing Script",
+        "score": 99
+      }
+    ]
+  }
+]

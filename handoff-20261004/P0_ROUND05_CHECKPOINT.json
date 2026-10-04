@@ -1,0 +1,47 @@
+{
+  "recordedAtUtc": "2026-10-04T14:27:50.2587984Z",
+  "status": "awaiting_user_app_close_authorization_for_stable_RAM",
+  "antigravityLastRun": "p0-sol-run-09",
+  "antigravityRun10Started": false,
+  "reviewedFrozenSource": "candidate-round05-source/manifest.json",
+  "reviewedBuiltWeb": "p0-dist-round05",
+  "rootCore": {
+    "successful": 25,
+    "total": 26,
+    "remaining": "Fit control offscreen at360x640",
+    "pageErrors": 0,
+    "externalRequests": 0
+  },
+  "focusedQA": {
+    "fixture": "qa-agent/toolbar-drawer-round05.cjs",
+    "syntaxPassed": true,
+    "runtimeStarted": false,
+    "blankNormalizationRuntimeAccepted": false,
+    "plan": "qa-agent/round05/FOCUSED_RUN_PLAN.md"
+  },
+  "resource": {
+    "minimumMB": 2048,
+    "lastMB": 2010.41,
+    "ready": false,
+    "normalOriginalChromeCloseAuthorized": true,
+    "normalOriginalChromeCloseAccepted": true,
+    "originalWindowGoneVerified": true,
+    "forceKill": false,
+    "otherAppsClosed": false,
+    "request": "Normal ChatGPT window close after saved-work confirmation"
+  },
+  "skill": {
+    "snapshot": "tooling/agy-delegate-20261003T203459646Z",
+    "treeSha256": "f529dd57ee961d104fbd3557b0cae9d7ecb1f994a94d35a4a2af3aa7b1a05a1e",
+    "files": 18,
+    "verifiedUnchanged": "tooling/snapshot-before-run10.json"
+  },
+  "canonicalAdopted": false,
+  "newAPKInstalled": false,
+  "nativeHelpersAccepted": false,
+  "humanPenAccepted": false,
+  "nextBrief": "brief-p0-sol-correction-06.txt",
+  "phaseBoundary": "P0 remains open; P1 implementation not started",
+  "providerParentCumulative": 1301439,
+  "providerComparableDeltaSinceRun08": 222173
+}

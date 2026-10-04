@@ -1,0 +1,194 @@
+{
+  "method": "Independent viewport and rejected/empty reference checks, frozen candidate",
+  "webRoot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\p0-dist-round02",
+  "passed": false,
+  "sourceBefore": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "72a9c7eb8643e45ca101664b724c8b52ffb5c4050f7f290bff168411d7744d52"
+  },
+  "sourceAfter": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "72a9c7eb8643e45ca101664b724c8b52ffb5c4050f7f290bff168411d7744d52"
+  },
+  "sourcesUnchanged": true,
+  "checks": [
+    {
+      "name": "Drawer opening and closing refit the page without changing window size",
+      "passed": false,
+      "error": "Page is not refitted to changed workspace: {\"viewport\":{\"width\":1123,\"height\":670},\"workspace\":{\"x\":320,\"y\":56,\"right\":1123,\"bottom\":670,\"width\":803,\"height\":614},\"page\":{\"x\":421,\"y\":56,\"right\":1342,\"bottom\":670,\"width\":921,\"height\":614},\"toolbar\":{\"x\":0,\"y\":0,\"right\":1123,\"bottom\":56,\"width\":1123,\"height\":56},\"drawer\":{\"x\":0,\"y\":56,\"right\":320,\"bottom\":670,\"width\":320,\"height\":614}}",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\round02\\viewport-transitions\\failure-0.png"
+    },
+    {
+      "name": "Real pen stays aligned after both drawer layout transitions",
+      "passed": true,
+      "evidence": {
+        "initial": {
+          "tip": {
+            "x": 561.5,
+            "y": 363
+          },
+          "actual": {
+            "x": 561.4941950020825,
+            "y": 363.0061885880883,
+            "alphaTotal": 41160
+          },
+          "distance": 0.008485082400838376
+        },
+        "opened": {
+          "tip": {
+            "x": 772,
+            "y": 363
+          },
+          "actual": {
+            "x": 772.0004002914743,
+            "y": 363.00058802873104,
+            "alphaTotal": 41170
+          },
+          "distance": 0.0007113445388395077
+        },
+        "closed": {
+          "tip": {
+            "x": 561.5,
+            "y": 363
+          },
+          "actual": {
+            "x": 561.4941950020825,
+            "y": 363.0061885880883,
+            "alphaTotal": 41160
+          },
+          "distance": 0.008485082400838376
+        }
+      }
+    },
+    {
+      "name": "Keyboard-sized viewport refits the visible page and preserves real pen alignment",
+      "passed": true,
+      "evidence": {
+        "limitation": "Browser resize approximates keyboard space; native visualViewport/insets remain separate",
+        "reduced": {
+          "viewport": {
+            "width": 1123,
+            "height": 340
+          },
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "right": 1123,
+            "bottom": 340,
+            "width": 1123,
+            "height": 284
+          },
+          "page": {
+            "x": 348.5,
+            "y": 56,
+            "right": 774.5,
+            "bottom": 340,
+            "width": 426,
+            "height": 284
+          },
+          "toolbar": {
+            "x": 0,
+            "y": 0,
+            "right": 1123,
+            "bottom": 56,
+            "width": 1123,
+            "height": 56
+          },
+          "drawer": {
+            "x": 0,
+            "y": 56,
+            "right": 0,
+            "bottom": 340,
+            "width": 0,
+            "height": 284
+          }
+        },
+        "reducedTap": {
+          "tip": {
+            "x": 561.5,
+            "y": 198
+          },
+          "actual": {
+            "x": 561.4973149521034,
+            "y": 198.0028624739692,
+            "alphaTotal": 41160
+          },
+          "distance": 0.00392469609417764
+        },
+        "restored": {
+          "viewport": {
+            "width": 1123,
+            "height": 670
+          },
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "right": 1123,
+            "bottom": 670,
+            "width": 1123,
+            "height": 614
+          },
+          "page": {
+            "x": 101,
+            "y": 56,
+            "right": 1022,
+            "bottom": 670,
+            "width": 921,
+            "height": 614
+          },
+          "toolbar": {
+            "x": 0,
+            "y": 0,
+            "right": 1123,
+            "bottom": 56,
+            "width": 1123,
+            "height": 56
+          },
+          "drawer": {
+            "x": 0,
+            "y": 56,
+            "right": 0,
+            "bottom": 670,
+            "width": 0,
+            "height": 614
+          }
+        },
+        "restoredTap": {
+          "tip": {
+            "x": 561.5,
+            "y": 363
+          },
+          "actual": {
+            "x": 561.4941950020825,
+            "y": 363.0061885880883,
+            "alphaTotal": 41160
+          },
+          "distance": 0.008485082400838376
+        }
+      }
+    },
+    {
+      "name": "Rejected not-yet-loaded font retains coherent accepted reference or exposes non-ready failure",
+      "passed": false,
+      "error": "Rejected font advertised an incoherent reference: {\"target\":\"Amiri\",\"before\":{\"layout\":{\"ready\":true,\"version\":2,\"font\":\"Aref Ruqaa\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[{\"text\":\"مرجع قبول ABC\",\"x\":600,\"y\":363.7250061035156,\"bounds\":{\"left\":180.44998168945312,\"right\":1019.3500061035156,\"top\":212.27499389648438,\"bottom\":417.7250061035156}},{\"text\":\"123\",\"x\":600,\"y\":554.7250061035156,\"bounds\":{\"left\":500.5,\"right\":705.5,\"top\":447.7250061035156,\"bottom\":557.7250061035156}}],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":180.44998168945312,\"right\":1019.3500061035156,\"top\":212.27499389648438,\"bottom\":557.7250061035156}},\"datasetReady\":\"true\",\"input\":\"مرجع قبول ABC 123\",\"activeFont\":\"Aref Ruqaa\",\"scoreDisabled\":false,\"popupHidden\":true,\"dialogs\":[],\"visibleErrors\":[]},\"after\":{\"layout\":{\"ready\":true,\"version\":3,\"font\":\"Amiri\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[{\"text\":\"بسم الله الرحمن الرحيم\",\"x\":600,\"y\":431.5,\"bounds\":{\"left\":75.27880859375,\"right\":1127.10009765625,\"top\":306.5,\"bottom\":463.5}}],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":75.27880859375,\"right\":1127.10009765625,\"top\":306.5,\"bottom\":463.5}},\"datasetReady\":\"true\",\"input\":\"بسم الله الرحمن الرحيم\",\"activeFont\":\"Amiri\",\"scoreDisabled\":false,\"popupHidden\":true,\"dialogs\":[],\"visibleErrors\":[]}}",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\round02\\viewport-transitions\\failure-3.png"
+    },
+    {
+      "name": "First-load font rejection cannot advertise ready reference or grade fallback",
+      "passed": false,
+      "error": "Initial font failure advertised a ready layout: {\"layout\":{\"ready\":true,\"version\":1,\"font\":\"Aref Ruqaa\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[{\"text\":\"بسم الله الرحمن الرحيم\",\"x\":600,\"y\":431.5,\"bounds\":{\"left\":75.27880859375,\"right\":1127.10009765625,\"top\":306.5,\"bottom\":463.5}}],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":75.27880859375,\"right\":1127.10009765625,\"top\":306.5,\"bottom\":463.5}},\"datasetReady\":\"true\",\"input\":\"بسم الله الرحمن الرحيم\",\"activeFont\":\"Aref Ruqaa\",\"scoreDisabled\":false,\"popupHidden\":true,\"dialogs\":[],\"visibleErrors\":[]}",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\round02\\viewport-transitions\\failure-4.png"
+    },
+    {
+      "name": "Blank and whitespace references expose non-exercise state and prevent grading",
+      "passed": false,
+      "error": "Blank reference does not expose a non-exercise state: {\"layout\":{\"ready\":true,\"version\":2,\"font\":\"Aref Ruqaa\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":null,\"right\":null,\"top\":null,\"bottom\":null}},\"datasetReady\":\"true\",\"input\":\"\",\"activeFont\":\"Aref Ruqaa\",\"scoreDisabled\":false,\"popupHidden\":true,\"dialogs\":[],\"visibleErrors\":[]}",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\round02\\viewport-transitions\\failure-5.png"
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "startupErrors": []
+}

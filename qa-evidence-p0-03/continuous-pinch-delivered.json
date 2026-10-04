@@ -1,0 +1,689 @@
+{
+  "method": "Active pen camera transition gaps and continuous pinch, frozen candidate",
+  "webRoot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\p0-dist-round03",
+  "passed": true,
+  "sourceBefore": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourceAfter": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourcesUnchanged": true,
+  "checks": [
+    {
+      "name": "Intentional continuous pinch applies both moves and retains existing ink",
+      "passed": true,
+      "evidence": {
+        "initialCamera": {
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "width": 1123,
+            "height": 614
+          },
+          "matrix": {
+            "a": 0.7675,
+            "d": 0.7675,
+            "e": 101,
+            "f": 0
+          }
+        },
+        "firstCamera": {
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "width": 1123,
+            "height": 614
+          },
+          "matrix": {
+            "a": 0.921,
+            "d": 0.921,
+            "e": 32.25,
+            "f": -57.4
+          }
+        },
+        "secondCamera": {
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "width": 1123,
+            "height": 614
+          },
+          "matrix": {
+            "a": 1.0745,
+            "d": 1.0745,
+            "e": -36.5001,
+            "f": -114.8
+          }
+        },
+        "mid": {
+          "x": 484.75,
+          "y": 363
+        },
+        "anchored": {
+          "x": 500.75,
+          "y": 371
+        },
+        "before": {
+          "rgbaHash": 3087576096,
+          "count": 210,
+          "total": 42042,
+          "redRatio": 1,
+          "normalizedAlpha": 8785.92,
+          "bounds": [
+            242.74285714285713,
+            242.74285714285713,
+            256.9142857142857,
+            256.9142857142857
+          ],
+          "sample": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "after": {
+          "rgbaHash": 3087576096,
+          "count": 210,
+          "total": 42042,
+          "redRatio": 1,
+          "normalizedAlpha": 8785.92,
+          "bounds": [
+            242.74285714285713,
+            242.74285714285713,
+            256.9142857142857,
+            256.9142857142857
+          ],
+          "sample": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "events": [
+          {
+            "tag": "before-gesture",
+            "time": 1085.4000000059605,
+            "matrix": {
+              "a": 0.7675,
+              "d": 0.7675,
+              "e": 101,
+              "f": 0
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            }
+          },
+          {
+            "tag": "qa-workspace-resize-observer",
+            "time": 1264.4000000059605,
+            "matrix": {
+              "a": 0.7675,
+              "d": 0.7675,
+              "e": 101,
+              "f": 0
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            }
+          },
+          {
+            "tag": "pointerdown",
+            "time": 1276.199999988079,
+            "matrix": {
+              "a": 0.7675,
+              "d": 0.7675,
+              "e": 101,
+              "f": 0
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 3,
+            "pointerType": "touch",
+            "x": 408,
+            "y": 363
+          },
+          {
+            "tag": "pointerdown",
+            "time": 1370,
+            "matrix": {
+              "a": 0.7675,
+              "d": 0.7675,
+              "e": 101,
+              "f": 0
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 4,
+            "pointerType": "touch",
+            "x": 561.5,
+            "y": 363
+          },
+          {
+            "tag": "pointermove",
+            "time": 1471.199999988079,
+            "matrix": {
+              "a": 0.884476,
+              "d": 0.884476,
+              "e": 54.187,
+              "f": -44.7904
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 4,
+            "pointerType": "touch",
+            "x": 584.8499755859375,
+            "y": 367
+          },
+          {
+            "tag": "pointermove",
+            "time": 1471.4000000059605,
+            "matrix": {
+              "a": 0.921,
+              "d": 0.921,
+              "e": 32.25,
+              "f": -57.4
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 3,
+            "pointerType": "touch",
+            "x": 400.6499938964844,
+            "y": 367
+          },
+          {
+            "tag": "pointermove",
+            "time": 1497.5999999940395,
+            "matrix": {
+              "a": 1.03794,
+              "d": 1.03794,
+              "e": -14.5464,
+              "f": -102.177
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 4,
+            "pointerType": "touch",
+            "x": 608.2000122070312,
+            "y": 371
+          },
+          {
+            "tag": "pointermove",
+            "time": 1497.699999988079,
+            "matrix": {
+              "a": 1.0745,
+              "d": 1.0745,
+              "e": -36.5001,
+              "f": -114.8
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 3,
+            "pointerType": "touch",
+            "x": 393.29998779296875,
+            "y": 371
+          },
+          {
+            "tag": "pointerup",
+            "time": 1512.0999999940395,
+            "matrix": {
+              "a": 1.0745,
+              "d": 1.0745,
+              "e": -36.5001,
+              "f": -114.8
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 3,
+            "pointerType": "touch",
+            "x": 393.29998779296875,
+            "y": 371
+          },
+          {
+            "tag": "lostpointercapture",
+            "time": 1512.300000011921,
+            "matrix": {
+              "a": 1.0745,
+              "d": 1.0745,
+              "e": -36.5001,
+              "f": -114.8
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 3,
+            "pointerType": "touch",
+            "x": 393.29998779296875,
+            "y": 371
+          },
+          {
+            "tag": "pointerup",
+            "time": 1512.699999988079,
+            "matrix": {
+              "a": 1.0745,
+              "d": 1.0745,
+              "e": -36.5001,
+              "f": -114.8
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 4,
+            "pointerType": "touch",
+            "x": 608.2000122070312,
+            "y": 371
+          },
+          {
+            "tag": "lostpointercapture",
+            "time": 1512.699999988079,
+            "matrix": {
+              "a": 1.0745,
+              "d": 1.0745,
+              "e": -36.5001,
+              "f": -114.8
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 4,
+            "pointerType": "touch",
+            "x": 608.2000122070312,
+            "y": 371
+          }
+        ]
+      }
+    },
+    {
+      "name": "Stable workspace and two RAF continuous pinch applies both moves and retains existing ink",
+      "passed": true,
+      "evidence": {
+        "initialCamera": {
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "width": 1123,
+            "height": 614
+          },
+          "matrix": {
+            "a": 0.7675,
+            "d": 0.7675,
+            "e": 101,
+            "f": 0
+          }
+        },
+        "firstCamera": {
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "width": 1123,
+            "height": 614
+          },
+          "matrix": {
+            "a": 0.921,
+            "d": 0.921,
+            "e": 32.25,
+            "f": -57.4
+          }
+        },
+        "secondCamera": {
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "width": 1123,
+            "height": 614
+          },
+          "matrix": {
+            "a": 1.0745,
+            "d": 1.0745,
+            "e": -36.5001,
+            "f": -114.8
+          }
+        },
+        "mid": {
+          "x": 484.75,
+          "y": 363
+        },
+        "anchored": {
+          "x": 500.75,
+          "y": 371
+        },
+        "before": {
+          "rgbaHash": 3087576096,
+          "count": 210,
+          "total": 42042,
+          "redRatio": 1,
+          "normalizedAlpha": 8785.92,
+          "bounds": [
+            242.74285714285713,
+            242.74285714285713,
+            256.9142857142857,
+            256.9142857142857
+          ],
+          "sample": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "after": {
+          "rgbaHash": 3087576096,
+          "count": 210,
+          "total": 42042,
+          "redRatio": 1,
+          "normalizedAlpha": 8785.92,
+          "bounds": [
+            242.74285714285713,
+            242.74285714285713,
+            256.9142857142857,
+            256.9142857142857
+          ],
+          "sample": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "events": [
+          {
+            "tag": "before-gesture",
+            "time": 849.2000000178814,
+            "matrix": {
+              "a": 0.7675,
+              "d": 0.7675,
+              "e": 101,
+              "f": 0
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            }
+          },
+          {
+            "tag": "qa-workspace-resize-observer",
+            "time": 849.4000000059605,
+            "matrix": {
+              "a": 0.7675,
+              "d": 0.7675,
+              "e": 101,
+              "f": 0
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            }
+          },
+          {
+            "tag": "pointerdown",
+            "time": 1019.8000000119209,
+            "matrix": {
+              "a": 0.7675,
+              "d": 0.7675,
+              "e": 101,
+              "f": 0
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 3,
+            "pointerType": "touch",
+            "x": 408,
+            "y": 363
+          },
+          {
+            "tag": "pointerdown",
+            "time": 1167.4000000059605,
+            "matrix": {
+              "a": 0.7675,
+              "d": 0.7675,
+              "e": 101,
+              "f": 0
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 4,
+            "pointerType": "touch",
+            "x": 561.5,
+            "y": 363
+          },
+          {
+            "tag": "pointermove",
+            "time": 1290.0999999940395,
+            "matrix": {
+              "a": 0.884476,
+              "d": 0.884476,
+              "e": 54.187,
+              "f": -44.7904
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 4,
+            "pointerType": "touch",
+            "x": 584.8499755859375,
+            "y": 367
+          },
+          {
+            "tag": "pointermove",
+            "time": 1290.300000011921,
+            "matrix": {
+              "a": 0.921,
+              "d": 0.921,
+              "e": 32.25,
+              "f": -57.4
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 3,
+            "pointerType": "touch",
+            "x": 400.6499938964844,
+            "y": 367
+          },
+          {
+            "tag": "pointermove",
+            "time": 1314.0999999940395,
+            "matrix": {
+              "a": 1.03794,
+              "d": 1.03794,
+              "e": -14.5464,
+              "f": -102.177
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 4,
+            "pointerType": "touch",
+            "x": 608.2000122070312,
+            "y": 371
+          },
+          {
+            "tag": "pointermove",
+            "time": 1314.300000011921,
+            "matrix": {
+              "a": 1.0745,
+              "d": 1.0745,
+              "e": -36.5001,
+              "f": -114.8
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 3,
+            "pointerType": "touch",
+            "x": 393.29998779296875,
+            "y": 371
+          },
+          {
+            "tag": "pointerup",
+            "time": 1328.4000000059605,
+            "matrix": {
+              "a": 1.0745,
+              "d": 1.0745,
+              "e": -36.5001,
+              "f": -114.8
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 3,
+            "pointerType": "touch",
+            "x": 393.29998779296875,
+            "y": 371
+          },
+          {
+            "tag": "lostpointercapture",
+            "time": 1328.5,
+            "matrix": {
+              "a": 1.0745,
+              "d": 1.0745,
+              "e": -36.5001,
+              "f": -114.8
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 3,
+            "pointerType": "touch",
+            "x": 393.29998779296875,
+            "y": 371
+          },
+          {
+            "tag": "pointerup",
+            "time": 1329.0999999940395,
+            "matrix": {
+              "a": 1.0745,
+              "d": 1.0745,
+              "e": -36.5001,
+              "f": -114.8
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 4,
+            "pointerType": "touch",
+            "x": 608.2000122070312,
+            "y": 371
+          },
+          {
+            "tag": "lostpointercapture",
+            "time": 1329.2000000178814,
+            "matrix": {
+              "a": 1.0745,
+              "d": 1.0745,
+              "e": -36.5001,
+              "f": -114.8
+            },
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "pointerId": 4,
+            "pointerType": "touch",
+            "x": 608.2000122070312,
+            "y": 371
+          }
+        ]
+      }
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "startupErrors": []
+}

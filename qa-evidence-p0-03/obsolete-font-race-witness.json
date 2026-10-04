@@ -1,0 +1,27 @@
+{
+  "method": "Obsolete font-load rejection race, frozen candidate",
+  "webRoot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\p0-dist-round03",
+  "passed": false,
+  "sourceBefore": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourceAfter": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourcesUnchanged": true,
+  "checks": [
+    {
+      "name": "Obsolete font rejection cannot alert, roll back, or publish readiness while newer load is pending",
+      "passed": false,
+      "error": "{\"requested\":{\"older\":\"Amiri\",\"newer\":\"Reem Kufi\",\"expectedDirection\":null},\"beforeObsoleteReject\":{\"layout\":{\"ready\":false,\"version\":1,\"font\":\"Aref Ruqaa\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[{\"text\":\"بسم الله الرحمن الرحيم\",\"x\":600,\"y\":434.87500762939453,\"bounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}}],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}},\"ready\":\"false\",\"font\":\"Reem Kufi\",\"input\":\"New reference ABC 123\",\"scoreDisabled\":false},\"afterObsoleteReject\":{\"layout\":{\"ready\":true,\"version\":1,\"font\":\"Aref Ruqaa\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[{\"text\":\"بسم الله الرحمن الرحيم\",\"x\":600,\"y\":434.87500762939453,\"bounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}}],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":67.6500244140625,\"right\":1130.25,\"top\":281.12499237060547,\"bottom\":488.87500762939453}},\"ready\":\"true\",\"font\":\"Reem Kufi\",\"input\":\"بسم الله الرحمن الرحيم\",\"scoreDisabled\":false},\"resolved\":{\"layout\":{\"ready\":true,\"version\":2,\"font\":\"Aref Ruqaa\",\"fontSize\":150,\"direction\":\"rtl\",\"textAlign\":\"center\",\"textBaseline\":\"alphabetic\",\"lines\":[{\"text\":\"New reference\",\"x\":600,\"y\":365.5,\"bounds\":{\"left\":118.27499389648438,\"right\":1079.4249572753906,\"top\":261.5,\"bottom\":368.5}},{\"text\":\"ABC 123\",\"x\":600,\"y\":505.5,\"bounds\":{\"left\":318.9750061035156,\"right\":874.0249938964844,\"top\":398.5,\"bottom\":508.5}}],\"worldWidth\":1200,\"worldHeight\":800,\"contentBounds\":{\"left\":118.27499389648438,\"right\":1079.4249572753906,\"top\":261.5,\"bottom\":508.5}},\"ready\":\"true\",\"font\":\"Reem Kufi\",\"input\":\"بسم الله الرحمن الرحيم\",\"scoreDisabled\":false},\"dialogs\":[\"تعذر تحميل الخط المطلوب.\"],\"staleFailures\":[\"Obsolete request displayed a dialog: [\\\"تعذر تحميل الخط المطلوب.\\\"]\",\"Obsolete request rolled back newer controls\",\"Obsolete request published a ready layout\",\"Obsolete rejection changed pending reference/version\"]}\n+ actual - expected\n\n+ 'بسم الله الرحمن الرحيم'\n- 'New reference ABC 123'\n",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\round03\\obsolete-font-race-witness\\failure-0.png"
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "startupErrors": []
+}

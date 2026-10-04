@@ -1,0 +1,191 @@
+{
+  "method": "Independent supplemental installed-Chrome CDP/pixel tests; native Huawei keyboard and SystemBars acceptance remain separate",
+  "webRoot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\p0-dist",
+  "passed": false,
+  "sourceBefore": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "cb677b8415dbb717ea0265e9b98b9aa4d34387288827b6533ce8e621c5bc0f8d"
+  },
+  "sourceAfter": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "cb677b8415dbb717ea0265e9b98b9aa4d34387288827b6533ce8e621c5bc0f8d"
+  },
+  "sourcesUnchanged": true,
+  "checks": [
+    {
+      "name": "Template layout snapshot is detached down to individual line records",
+      "passed": true,
+      "evidence": {
+        "detached": true
+      }
+    },
+    {
+      "name": "Sequential finger-to-pinch transition preserves prior ink and suppresses remaining-finger drawing",
+      "passed": true,
+      "evidence": {
+        "count": 6762,
+        "hash": 2765534975,
+        "width": 2625,
+        "height": 1750
+      }
+    },
+    {
+      "name": "Standalone broad palm creates no ink and subsequent pen recovers",
+      "passed": false,
+      "error": "Palm alone left a mark\n\n2896 !== 0\n",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\results\\failure-2.png"
+    },
+    {
+      "name": "Touch stylus survives palm-only release at pressure 0.7",
+      "passed": false,
+      "error": "Palm release terminated stylus",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\results\\failure-3.png"
+    },
+    {
+      "name": "Touch stylus survives palm-only release at pressure 1",
+      "passed": false,
+      "error": "Palm release terminated stylus",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\results\\failure-4.png"
+    },
+    {
+      "name": "Narrow pressure1 touch stylus retains ownership with an ordinary24px contact",
+      "passed": false,
+      "error": "Stylus stroke was discarded as a pinch",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\results\\failure-5.png"
+    },
+    {
+      "name": "Pointer maps to world coordinates after translated pinch",
+      "passed": false,
+      "error": "Pointer used viewport coordinates after pinch",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\results\\failure-6.png"
+    },
+    {
+      "name": "All bundled fonts and mixed-direction text score identically after zoom at DPR 1",
+      "passed": false,
+      "error": "Dancing Script reference/scoring mismatch\n\n99 !== 100\n",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\results\\failure-7.png"
+    },
+    {
+      "name": "All bundled fonts and mixed-direction text score identically after zoom at DPR 2.1875",
+      "passed": true,
+      "evidence": [
+        {
+          "family": "Aref Ruqaa",
+          "score": 100,
+          "direction": "rtl"
+        },
+        {
+          "family": "Amiri",
+          "score": 100,
+          "direction": "rtl"
+        },
+        {
+          "family": "Reem Kufi",
+          "score": 100,
+          "direction": "rtl"
+        },
+        {
+          "family": "Dancing Script",
+          "score": 100,
+          "direction": "ltr"
+        }
+      ]
+    },
+    {
+      "name": "Empty and whitespace templates never produce false successful scores",
+      "passed": true,
+      "evidence": [
+        {
+          "hidden": false,
+          "score": 0
+        },
+        {
+          "hidden": false,
+          "score": 0
+        }
+      ]
+    },
+    {
+      "name": "Changing reference after completed score invalidates popup and heatmap",
+      "passed": true,
+      "evidence": {
+        "textAndFontInvalidate": true
+      }
+    },
+    {
+      "name": "Clear during active pen cannot draw again until a new pointerdown",
+      "passed": true,
+      "evidence": {
+        "recovered": true
+      }
+    },
+    {
+      "name": "Keyboard-sized viewport excludes toolbar and open drawer 1123x340",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 1123,
+          "height": 340
+        },
+        "workspace": {
+          "x": 320,
+          "y": 56,
+          "right": 1123,
+          "bottom": 340,
+          "width": 803,
+          "height": 284
+        },
+        "toolbar": {
+          "x": 0,
+          "y": 0,
+          "right": 1123,
+          "bottom": 56,
+          "width": 1123,
+          "height": 56
+        },
+        "drawer": {
+          "x": 0,
+          "y": 56,
+          "right": 320,
+          "bottom": 340,
+          "width": 320,
+          "height": 284
+        },
+        "page": {
+          "x": 508.5,
+          "y": 56,
+          "right": 793.5650024414062,
+          "bottom": 156.82000732421875,
+          "width": 285.06500244140625,
+          "height": 100.82000732421875
+        }
+      }
+    },
+    {
+      "name": "Keyboard-sized viewport excludes toolbar and open drawer 360x340",
+      "passed": false,
+      "error": "The expression evaluated to a falsy value:\n\n  assert(geometry.workspace.width >= 120 && geometry.workspace.height >= 120)\n",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\results\\failure-13.png"
+    },
+    {
+      "name": "Native touch scrolling reaches lower drawer controls",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "scrollTop": 0,
+          "scrollHeight": 595,
+          "clientHeight": 236,
+          "x": 180,
+          "startY": 615,
+          "endY": 429
+        },
+        "after": 171
+      }
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "startupErrors": []
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CalligraphyApp</string>
+    <string name="title_activity_main">CalligraphyApp</string>
+    <string name="package_name">com.calligraphy.app</string>
+    <string name="custom_url_scheme">com.calligraphy.app</string>
+</resources>

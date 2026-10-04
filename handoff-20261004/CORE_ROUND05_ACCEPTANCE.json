@@ -1,0 +1,851 @@
+{
+  "method": "Independent installed Chrome pixel/CDP tests, fixed-world semantics, DPR2.1875 and external network blocked; physical M-Pencil acceptance remains separate",
+  "passed": false,
+  "checks": [
+    {
+      "name": "Fixed world, fractional DPR buffers and detached layout snapshot",
+      "passed": true,
+      "evidence": {
+        "worldWidth": 1200,
+        "worldHeight": 800,
+        "snapshotDetached": true,
+        "layout": {
+          "ready": true,
+          "version": 1,
+          "font": "Aref Ruqaa",
+          "fontSize": 150,
+          "direction": "rtl",
+          "textAlign": "center",
+          "textBaseline": "alphabetic",
+          "lines": [
+            {
+              "text": "بسم الله الرحمن الرحيم",
+              "x": 600,
+              "y": 434.87500762939453,
+              "bounds": {
+                "left": 67.6500244140625,
+                "right": 1130.25,
+                "top": 281.12499237060547,
+                "bottom": 488.87500762939453
+              }
+            }
+          ],
+          "worldWidth": 1200,
+          "worldHeight": 800,
+          "contentBounds": {
+            "left": 67.6500244140625,
+            "right": 1130.25,
+            "top": 281.12499237060547,
+            "bottom": 488.87500762939453
+          }
+        },
+        "canvases": [
+          {
+            "id": "gridCanvas",
+            "width": 2625,
+            "height": 1750
+          },
+          {
+            "id": "templateCanvas",
+            "width": 2625,
+            "height": 1750
+          },
+          {
+            "id": "drawingCanvas",
+            "width": 2625,
+            "height": 1750
+          },
+          {
+            "id": "heatmapCanvas",
+            "width": 2625,
+            "height": 1750
+          }
+        ]
+      }
+    },
+    {
+      "name": "Four bundled fonts load with external network blocked",
+      "passed": true,
+      "evidence": [
+        {
+          "family": "Aref Ruqaa",
+          "faces": 1
+        },
+        {
+          "family": "Amiri",
+          "faces": 1
+        },
+        {
+          "family": "Reem Kufi",
+          "faces": 1
+        },
+        {
+          "family": "Dancing Script",
+          "faces": 1
+        }
+      ]
+    },
+    {
+      "name": "Arabic full content fits actual ink bounds",
+      "passed": true,
+      "evidence": {
+        "layout": {
+          "ready": true,
+          "version": 2,
+          "font": "Aref Ruqaa",
+          "fontSize": 70,
+          "direction": "rtl",
+          "textAlign": "center",
+          "textBaseline": "alphabetic",
+          "lines": [
+            {
+              "text": "بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم",
+              "x": 600,
+              "y": 194.57500457763672,
+              "bounds": {
+                "left": 90.48507690429688,
+                "right": 1107.9349670410156,
+                "top": 122.62500762939453,
+                "bottom": 219.57500457763672
+              }
+            },
+            {
+              "text": "بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم",
+              "x": 600,
+              "y": 305.5250015258789,
+              "bounds": {
+                "left": 90.48507690429688,
+                "right": 1107.9349670410156,
+                "top": 233.57500457763672,
+                "bottom": 330.5250015258789
+              }
+            },
+            {
+              "text": "بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم",
+              "x": 600,
+              "y": 416.4749984741211,
+              "bounds": {
+                "left": 90.48507690429688,
+                "right": 1107.9349670410156,
+                "top": 344.5250015258789,
+                "bottom": 441.4749984741211
+              }
+            },
+            {
+              "text": "بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم",
+              "x": 600,
+              "y": 527.4249954223633,
+              "bounds": {
+                "left": 90.48507690429688,
+                "right": 1107.9349670410156,
+                "top": 455.4749984741211,
+                "bottom": 552.4249954223633
+              }
+            },
+            {
+              "text": "بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم ",
+              "x": 600,
+              "y": 638.3749923706055,
+              "bounds": {
+                "left": 102.14007568359375,
+                "right": 1119.58984375,
+                "top": 566.4249954223633,
+                "bottom": 663.3749923706055
+              }
+            }
+          ],
+          "worldWidth": 1200,
+          "worldHeight": 800,
+          "contentBounds": {
+            "left": 90.48507690429688,
+            "right": 1119.58984375,
+            "top": 122.62500762939453,
+            "bottom": 663.3749923706055
+          }
+        },
+        "pixels": {
+          "count": 289713,
+          "total": 65427810,
+          "hash": 1770686147,
+          "width": 2625,
+          "height": 1750,
+          "bounds": [
+            91.42857142857143,
+            122.97142857142858,
+            1118.6285714285714,
+            662.8571428571429
+          ]
+        }
+      }
+    },
+    {
+      "name": "English full content fits actual ink bounds",
+      "passed": true,
+      "evidence": {
+        "layout": {
+          "ready": true,
+          "version": 3,
+          "font": "Dancing Script",
+          "fontSize": 65,
+          "direction": "ltr",
+          "textAlign": "center",
+          "textBaseline": "alphabetic",
+          "lines": [
+            {
+              "text": "Calligraphy practice helps us control the line",
+              "x": 600,
+              "y": 131,
+              "bounds": {
+                "left": 92.8302001953125,
+                "right": 1110.5248413085938,
+                "top": 84,
+                "bottom": 150
+              }
+            },
+            {
+              "text": "and spacing. Calligraphy practice helps us",
+              "x": 600,
+              "y": 210,
+              "bounds": {
+                "left": 117.09762573242188,
+                "right": 1083.4773864746094,
+                "top": 163,
+                "bottom": 229
+              }
+            },
+            {
+              "text": "control the line and spacing. Calligraphy",
+              "x": 600,
+              "y": 289,
+              "bounds": {
+                "left": 133.86013793945312,
+                "right": 1067.8548889160156,
+                "top": 242,
+                "bottom": 308
+              }
+            },
+            {
+              "text": "practice helps us control the line and spacing.",
+              "x": 600,
+              "y": 368,
+              "bounds": {
+                "left": 72.90264892578125,
+                "right": 1113.1873168945312,
+                "top": 321,
+                "bottom": 387
+              }
+            },
+            {
+              "text": "Calligraphy practice helps us control the line",
+              "x": 600,
+              "y": 447,
+              "bounds": {
+                "left": 92.8302001953125,
+                "right": 1110.5248413085938,
+                "top": 400,
+                "bottom": 466
+              }
+            },
+            {
+              "text": "and spacing. Calligraphy practice helps us",
+              "x": 600,
+              "y": 526,
+              "bounds": {
+                "left": 117.09762573242188,
+                "right": 1083.4773864746094,
+                "top": 479,
+                "bottom": 545
+              }
+            },
+            {
+              "text": "control the line and spacing. Calligraphy",
+              "x": 600,
+              "y": 605,
+              "bounds": {
+                "left": 133.86013793945312,
+                "right": 1067.8548889160156,
+                "top": 558,
+                "bottom": 624
+              }
+            },
+            {
+              "text": "practice helps us control the line and spacing. ",
+              "x": 600,
+              "y": 684,
+              "bounds": {
+                "left": 64.45263671875,
+                "right": 1104.7373046875,
+                "top": 637,
+                "bottom": 703
+              }
+            }
+          ],
+          "worldWidth": 1200,
+          "worldHeight": 800,
+          "contentBounds": {
+            "left": 64.45263671875,
+            "right": 1113.1873168945312,
+            "top": 84,
+            "bottom": 703
+          }
+        },
+        "pixels": {
+          "count": 426400,
+          "total": 86807883,
+          "hash": 3795255750,
+          "width": 2625,
+          "height": 1750,
+          "bounds": [
+            64.91428571428571,
+            84.11428571428571,
+            1112.2285714285715,
+            701.7142857142857
+          ]
+        }
+      }
+    },
+    {
+      "name": "Mixed multiline full content fits actual ink bounds",
+      "passed": true,
+      "evidence": {
+        "layout": {
+          "ready": true,
+          "version": 2,
+          "font": "Aref Ruqaa",
+          "fontSize": 95,
+          "direction": "rtl",
+          "textAlign": "center",
+          "textBaseline": "alphabetic",
+          "lines": [
+            {
+              "text": "العربية ABC 123",
+              "x": 600,
+              "y": 167.2249984741211,
+              "bounds": {
+                "left": 312.2925109863281,
+                "right": 881.1474914550781,
+                "top": 86.12499237060547,
+                "bottom": 190.4699935913086
+              }
+            },
+            {
+              "text": "آيات وإِشارات مع English",
+              "x": 600,
+              "y": 290.61499786376953,
+              "bounds": {
+                "left": 156.49005126953125,
+                "right": 1047.4448852539062,
+                "top": 209.4699935913086,
+                "bottom": 325.61499786376953
+              }
+            },
+            {
+              "text": "سطر أخير طويل للتدريب على قياس",
+              "x": 600,
+              "y": 548.7600021362305,
+              "bounds": {
+                "left": 66.572509765625,
+                "right": 1129.282470703125,
+                "top": 458.61499786376953,
+                "bottom": 576.0949935913086
+              }
+            },
+            {
+              "text": "الحروف",
+              "x": 600,
+              "y": 693.8750076293945,
+              "bounds": {
+                "left": 499.54251861572266,
+                "right": 695.8974838256836,
+                "top": 595.0949935913086,
+                "bottom": 694.8750076293945
+              }
+            }
+          ],
+          "worldWidth": 1200,
+          "worldHeight": 800,
+          "contentBounds": {
+            "left": 66.572509765625,
+            "right": 1129.282470703125,
+            "top": 86.12499237060547,
+            "bottom": 694.8750076293945
+          }
+        },
+        "pixels": {
+          "count": 213126,
+          "total": 49577067,
+          "hash": 1668412148,
+          "width": 2625,
+          "height": 1750,
+          "bounds": [
+            67.2,
+            86.4,
+            1128.6857142857143,
+            693.4857142857143
+          ]
+        }
+      }
+    },
+    {
+      "name": "Arabic exact reference scores100 at DPR2.1875",
+      "passed": true,
+      "evidence": {
+        "score": 100
+      }
+    },
+    {
+      "name": "Ghost0 and current English font score100",
+      "passed": true,
+      "evidence": {
+        "score": 100,
+        "direction": "ltr"
+      }
+    },
+    {
+      "name": "Visible page and open drawer exclude toolbar 1123x670",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 1123,
+          "height": 670
+        },
+        "workspace": {
+          "x": 320,
+          "y": 56,
+          "width": 803,
+          "height": 614,
+          "right": 1123,
+          "bottom": 670
+        },
+        "page": {
+          "x": 320,
+          "y": 95.33332824707031,
+          "width": 803,
+          "height": 535.3333740234375,
+          "right": 1123,
+          "bottom": 630.6667022705078
+        },
+        "drawer": {
+          "open": true,
+          "x": 0,
+          "y": 56,
+          "right": 320,
+          "bottom": 670,
+          "width": 320,
+          "height": 614
+        }
+      }
+    },
+    {
+      "name": "Visible page and open drawer exclude toolbar 670x1123",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 670,
+          "height": 1123
+        },
+        "workspace": {
+          "x": 0,
+          "y": 56,
+          "width": 670,
+          "height": 194,
+          "right": 670,
+          "bottom": 250
+        },
+        "page": {
+          "x": 189.5,
+          "y": 56,
+          "width": 291,
+          "height": 194,
+          "right": 480.5,
+          "bottom": 250
+        },
+        "drawer": {
+          "open": true,
+          "x": 0,
+          "y": 250,
+          "right": 670,
+          "bottom": 1123,
+          "width": 670,
+          "height": 873
+        }
+      }
+    },
+    {
+      "name": "Visible page and open drawer exclude toolbar 360x640",
+      "passed": false,
+      "error": "Fit control offscreen"
+    },
+    {
+      "name": "Rotation keeps reference and ink in fixed world",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "count": 11992,
+          "total": 2951798,
+          "hash": 718354807,
+          "width": 2625,
+          "height": 1750,
+          "bounds": [
+            292.57142857142856,
+            342.85714285714283,
+            456.6857142857143,
+            376.6857142857143
+          ]
+        },
+        "after": {
+          "count": 11992,
+          "total": 2951798,
+          "hash": 718354807,
+          "width": 2625,
+          "height": 1750,
+          "bounds": [
+            292.57142857142856,
+            342.85714285714283,
+            456.6857142857143,
+            376.6857142857143
+          ]
+        },
+        "referenceHash": 1601667627
+      }
+    },
+    {
+      "name": "Opening/closing drawer leaves template and ink unchanged",
+      "passed": true,
+      "evidence": {
+        "inkHash": 2825918434,
+        "templateHash": 1601667627
+      }
+    },
+    {
+      "name": "Faint tap has finite minimum radii and real ink",
+      "passed": true,
+      "evidence": {
+        "result": {
+          "count": 206,
+          "total": 41199,
+          "hash": 1498704886,
+          "width": 2625,
+          "height": 1750,
+          "bounds": [
+            492.8,
+            392.6857142857143,
+            506.9714285714286,
+            406.85714285714283
+          ]
+        },
+        "last": {
+          "x": 500,
+          "y": 400,
+          "rx": 10,
+          "ry": 1,
+          "angle": -0.7853981633974483
+        }
+      }
+    },
+    {
+      "name": "Pointer release deposits updated end position",
+      "passed": true,
+      "evidence": {
+        "x": 470.00000795246336,
+        "y": 400,
+        "rx": 10,
+        "ry": 1,
+        "angle": -0.7853981633974483
+      }
+    },
+    {
+      "name": "Thin vertical stroke has no pixel gaps",
+      "passed": true,
+      "evidence": {
+        "gaps": 0
+      }
+    },
+    {
+      "name": "Pen retains ownership when broad palm arrives",
+      "passed": true,
+      "evidence": {
+        "count": 10706,
+        "total": 2613919,
+        "hash": 2566145544,
+        "width": 2625,
+        "height": 1750,
+        "bounds": [
+          342.85714285714283,
+          392.6857142857143,
+          506.9714285714286,
+          406.85714285714283
+        ]
+      }
+    },
+    {
+      "name": "Touch-reported stylus pressure0.7 retains ownership with palm70",
+      "passed": true,
+      "evidence": {
+        "count": 10706,
+        "total": 2613919,
+        "hash": 2566145544,
+        "width": 2625,
+        "height": 1750,
+        "bounds": [
+          342.85714285714283,
+          392.6857142857143,
+          506.9714285714286,
+          406.85714285714283
+        ]
+      }
+    },
+    {
+      "name": "Touch-reported stylus pressure1 retains ownership with palm70",
+      "passed": true,
+      "evidence": {
+        "count": 10706,
+        "total": 2613919,
+        "hash": 2566145544,
+        "width": 2625,
+        "height": 1750,
+        "bounds": [
+          342.85714285714283,
+          392.6857142857143,
+          506.9714285714286,
+          406.85714285714283
+        ]
+      }
+    },
+    {
+      "name": "Ordinary24px fingers pinch with anchored midpoint and no ink",
+      "passed": true,
+      "evidence": {
+        "initial": {
+          "x": 484.75,
+          "y": 363
+        },
+        "anchored": {
+          "x": 504.75,
+          "y": 363
+        }
+      }
+    },
+    {
+      "name": "Fit and Reset preserve ink",
+      "passed": true,
+      "evidence": {
+        "hash": 2566145544
+      }
+    },
+    {
+      "name": "Resize safely ends active red stroke with no stationary or release ink",
+      "passed": true,
+      "evidence": {
+        "resizePolicy": "Safe termination, verified after resize debounce settles",
+        "before": {
+          "rgbaHash": 4113908443,
+          "count": 3700,
+          "total": 895795,
+          "redRatio": 1,
+          "normalizedAlpha": 187202.87346938776,
+          "bounds": [
+            342.85714285714283,
+            392.6857142857143,
+            406.85714285714283,
+            406.85714285714283
+          ],
+          "sample": [
+            217,
+            0,
+            0,
+            255
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "afterResize": {
+          "rgbaHash": 4113908443,
+          "count": 3700,
+          "total": 895795,
+          "redRatio": 1,
+          "normalizedAlpha": 187202.87346938776,
+          "bounds": [
+            342.85714285714283,
+            392.6857142857143,
+            406.85714285714283,
+            406.85714285714283
+          ],
+          "sample": [
+            217,
+            0,
+            0,
+            255
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "afterStationary": {
+          "rgbaHash": 4113908443,
+          "count": 3700,
+          "total": 895795,
+          "redRatio": 1,
+          "normalizedAlpha": 187202.87346938776,
+          "bounds": [
+            342.85714285714283,
+            392.6857142857143,
+            406.85714285714283,
+            406.85714285714283
+          ],
+          "sample": [
+            217,
+            0,
+            0,
+            255
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "afterRelease": {
+          "rgbaHash": 4113908443,
+          "count": 3700,
+          "total": 895795,
+          "redRatio": 1,
+          "normalizedAlpha": 187202.87346938776,
+          "bounds": [
+            342.85714285714283,
+            392.6857142857143,
+            406.85714285714283,
+            406.85714285714283
+          ],
+          "sample": [
+            217,
+            0,
+            0,
+            255
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "recovered": {
+          "rgbaHash": 2732281258,
+          "count": 3907,
+          "total": 937824,
+          "redRatio": 1,
+          "normalizedAlpha": 195986.07673469387,
+          "bounds": [
+            342.85714285714283,
+            392.6857142857143,
+            556.8,
+            456.6857142857143
+          ],
+          "sample": [
+            217,
+            0,
+            0,
+            255
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        }
+      }
+    },
+    {
+      "name": "Original red nib survives actual buffer reconstruction after tool changes",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "rgbaHash": 1610436146,
+          "count": 7206,
+          "total": 1755786,
+          "redRatio": 1,
+          "normalizedAlpha": 366923.44163265306,
+          "bounds": [
+            342.85714285714283,
+            392.6857142857143,
+            456.6857142857143,
+            406.85714285714283
+          ],
+          "sample": [
+            217,
+            0,
+            0,
+            255
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "after": {
+          "rgbaHash": 2654344041,
+          "count": 3401,
+          "total": 836284,
+          "redRatio": 1,
+          "normalizedAlpha": 371681.77777777775,
+          "bounds": [
+            342.6666666666667,
+            392.6666666666667,
+            456.6666666666667,
+            406.6666666666667
+          ],
+          "sample": [
+            217,
+            0,
+            0,
+            255
+          ],
+          "dpr": 1.5,
+          "width": 1800,
+          "height": 1200
+        },
+        "normalizedAlphaTolerance": 0.03,
+        "worldBoundsTolerance": 1
+      }
+    },
+    {
+      "name": "Hover never starts ink and cancel adds no false segment",
+      "passed": true,
+      "evidence": {
+        "hash": 475846366
+      }
+    },
+    {
+      "name": "Lost capture terminates active stroke",
+      "passed": true,
+      "evidence": {
+        "captured": true,
+        "hash": 3312009455
+      }
+    },
+    {
+      "name": "Clear during delayed score cannot resurrect popup/heat",
+      "passed": true,
+      "evidence": {
+        "hidden": true
+      }
+    },
+    {
+      "name": "Excessive input reports limit and retains previous valid layout",
+      "passed": true,
+      "evidence": {
+        "retained": "نص صالح للتدريب",
+        "notice": {
+          "dialogs": [],
+          "inline": [
+            {
+              "id": "statusMessage",
+              "role": null,
+              "ariaLive": "polite",
+              "text": "النص طويل جداً."
+            }
+          ],
+          "texts": [
+            "النص طويل جداً."
+          ]
+        }
+      }
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": []
+}

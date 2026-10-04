@@ -1,0 +1,718 @@
+{
+  "method": "Active pen camera transition gaps and continuous pinch, frozen candidate",
+  "webRoot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\p0-dist-round03",
+  "passed": false,
+  "sourceBefore": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourceAfter": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourcesUnchanged": true,
+  "checks": [
+    {
+      "name": "Held pen survives actual drawer opening and closing without false ink",
+      "passed": true,
+      "evidence": [
+        {
+          "button": "#menuBtn",
+          "initialCamera": {
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "matrix": {
+              "a": 0.7675,
+              "d": 0.7675,
+              "e": 101,
+              "f": 0
+            }
+          },
+          "finalCamera": {
+            "workspace": {
+              "x": 320,
+              "y": 56,
+              "width": 803,
+              "height": 614
+            },
+            "matrix": {
+              "a": 0.669167,
+              "d": 0.669167,
+              "e": 0,
+              "f": 39.3333
+            }
+          },
+          "samples": [
+            {
+              "rgbaHash": 3680730685,
+              "count": 204,
+              "total": 37668,
+              "redRatio": 1,
+              "normalizedAlpha": 7871.843265306123,
+              "bounds": [
+                592.9142857142857,
+                392.6857142857143,
+                606.6285714285714,
+                406.85714285714283
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            },
+            {
+              "rgbaHash": 3680730685,
+              "count": 204,
+              "total": 37668,
+              "redRatio": 1,
+              "normalizedAlpha": 7871.843265306123,
+              "bounds": [
+                592.9142857142857,
+                392.6857142857143,
+                606.6285714285714,
+                406.85714285714283
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            },
+            {
+              "rgbaHash": 3680730685,
+              "count": 204,
+              "total": 37668,
+              "redRatio": 1,
+              "normalizedAlpha": 7871.843265306123,
+              "bounds": [
+                592.9142857142857,
+                392.6857142857143,
+                606.6285714285714,
+                406.85714285714283
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            },
+            {
+              "rgbaHash": 3680730685,
+              "count": 204,
+              "total": 37668,
+              "redRatio": 1,
+              "normalizedAlpha": 7871.843265306123,
+              "bounds": [
+                592.9142857142857,
+                392.6857142857143,
+                606.6285714285714,
+                406.85714285714283
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            },
+            {
+              "rgbaHash": 3680730685,
+              "count": 204,
+              "total": 37668,
+              "redRatio": 1,
+              "normalizedAlpha": 7871.843265306123,
+              "bounds": [
+                592.9142857142857,
+                392.6857142857143,
+                606.6285714285714,
+                406.85714285714283
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            }
+          ],
+          "recovery": {
+            "afterRelease": {
+              "rgbaHash": 3680730685,
+              "count": 204,
+              "total": 37668,
+              "redRatio": 1,
+              "normalizedAlpha": 7871.843265306123,
+              "bounds": [
+                592.9142857142857,
+                392.6857142857143,
+                606.6285714285714,
+                406.85714285714283
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            },
+            "recovered": {
+              "rgbaHash": 2063058202,
+              "count": 406,
+              "total": 78669,
+              "redRatio": 1,
+              "normalizedAlpha": 16440.21551020408,
+              "bounds": [
+                242.74285714285713,
+                392.6857142857143,
+                606.6285714285714,
+                606.6285714285714
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            }
+          }
+        },
+        {
+          "button": "#closeDrawerBtn",
+          "initialCamera": {
+            "workspace": {
+              "x": 320,
+              "y": 56,
+              "width": 803,
+              "height": 614
+            },
+            "matrix": {
+              "a": 0.669167,
+              "d": 0.669167,
+              "e": 0,
+              "f": 39.3333
+            }
+          },
+          "finalCamera": {
+            "workspace": {
+              "x": 0,
+              "y": 56,
+              "width": 1123,
+              "height": 614
+            },
+            "matrix": {
+              "a": 0.7675,
+              "d": 0.7675,
+              "e": 101,
+              "f": 0
+            }
+          },
+          "samples": [
+            {
+              "rgbaHash": 2014657359,
+              "count": 406,
+              "total": 82093,
+              "redRatio": 1,
+              "normalizedAlpha": 17155.761632653062,
+              "bounds": [
+                242.74285714285713,
+                392.6857142857143,
+                606.6285714285714,
+                606.6285714285714
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            },
+            {
+              "rgbaHash": 2014657359,
+              "count": 406,
+              "total": 82093,
+              "redRatio": 1,
+              "normalizedAlpha": 17155.761632653062,
+              "bounds": [
+                242.74285714285713,
+                392.6857142857143,
+                606.6285714285714,
+                606.6285714285714
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            },
+            {
+              "rgbaHash": 2014657359,
+              "count": 406,
+              "total": 82093,
+              "redRatio": 1,
+              "normalizedAlpha": 17155.761632653062,
+              "bounds": [
+                242.74285714285713,
+                392.6857142857143,
+                606.6285714285714,
+                606.6285714285714
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            },
+            {
+              "rgbaHash": 2014657359,
+              "count": 406,
+              "total": 82093,
+              "redRatio": 1,
+              "normalizedAlpha": 17155.761632653062,
+              "bounds": [
+                242.74285714285713,
+                392.6857142857143,
+                606.6285714285714,
+                606.6285714285714
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            },
+            {
+              "rgbaHash": 2014657359,
+              "count": 406,
+              "total": 82093,
+              "redRatio": 1,
+              "normalizedAlpha": 17155.761632653062,
+              "bounds": [
+                242.74285714285713,
+                392.6857142857143,
+                606.6285714285714,
+                606.6285714285714
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            }
+          ],
+          "recovery": {
+            "afterRelease": {
+              "rgbaHash": 2014657359,
+              "count": 406,
+              "total": 82093,
+              "redRatio": 1,
+              "normalizedAlpha": 17155.761632653062,
+              "bounds": [
+                242.74285714285713,
+                392.6857142857143,
+                606.6285714285714,
+                606.6285714285714
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            },
+            "recovered": {
+              "rgbaHash": 1799128736,
+              "count": 602,
+              "total": 123129,
+              "redRatio": 1,
+              "normalizedAlpha": 25731.448163265308,
+              "bounds": [
+                242.74285714285713,
+                392.6857142857143,
+                606.6285714285714,
+                606.6285714285714
+              ],
+              "sample": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "dpr": 2.1875,
+              "width": 2625,
+              "height": 1750
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Resize while pen is held is safe before the prior50ms debounce can fire",
+      "passed": true,
+      "evidence": {
+        "clockBefore": 120000,
+        "beforeMove": {
+          "clock": 120000,
+          "timerFired": false,
+          "resizeClock": 120000
+        },
+        "afterMove": {
+          "rgbaHash": 1787287371,
+          "count": 197,
+          "total": 37613,
+          "redRatio": 1,
+          "normalizedAlpha": 7860.349387755102,
+          "bounds": [
+            242.74285714285713,
+            392.6857142857143,
+            256.9142857142857,
+            406.85714285714283
+          ],
+          "sample": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "afterRelease": {
+          "rgbaHash": 1787287371,
+          "count": 197,
+          "total": 37613,
+          "redRatio": 1,
+          "normalizedAlpha": 7860.349387755102,
+          "bounds": [
+            242.74285714285713,
+            392.6857142857143,
+            256.9142857142857,
+            406.85714285714283
+          ],
+          "sample": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "afterTimers": {
+          "rgbaHash": 1787287371,
+          "count": 197,
+          "total": 37613,
+          "redRatio": 1,
+          "normalizedAlpha": 7860.349387755102,
+          "bounds": [
+            242.74285714285713,
+            392.6857142857143,
+            256.9142857142857,
+            406.85714285714283
+          ],
+          "sample": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "recovered": {
+          "rgbaHash": 483022720,
+          "count": 399,
+          "total": 78622,
+          "redRatio": 1,
+          "normalizedAlpha": 16430.393469387756,
+          "bounds": [
+            242.74285714285713,
+            392.6857142857143,
+            256.9142857142857,
+            606.6285714285714
+          ],
+          "sample": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "priorDebounceMilliseconds": 50
+      }
+    },
+    {
+      "name": "External camera command #fitViewBtn safely ends held pen",
+      "passed": true,
+      "evidence": {
+        "button": "#fitViewBtn",
+        "initialCamera": {
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "width": 1123,
+            "height": 614
+          },
+          "matrix": {
+            "a": 0.99775,
+            "d": 0.99775,
+            "e": 5.87497,
+            "f": -82.1
+          }
+        },
+        "finalCamera": {
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "width": 1123,
+            "height": 614
+          },
+          "matrix": {
+            "a": 0.7675,
+            "d": 0.7675,
+            "e": 101,
+            "f": 0
+          }
+        },
+        "afterMove": {
+          "rgbaHash": 3680730685,
+          "count": 204,
+          "total": 37668,
+          "redRatio": 1,
+          "normalizedAlpha": 7871.843265306123,
+          "bounds": [
+            592.9142857142857,
+            392.6857142857143,
+            606.6285714285714,
+            406.85714285714283
+          ],
+          "sample": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "recovery": {
+          "afterRelease": {
+            "rgbaHash": 3680730685,
+            "count": 204,
+            "total": 37668,
+            "redRatio": 1,
+            "normalizedAlpha": 7871.843265306123,
+            "bounds": [
+              592.9142857142857,
+              392.6857142857143,
+              606.6285714285714,
+              406.85714285714283
+            ],
+            "sample": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "dpr": 2.1875,
+            "width": 2625,
+            "height": 1750
+          },
+          "recovered": {
+            "rgbaHash": 2579788074,
+            "count": 406,
+            "total": 78677,
+            "redRatio": 1,
+            "normalizedAlpha": 16441.887346938776,
+            "bounds": [
+              242.74285714285713,
+              392.6857142857143,
+              606.6285714285714,
+              606.6285714285714
+            ],
+            "sample": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "dpr": 2.1875,
+            "width": 2625,
+            "height": 1750
+          }
+        }
+      }
+    },
+    {
+      "name": "External camera command #resetViewBtn safely ends held pen",
+      "passed": true,
+      "evidence": {
+        "button": "#resetViewBtn",
+        "initialCamera": {
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "width": 1123,
+            "height": 614
+          },
+          "matrix": {
+            "a": 0.99775,
+            "d": 0.99775,
+            "e": 5.87497,
+            "f": -82.1
+          }
+        },
+        "finalCamera": {
+          "workspace": {
+            "x": 0,
+            "y": 56,
+            "width": 1123,
+            "height": 614
+          },
+          "matrix": {
+            "a": 1,
+            "d": 1,
+            "e": -38.5,
+            "f": -93
+          }
+        },
+        "afterMove": {
+          "rgbaHash": 3680730685,
+          "count": 204,
+          "total": 37668,
+          "redRatio": 1,
+          "normalizedAlpha": 7871.843265306123,
+          "bounds": [
+            592.9142857142857,
+            392.6857142857143,
+            606.6285714285714,
+            406.85714285714283
+          ],
+          "sample": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "dpr": 2.1875,
+          "width": 2625,
+          "height": 1750
+        },
+        "recovery": {
+          "afterRelease": {
+            "rgbaHash": 3680730685,
+            "count": 204,
+            "total": 37668,
+            "redRatio": 1,
+            "normalizedAlpha": 7871.843265306123,
+            "bounds": [
+              592.9142857142857,
+              392.6857142857143,
+              606.6285714285714,
+              406.85714285714283
+            ],
+            "sample": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "dpr": 2.1875,
+            "width": 2625,
+            "height": 1750
+          },
+          "recovered": {
+            "rgbaHash": 2579788074,
+            "count": 406,
+            "total": 78677,
+            "redRatio": 1,
+            "normalizedAlpha": 16441.887346938776,
+            "bounds": [
+              242.74285714285713,
+              392.6857142857143,
+              606.6285714285714,
+              606.6285714285714
+            ],
+            "sample": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "dpr": 2.1875,
+            "width": 2625,
+            "height": 1750
+          }
+        }
+      }
+    },
+    {
+      "name": "Intentional continuous pinch applies both moves and retains existing ink",
+      "passed": false,
+      "error": "Continuous pinch was cancelled between moves",
+      "screenshot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\qa-agent\\round03\\active-camera-gaps\\failure-4.png"
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "startupErrors": []
+}

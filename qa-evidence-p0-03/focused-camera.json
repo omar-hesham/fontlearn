@@ -1,0 +1,67 @@
+{
+  "method": "Focused independent CDP camera regression tests, frozen candidate",
+  "webRoot": "C:\\New folder (3)\\hostinger\\fix\\audits\\20261003-learning-implementation\\p0-dist-round03",
+  "passed": true,
+  "sourceBefore": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourceAfter": {
+    "main.js": null,
+    "style.css": null,
+    "index.html": "281635a28259a8c8b10c41c6b8fad932d875f390de3ef4dfc4f782aa167725c4"
+  },
+  "sourcesUnchanged": true,
+  "checks": [
+    {
+      "name": "Visible pen tap deposits ink under its actual client position",
+      "passed": true,
+      "evidence": {
+        "tip": {
+          "x": 561.5,
+          "y": 363
+        },
+        "actual": {
+          "x": 561.4941950020825,
+          "y": 363.0061885880883,
+          "alphaTotal": 41160,
+          "canvas": {
+            "x": 101,
+            "y": 56,
+            "width": 921,
+            "height": 614
+          }
+        },
+        "distance": 0.008485082400838376
+      }
+    },
+    {
+      "name": "Inward pinch from a small fitted view cannot zoom the page in",
+      "passed": true,
+      "evidence": {
+        "initialScale": 0.3,
+        "afterScale": 0.225
+      }
+    },
+    {
+      "name": "Resize during an active stationary pen adds no long connector",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "x": 467.7524429967427,
+          "y": 448.2084690553746,
+          "rx": 10,
+          "ry": 1,
+          "angle": -0.7853981633974483
+        },
+        "newStampCount": 0,
+        "worldSpan": 0,
+        "nibWidth": 0
+      }
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "startupErrors": []
+}
