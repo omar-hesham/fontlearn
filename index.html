@@ -13,7 +13,7 @@
 <div class="pod-wrapper" id="penPodWrapper">
   <button id="penPodBtn" class="pod-btn pen-pod-btn" title="تخصيص القلم والسن واللون">
     <span id="activePenIcon">✒️</span>
-    <span id="activePenLabel">قصبة عربي</span>
+    <span id="activePenLabel">قلم القصب الطبيعي</span>
     <span id="activePenSizeBadge" class="pod-badge">20px</span>
     <span class="pod-arrow">▾</span>
   </button>
@@ -23,46 +23,46 @@
     <div class="popover-section">
       <div class="popover-label">أداة الرسم والتحبير الفيزيائية:</div>
       <div class="pen-selector-grid" id="penToolsGroup">
-        <button class="pen-tool-btn active" data-pen="qalam">
+        <button class="pen-tool-btn active" data-pen="qalam_qasab">
           <span class="pen-icon">✒️</span>
           <div class="pen-texts">
-            <span class="pen-name">قصبة عربي</span>
-            <span class="pen-desc">سن مشطوف تراثي</span>
+            <span class="pen-name">قلم القصب الطبيعي</span>
+            <span class="pen-desc">خيزران مشطوف أصيل</span>
           </div>
         </button>
-        <button class="pen-tool-btn" data-pen="ruling">
-          <span class="pen-icon">📏</span>
-          <div class="pen-texts">
-            <span class="pen-name">مسطرة هندسي</span>
-            <span class="pen-desc">خط موحد ثابت</span>
-          </div>
-        </button>
-        <button class="pen-tool-btn" data-pen="fountain">
+        <button class="pen-tool-btn" data-pen="qalam_jawi">
           <span class="pen-icon">🖋️</span>
           <div class="pen-texts">
-            <span class="pen-name">حبر سائل</span>
-            <span class="pen-desc">ريشة مرنة متدفقة</span>
+            <span class="pen-name">قلم الجاوي الهندامي</span>
+            <span class="pen-desc">صلب فائق الحدة للتشكيل</span>
           </div>
         </button>
-        <button class="pen-tool-btn" data-pen="ballpoint">
-          <span class="pen-icon">🖊️</span>
+        <button class="pen-tool-btn" data-pen="qalam_tomar">
+          <span class="pen-icon">📜</span>
           <div class="pen-texts">
-            <span class="pen-name">قلم جاف</span>
-            <span class="pen-desc">0.8 مم كتابة حرة</span>
+            <span class="pen-name">قلم الطومار الجلي</span>
+            <span class="pen-desc">سن عريض مشقوق للوحات</span>
           </div>
         </button>
-        <button class="pen-tool-btn" data-pen="pencil">
-          <span class="pen-icon">✏️</span>
+        <button class="pen-tool-btn" data-pen="qalam_meqatt">
+          <span class="pen-icon">📏</span>
           <div class="pen-texts">
-            <span class="pen-name">رصاص فني</span>
-            <span class="pen-desc">تظليل بميل القلم</span>
+            <span class="pen-name">المِقطّ وقلم التسطير</span>
+            <span class="pen-desc">تسطير هندسي لجداول المصاحف</span>
           </div>
         </button>
-        <button class="pen-tool-btn" data-pen="brush">
+        <button class="pen-tool-btn" data-pen="reesha_tadhhib">
           <span class="pen-icon">🖌️</span>
           <div class="pen-texts">
-            <span class="pen-name">فرشاة حرة</span>
-            <span class="pen-desc">انسيابية مائية</span>
+            <span class="pen-name">فرشاة التذهيب والترويس</span>
+            <span class="pen-desc">شعر سمور للتذييل والزخرفة</span>
+          </div>
+        </button>
+        <button class="pen-tool-btn" data-pen="reesha_maadaniya">
+          <span class="pen-icon">🪶</span>
+          <div class="pen-texts">
+            <span class="pen-name">الريشة المعدنية المشقوقة</span>
+            <span class="pen-desc">مرونة ثنائية الشفة للاتيني</span>
           </div>
         </button>
       </div>
@@ -235,6 +235,32 @@
     <button id="hudCopyReportBtn" class="hud-action-btn copy">نسخ التقرير</button>
   </div>
 </div>
+
+<!-- Floating Guided Calligraphy Training Bar (Smart In-Canvas Guidance) -->
+<div id="trainingGuideBar" class="training-guide-bar">
+  <div class="tguide-left">
+    <button id="toggleGuidedModeBtn" class="tguide-toggle-btn active" title="تشغيل/إيقاف ميزان النقط وأسهم التوجيه الحركي">
+      <span class="tguide-icon">🎯</span>
+      <span class="tguide-label">التدريب الموجه: <b id="guidedStatusText">مفعّل</b></span>
+    </button>
+    <div class="tguide-stat-chip" id="tguideAngleChip" title="مطابقة زاوية سن القلم مع ميزان الخط">
+      <span class="tguide-stat-label">زاوية السن:</span>
+      <span class="tguide-stat-val" id="tguideAngleVal">-45°</span>
+      <span class="tguide-stat-indicator ok" id="tguideAngleStatus">مثالي 🎯</span>
+    </div>
+    <div class="tguide-stat-chip" id="tguideSpeedChip" title="معدل انسيابية حركة اليد">
+      <span class="tguide-stat-label">الانسيابية:</span>
+      <span class="tguide-stat-val" id="tguideSpeedVal">متزنة ✨</span>
+    </div>
+  </div>
+  <div class="tguide-actions">
+    <button id="tguideToggleGhostBtn" class="tguide-action-btn" title="تبديل إظهار القالب الشفاف">👁️ القالب</button>
+    <button id="tguideToggleDotsBtn" class="tguide-action-btn active" title="إظهار ميزان النقط المعيّنة على اللوحة">📐 ميزان النقط</button>
+    <button id="tguideRetryBtn" class="tguide-action-btn" title="مسح وإعادة المحاولة لهذا الحرف">🔄 إعادة</button>
+    <button id="tguideNextLessonBtn" class="tguide-action-btn primary" title="الانتقال للحرف أو النموذج التالي">⏭️ التالي</button>
+  </div>
+</div>
+
 <div id="canvasContainer" data-world-width="1200" data-world-height="800">
 <canvas id="gridCanvas"></canvas>
 <canvas id="templateCanvas"></canvas>
@@ -268,51 +294,63 @@
 </div>
 <hr>
 <div class="sample-library-section">
-  <div class="section-subtitle">📚 مكتبة النماذج والتمارين (اضغط للتحميل المباشر):</div>
+  <div class="section-subtitle">📚 منهج تعليم الخط العربي المتدرج (4 مراحل معتمدة):</div>
   
-  <div class="section-subtitle" style="font-size: 11px;">🔤 مفردات الحروف:</div>
+  <div class="section-subtitle stage-badge" style="font-size: 11px; color:#2563eb; font-weight:700;">🟢 المرحلة 1: تشريح مفردات الحروف وميزان النقط (28 حرفاً):</div>
   <div class="sample-chips-row">
-    <button class="sample-chip" data-text="ا" data-font="Aref Ruqaa" data-angle="-45">ا (ألف)</button>
-    <button class="sample-chip" data-text="ب" data-font="Aref Ruqaa" data-angle="-45">ب (باء)</button>
-    <button class="sample-chip" data-text="ج" data-font="Amiri" data-angle="-70">ج (جيم)</button>
-    <button class="sample-chip" data-text="د" data-font="Aref Ruqaa" data-angle="-45">د (دال)</button>
-    <button class="sample-chip" data-text="ر" data-font="Aref Ruqaa" data-angle="-45">ر (راء)</button>
-    <button class="sample-chip" data-text="س" data-font="Amiri" data-angle="-70">س (سين)</button>
-    <button class="sample-chip" data-text="ص" data-font="Amiri" data-angle="-70">ص (صاد)</button>
-    <button class="sample-chip" data-text="ط" data-font="Amiri" data-angle="-70">ط (طاء)</button>
-    <button class="sample-chip" data-text="ع" data-font="Aref Ruqaa" data-angle="-45">ع (عين)</button>
-    <button class="sample-chip" data-text="ف" data-font="Aref Ruqaa" data-angle="-45">ف (فاء)</button>
-    <button class="sample-chip" data-text="ق" data-font="Amiri" data-angle="-70">ق (قاف)</button>
-    <button class="sample-chip" data-text="ك" data-font="Amiri" data-angle="-70">ك (كاف)</button>
-    <button class="sample-chip" data-text="ل" data-font="Aref Ruqaa" data-angle="-45">ل (لام)</button>
-    <button class="sample-chip" data-text="م" data-font="Aref Ruqaa" data-angle="-45">م (ميم)</button>
-    <button class="sample-chip" data-text="ن" data-font="Amiri" data-angle="-70">ن (نون)</button>
-    <button class="sample-chip" data-text="و" data-font="Rakkas" data-angle="-60">و (واو)</button>
-    <button class="sample-chip" data-text="ي" data-font="Amiri" data-angle="-70">ي (ياء)</button>
+    <button class="sample-chip" data-text="ا" data-font="Aref Ruqaa" data-angle="-45" data-dots="3" title="ألف الرقعة: 3 نقط رأسية بانحدار خفيف">ا (ألف - 3 نقط)</button>
+    <button class="sample-chip" data-text="ب" data-font="Aref Ruqaa" data-angle="-45" data-dots="3" title="باء الرقعة: 3 نقط في قاع الحرف">ب (باء - 3 نقط)</button>
+    <button class="sample-chip" data-text="ج" data-font="Amiri" data-angle="-70" data-dots="5" title="جيم النسخ: رأس 5 نقط وبطن قوسي 5 نقط">ج (جيم - 5 نقط)</button>
+    <button class="sample-chip" data-text="د" data-font="Aref Ruqaa" data-angle="-45" data-dots="2" title="دال الرقعة: نقطتان بارتكاز السطر">د (دال - نقطتان)</button>
+    <button class="sample-chip" data-text="ر" data-font="Aref Ruqaa" data-angle="-45" data-dots="2" title="راء الرقعة: نقطتان وتستقر على السطر">ر (راء - نقطتان)</button>
+    <button class="sample-chip" data-text="س" data-font="Amiri" data-angle="-70" data-dots="4" title="سين النسخ: أسنان بميزان نقطة ونقطة ونصف وكاسة 3 نقط">س (سين - 4 نقط)</button>
+    <button class="sample-chip" data-text="ص" data-font="Amiri" data-angle="-70" data-dots="4" title="صاد النسخ: رأس 3 نقط وكاسة 3 نقط">ص (صاد - 4 نقط)</button>
+    <button class="sample-chip" data-text="ط" data-font="Amiri" data-angle="-70" data-dots="4" title="طاء النسخ: جسم 3 نقط وألف صاعدة 4 نقط بترويس">ط (طاء - 4 نقط)</button>
+    <button class="sample-chip" data-text="ع" data-font="Amiri" data-angle="-70" data-dots="5" title="عين النسخ: حاجب نقطتان وبطن 5 نقط كالجيم">ع (عين - 5 نقط)</button>
+    <button class="sample-chip" data-text="ف" data-font="Aref Ruqaa" data-angle="-45" data-dots="3" title="فاء الرقعة: رأس مطموس وجسم باء">ف (فاء - 3 نقط)</button>
+    <button class="sample-chip" data-text="ق" data-font="Amiri" data-angle="-70" data-dots="4" title="قاف النسخ: رأس فاء وكاسة نون تحت السطر">ق (قاف - 4 نقط)</button>
+    <button class="sample-chip" data-text="ك" data-font="Amiri" data-angle="-70" data-dots="5" title="كاف النسخ: صاعد 5 نقط وقاعدة 4 نقط مع شارة">ك (كاف - 5 نقط)</button>
+    <button class="sample-chip" data-text="ل" data-font="Aref Ruqaa" data-angle="-45" data-dots="4" title="لام الرقعة: صاعد 3 نقط وكاسة تستقر على السطر">ل (لام - 4 نقط)</button>
+    <button class="sample-chip" data-text="م" data-font="Aref Ruqaa" data-angle="-45" data-dots="3" title="ميم الرقعة: رأس نقطة وخنجر نازل نقطتان">م (ميم - 3 نقط)</button>
+    <button class="sample-chip" data-text="ن" data-font="Amiri" data-angle="-70" data-dots="3" title="نون النسخ: هبوط نصف نقطة وتجويف 3 نقط">ن (نون - 3 نقط)</button>
+    <button class="sample-chip" data-text="هـ" data-font="Aref Ruqaa" data-angle="-45" data-dots="3" title="هاء الرقعة: تشبه أول الدال مع فاء وسطية">هـ (هاء - 3 نقط)</button>
+    <button class="sample-chip" data-text="و" data-font="Rakkas" data-angle="-60" data-dots="3" title="واو الديواني: رأس مقوس وذيل رشيق ناعم">و (واو - 3 نقط)</button>
+    <button class="sample-chip" data-text="ي" data-font="Amiri" data-angle="-70" data-dots="4" title="ياء النسخ: رأس باء ورجوع بطني متموج">ي (ياء - 4 نقط)</button>
   </div>
 
-  <div class="section-subtitle" style="font-size: 11px;">✨ كلمات شهيرة وتراكيب:</div>
+  <div class="section-subtitle stage-badge" style="font-size: 11px; color:#d97706; font-weight:700;">🟡 المرحلة 2: تراكيب ووصلات الحروف الأساسية (Ligatures):</div>
   <div class="sample-chips-row">
-    <button class="sample-chip phrase" data-text="سلام" data-font="Aref Ruqaa" data-angle="-45">سلام</button>
-    <button class="sample-chip phrase" data-text="نور" data-font="Gulzar" data-angle="-55">نور</button>
-    <button class="sample-chip phrase" data-text="أمل" data-font="Rakkas" data-angle="-60">أمل</button>
-    <button class="sample-chip phrase" data-text="جمال" data-font="Scheherazade New" data-angle="-65">جمال</button>
-    <button class="sample-chip phrase" data-text="حق" data-font="Amiri" data-angle="-70">حق</button>
-    <button class="sample-chip phrase" data-text="صبر" data-font="Aref Ruqaa" data-angle="-45">صبر</button>
-    <button class="sample-chip phrase" data-text="إبداع" data-font="Cairo" data-angle="0">إبداع</button>
+    <button class="sample-chip phrase" data-text="لا" data-font="Amiri" data-angle="-70" title="لام ألف: تراكب وتوازن الميزان الهندسي">لا (لام ألف)</button>
+    <button class="sample-chip phrase" data-text="بح" data-font="Aref Ruqaa" data-angle="-45" title="باء مع حاء: قنطرة الباء والنزول بجسم الحاء">بح (باء + حاء)</button>
+    <button class="sample-chip phrase" data-text="سم" data-font="Aref Ruqaa" data-angle="-45" title="سين مع ميم: سحب مسنن وميم خنجرية">سم (سين + ميم)</button>
+    <button class="sample-chip phrase" data-text="عم" data-font="Amiri" data-angle="-70" title="عين مع ميم: عين بادئة ملهمة">عم (عين + ميم)</button>
+    <button class="sample-chip phrase" data-text="في" data-font="Aref Ruqaa" data-angle="-45" title="فاء مع ياء: رأس فاء وياء راجعة">في (فاء + ياء)</button>
+    <button class="sample-chip phrase" data-text="كا" data-font="Amiri" data-angle="-70" title="كاف مع ألف: صاعد متوازٍ">كا (كاف + ألف)</button>
+    <button class="sample-chip phrase" data-text="حم" data-font="Gulzar" data-angle="-55" title="حاء مع ميم نستعليق: تعليق شاهق">حم (نستعليق)</button>
   </div>
 
-  <div class="section-subtitle" style="font-size: 11px;">📜 روائع الخط العربي والآيات:</div>
+  <div class="section-subtitle stage-badge" style="font-size: 11px; color:#059669; font-weight:700;">🔵 المرحلة 3: الكلمات المأثورة والآيات الشريفة:</div>
   <div class="sample-chips-row">
-    <button class="sample-chip phrase" data-text="بسم الله الرحمن الرحيم" data-font="Scheherazade New" data-angle="-65">البسملة الكبرى</button>
-    <button class="sample-chip phrase" data-text="وقل رب زدني علماً" data-font="Amiri" data-angle="-70">وقل رب زدني علماً</button>
-    <button class="sample-chip phrase" data-text="العلم نور" data-font="Gulzar" data-angle="-55">العلم نور (نستعليق)</button>
-    <button class="sample-chip phrase" data-text="فصبر جميل" data-font="Aref Ruqaa" data-angle="-45">فصبر جميل (رقعة)</button>
-    <button class="sample-chip phrase" data-text="ن والقلم وما يسطرون" data-font="Scheherazade New" data-angle="-65">ن والقلم وما يسطرون</button>
+    <button class="sample-chip phrase" data-text="سلام" data-font="Aref Ruqaa" data-angle="-45">سلام (رقعة)</button>
+    <button class="sample-chip phrase" data-text="نور" data-font="Gulzar" data-angle="-55">نور (نستعليق)</button>
+    <button class="sample-chip phrase" data-text="العلم نور" data-font="Gulzar" data-angle="-55">العلم نور</button>
+    <button class="sample-chip phrase" data-text="الصبر جميل" data-font="Aref Ruqaa" data-angle="-45">الصبر جميل</button>
     <button class="sample-chip phrase" data-text="كن جميلاً ترى الوجود جميلاً" data-font="Rakkas" data-angle="-60">كن جميلاً (ديواني)</button>
+    <button class="sample-chip phrase" data-text="بسم الله الرحمن الرحيم" data-font="Scheherazade New" data-angle="-65">البسملة الكبرى (نسخ قرآني)</button>
+    <button class="sample-chip phrase" data-text="وقل رب زدني علماً" data-font="Amiri" data-angle="-70">وقل رب زدني علماً</button>
+    <button class="sample-chip phrase" data-text="ن والقلم وما يسطرون" data-font="Scheherazade New" data-angle="-65">ن والقلم وما يسطرون</button>
+    <button class="sample-chip phrase" data-text="إن مع العسر يسراً" data-font="Aref Ruqaa" data-angle="-45">إن مع العسر يسراً</button>
   </div>
 
-  <div class="section-subtitle" style="font-size: 11px;">✒️ English & Latin Calligraphy:</div>
+  <div class="section-subtitle stage-badge" style="font-size: 11px; color:#7c3aed; font-weight:700;">🟣 المرحلة 4: روائع ومحاكاة كبار الخطاطين:</div>
+  <div class="sample-chips-row">
+    <button class="sample-chip phrase" data-text="محمد رسول الله" data-font="Scheherazade New" data-angle="-65" title="أسلوب محمد شوقي أفندي: عميد مدرسة النسخ العثمانية">مدرسة شوقي أفندي (نسخ)</button>
+    <button class="sample-chip phrase" data-text="الملك لله وحده" data-font="Amiri" data-angle="-70" title="أسلوب هاشم محمد البغدادي: صاحب قواعد الخط العربي">مدرسة هاشم البغدادي (ثلث/نسخ)</button>
+    <button class="sample-chip phrase" data-text="يا فتاح يا عليم" data-font="Aref Ruqaa" data-angle="-45" title="أسلوب مصطفى عزت: أستاذ خط الرقعة">مدرسة مصطفى عزت (رقعة)</button>
+    <button class="sample-chip phrase" data-text="سبحان الله وبحمده" data-font="Rakkas" data-angle="-60" title="أسلوب خليل الزهاوي: عميد الخط الديواني والتعليق">مدرسة خليل الزهاوي (ديواني)</button>
+  </div>
+
+  <div class="section-subtitle" style="font-size: 11px; margin-top:8px;">✒️ English & Latin Calligraphy:</div>
   <div class="sample-chips-row">
     <button class="sample-chip phrase" data-text="Calligraphy" data-font="MedievalSharp" data-lang="en" data-angle="45">Gothic: Calligraphy</button>
     <button class="sample-chip phrase" data-text="Art & Soul" data-font="Great Vibes" data-lang="en" data-angle="0" data-flex="true">Flourish: Art & Soul</button>

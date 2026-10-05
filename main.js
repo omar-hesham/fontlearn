@@ -26,7 +26,23 @@ const compassNeedle = document.getElementById('compassNeedle');
 const playerMiniLevel = document.getElementById('playerMiniLevel');
 const penToolsGroup = document.getElementById('penToolsGroup');
 const penToolBtns = document.querySelectorAll('.pen-tool-btn');
-let currentPenType = 'qalam';
+let currentPenType = 'qalam_qasab';
+
+// Guided Training Elements
+const trainingGuideBar = document.getElementById('trainingGuideBar');
+const toggleGuidedModeBtn = document.getElementById('toggleGuidedModeBtn');
+const guidedStatusText = document.getElementById('guidedStatusText');
+const tguideAngleVal = document.getElementById('tguideAngleVal');
+const tguideAngleStatus = document.getElementById('tguideAngleStatus');
+const tguideSpeedVal = document.getElementById('tguideSpeedVal');
+const tguideToggleGhostBtn = document.getElementById('tguideToggleGhostBtn');
+const tguideToggleDotsBtn = document.getElementById('tguideToggleDotsBtn');
+const tguideRetryBtn = document.getElementById('tguideRetryBtn');
+const tguideNextLessonBtn = document.getElementById('tguideNextLessonBtn');
+
+let isGuidedModeActive = true;
+let showRhombicDotsOnCanvas = true;
+let isGhostVisible = true;
 
 // Interactive Calligraphy Demonstration Elements
 const interactiveDemoBtn = document.getElementById('interactiveDemoBtn');
@@ -650,12 +666,19 @@ if (resetViewBtn) resetViewBtn.addEventListener('click', () => { interruptGestur
 // 4. Physical Pen Tools & Popover Controller
 // ==========================================
 const PEN_INFO = {
-  qalam: { icon: '✒️', name: 'قصبة عربي', defaultSize: 20 },
-  ruling: { icon: '📏', name: 'مسطرة هندسي', defaultSize: 14 },
-  fountain: { icon: '🖋️', name: 'حبر سائل', defaultSize: 16 },
-  ballpoint: { icon: '🖊️', name: 'قلم جاف', defaultSize: 8 },
-  pencil: { icon: '✏️', name: 'رصاص فني', defaultSize: 18 },
-  brush: { icon: '🖌️', name: 'فرشاة حرة', defaultSize: 22 }
+  qalam_qasab: { icon: '✒️', name: 'قلم القصب الطبيعي', defaultSize: 20 },
+  qalam_jawi: { icon: '🖋️', name: 'قلم الجاوي الهندامي', defaultSize: 14 },
+  qalam_tomar: { icon: '📜', name: 'قلم الطومار الجلي', defaultSize: 32 },
+  qalam_meqatt: { icon: '📏', name: 'المِقطّ وقلم التسطير', defaultSize: 12 },
+  reesha_tadhhib: { icon: '🖌️', name: 'فرشاة التذهيب والترويس', defaultSize: 10 },
+  reesha_maadaniya: { icon: '🪶', name: 'الريشة المعدنية المشقوقة', defaultSize: 16 },
+  // Backward compatibility aliases
+  qalam: { icon: '✒️', name: 'قلم القصب الطبيعي', defaultSize: 20 },
+  ruling: { icon: '📏', name: 'المِقطّ وقلم التسطير', defaultSize: 12 },
+  fountain: { icon: '🪶', name: 'الريشة المعدنية المشقوقة', defaultSize: 16 },
+  ballpoint: { icon: '🖋️', name: 'قلم الجاوي الهندامي', defaultSize: 14 },
+  pencil: { icon: '✒️', name: 'قلم القصب الطبيعي', defaultSize: 20 },
+  brush: { icon: '🖌️', name: 'فرشاة التذهيب والترويس', defaultSize: 10 }
 };
 
 function setPenType(type) {
@@ -666,36 +689,35 @@ function setPenType(type) {
     });
   }
 
-  const info = PEN_INFO[type] || PEN_INFO.qalam;
+  const info = PEN_INFO[type] || PEN_INFO.qalam_qasab;
   if (activePenIcon) activePenIcon.textContent = info.icon;
   if (activePenLabel) activePenLabel.textContent = info.name;
 
-  // Adjust tool defaults to simulate real physical tool behavior
-  if (type === 'pencil') {
-    colorPicker.value = '#334155';
-    brushSize.value = 18;
-    baseSize = 18;
-    setStatusMessage('✏️ قلم الرصاص الفني: استجابة للميل والتظليل العريض', false);
-  } else if (type === 'ballpoint') {
-    brushSize.value = 8;
-    baseSize = 8;
-    setStatusMessage('🖊️ قلم جاف 0.8 مم: استجابة دقيقة وحبر انسيابي ثابت', false);
-  } else if (type === 'ruling') {
-    brushSize.value = 14;
-    baseSize = 14;
-    setStatusMessage('📏 قلم المسطرة والتحبير: خط هندسي دقيق موحد', false);
-  } else if (type === 'fountain') {
-    brushSize.value = 16;
-    baseSize = 16;
-    setStatusMessage('🖋️ قلم حبر سائل: ريشة مرنة ذات انسيابية شعرية', false);
-  } else if (type === 'brush') {
-    brushSize.value = 22;
-    baseSize = 22;
-    setStatusMessage('🖌️ فرشاة حرة: مرونة فائقة وتدرج ديناميكي واسع', false);
-  } else if (type === 'qalam') {
+  // Adjust tool defaults to simulate real physical master tool behavior
+  if (type === 'qalam_qasab' || type === 'qalam') {
     brushSize.value = 20;
     baseSize = 20;
-    setStatusMessage('✒️ قصبة الخط العربي: سن مشطوف بميزان النقط الأصيل', false);
+    setStatusMessage('✒️ قلم القصب الطبيعي: سن مشطوف بميزان النقط ومسار حريري انسيابي', false);
+  } else if (type === 'qalam_jawi' || type === 'ballpoint') {
+    brushSize.value = 14;
+    baseSize = 14;
+    setStatusMessage('🖋️ قلم الجاوي الهندامي: صلب فائق الحدة لضبط الحركات والحروف الدقيقة', false);
+  } else if (type === 'qalam_tomar') {
+    brushSize.value = 32;
+    baseSize = 32;
+    setStatusMessage('📜 قلم الطومار الجلي: سن عريض ذو شق حبري للخطوط الكبيرة واللوحات', false);
+  } else if (type === 'qalam_meqatt' || type === 'ruling') {
+    brushSize.value = 12;
+    baseSize = 12;
+    setStatusMessage('📏 المِقطّ وقلم التسطير: تسطير هندسي ثابت لجداول المصاحف والكوفي', false);
+  } else if (type === 'reesha_tadhhib' || type === 'brush') {
+    brushSize.value = 10;
+    baseSize = 10;
+    setStatusMessage('🖌️ فرشاة التذهيب والترويس: شعر سمور مرن لتذييل ونهايات الحروف', false);
+  } else if (type === 'reesha_maadaniya' || type === 'fountain' || type === 'pencil') {
+    brushSize.value = 16;
+    baseSize = 16;
+    setStatusMessage('🪶 الريشة المعدنية المشقوقة: تمدد الشفتين بحساسية الضغط للاتيني والحر', false);
   }
 
   if (activePenSizeBadge) activePenSizeBadge.textContent = `${baseSize}px`;
@@ -2219,13 +2241,84 @@ function renderTemplate() {
   scoringImageData = oCtx.getImageData(0, 0, w, h);
 
   const op = ghostOpacityInput.value / 100;
-  if (op > 0) {
+  if (op > 0 && isGhostVisible) {
     tCtx.save();
     tCtx.setTransform(1, 0, 0, 1, 0, 0);
     tCtx.globalAlpha = op;
     tCtx.drawImage(off, 0, 0);
     tCtx.restore();
   }
+
+  // Draw Dynamic Rhombic Dots on templateCanvas if guided mode is active
+  if (isGuidedModeActive && showRhombicDotsOnCanvas && templateLayout.ready) {
+    renderCanvasRhombicDots(tCtx, templateLayout);
+  }
+}
+
+function renderCanvasRhombicDots(ctx, layout) {
+  if (!layout || !layout.lines || layout.lines.length === 0) return;
+  const line = layout.lines[0];
+  if (!line || !line.text) return;
+  const text = line.text.trim();
+  const fontSize = layout.fontSize;
+
+  // Dot size proportional to font size (1 nib width = fontSize * 0.16)
+  const dotSize = Math.max(9, Math.min(24, fontSize * 0.16));
+  const angleRad = defaultNibAngle;
+
+  let dotCount = 3;
+  if (text.startsWith('ا') || text === 'ا') {
+    dotCount = (defaultNibAngle <= -65 * (Math.PI / 180)) ? 5 : 3;
+  } else if (text.startsWith('ب') || text === 'ب' || text.startsWith('ت') || text.startsWith('ث')) {
+    dotCount = (defaultNibAngle <= -65 * (Math.PI / 180)) ? 5 : 3;
+  } else if (text.startsWith('ج') || text === 'ج' || text.startsWith('ح') || text.startsWith('خ') || text.startsWith('ع')) {
+    dotCount = 5;
+  } else if (text.startsWith('د') || text === 'د' || text.startsWith('ر') || text.startsWith('ز')) {
+    dotCount = 2;
+  } else if (text.startsWith('س') || text === 'س' || text.startsWith('ص') || text.startsWith('ط') || text.startsWith('ق')) {
+    dotCount = 4;
+  } else if (text.startsWith('ك') || text === 'ك') {
+    dotCount = 5;
+  } else {
+    dotCount = Math.min(6, Math.max(3, Math.round(fontSize / 38)));
+  }
+
+  // Position dots adjacent to the practice letter
+  const offsetSide = (layout.direction === 'rtl') ? (fontSize * 0.65) : (-fontSize * 0.65);
+  const startX = Math.max(70, Math.min(WORLD_WIDTH - 70, line.x + offsetSide));
+  const startY = Math.max(80, line.y - (fontSize * 0.5));
+
+  ctx.save();
+  ctx.lineWidth = 1;
+  ctx.font = 'bold 10px Cairo, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  for (let i = 0; i < dotCount; i++) {
+    const cx = startX;
+    const cy = startY + i * (dotSize * 1.12);
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angleRad);
+
+    // Classical amber rhombic dot square
+    ctx.fillStyle = 'rgba(217, 119, 6, 0.85)';
+    ctx.fillRect(-dotSize / 2, -dotSize / 2, dotSize, dotSize);
+    ctx.strokeStyle = '#78350f';
+    ctx.strokeRect(-dotSize / 2, -dotSize / 2, dotSize, dotSize);
+    ctx.restore();
+
+    // Dot number badge
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText((i + 1).toString(), cx, cy);
+  }
+
+  // Label: "ميزان: X نقط"
+  ctx.fillStyle = '#b45309';
+  ctx.font = 'bold 11px Cairo, sans-serif';
+  ctx.fillText(`ميزان: ${dotCount} نقط`, startX, startY - 16);
+  ctx.restore();
 }
 
 let workspaceRect = workspace.getBoundingClientRect();
@@ -2280,26 +2373,57 @@ const metrics = {
   startTime: Date.now()
 };
 
-function drawNibCap(ctx, x, y, angle, thickness, ratio, color) {
+function drawNibBladeFootprint(ctx, x, y, angle, thickness, color, ratio = 0.04) {
   ctx.save();
   ctx.fillStyle = color;
   ctx.translate(x, y);
   ctx.rotate(angle);
-  const rx = Math.max(thickness / 2, 0.5);
-  const ry = Math.max(thickness * ratio, 0.5);
-  ctx.beginPath();
-  ctx.ellipse(0, 0, rx, ry, 0, 0, 2 * Math.PI);
-  ctx.fill();
+  const halfW = Math.max(thickness / 2, 0.5);
+  const halfH = Math.max(thickness * ratio, 0.6);
+  ctx.fillRect(-halfW, -halfH, halfW * 2, halfH * 2);
   ctx.restore();
 }
 
-function renderStrokeSegment(ctx, pPrev, pCurr, stroke) {
-  const color = stroke.color || '#000000';
-  const tool = stroke.tool || 'qalam';
-  const ratio = stroke.ratio !== undefined ? stroke.ratio : 0.05;
+function drawNibCap(ctx, x, y, angle, thickness, ratio, color) {
+  drawNibBladeFootprint(ctx, x, y, angle, thickness, color, ratio || 0.04);
+}
 
-  if (tool === 'ruling') {
-    // 1. Ruling / Technical Drafting Pen: perfectly uniform mechanical line
+function drawNibFootprint(ctx, pt, stroke) {
+  const tool = stroke.tool || 'qalam_qasab';
+  const color = stroke.color || '#000000';
+  const ratio = stroke.ratio !== undefined ? stroke.ratio : 0.04;
+
+  if (tool === 'qalam_meqatt' || tool === 'ruling') {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(pt.x, pt.y, Math.max(stroke.baseSize / 2, 0.5), 0, 2 * Math.PI);
+    ctx.fill();
+  } else if (tool === 'reesha_tadhhib' || tool === 'reesha_maadaniya' || tool === 'fountain' || tool === 'brush') {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(pt.x, pt.y, Math.max(pt.thickness / 2, 0.5), 0, 2 * Math.PI);
+    ctx.fill();
+  } else {
+    // Chisel nib footprint: qalam_qasab, qalam_jawi, qalam_tomar, qalam
+    drawNibBladeFootprint(ctx, pt.x, pt.y, pt.angle, pt.thickness, color, ratio);
+  }
+}
+
+function drawNibEndCap(ctx, pt, stroke) {
+  const tool = stroke.tool || 'qalam_qasab';
+  const color = stroke.color || '#000000';
+  const ratio = stroke.ratio !== undefined ? stroke.ratio : 0.04;
+  if (tool === 'qalam_qasab' || tool === 'qalam_jawi' || tool === 'qalam_tomar' || tool === 'qalam') {
+    drawNibBladeFootprint(ctx, pt.x, pt.y, pt.angle, pt.thickness, color, ratio);
+  }
+}
+
+function renderMicroSegment(ctx, pPrev, pCurr, stroke) {
+  const color = stroke.color || '#000000';
+  const tool = stroke.tool || 'qalam_qasab';
+
+  if (tool === 'qalam_meqatt' || tool === 'ruling') {
+    // Ruling & Table-Lining Pen: perfectly uniform line
     ctx.save();
     ctx.strokeStyle = color;
     ctx.lineWidth = stroke.baseSize;
@@ -2313,56 +2437,8 @@ function renderStrokeSegment(ctx, pPrev, pCurr, stroke) {
     return;
   }
 
-  if (tool === 'ballpoint') {
-    // 2. Ballpoint 0.8mm Biro: pressure modulates line width smoothly without alpha multiplication knots
-    const p = pCurr.pressure !== undefined ? pCurr.pressure : 0.5;
-    ctx.save();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = Math.max(1.2, (stroke.baseSize * 0.12) + (p * stroke.baseSize * 0.28));
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.beginPath();
-    ctx.moveTo(pPrev.x, pPrev.y);
-    ctx.lineTo(pCurr.x, pCurr.y);
-    ctx.stroke();
-    ctx.restore();
-    return;
-  }
-
-  if (tool === 'pencil') {
-    // 3. Graphite Sketching Pencil with M-Pencil Tilt Shading
-    const tiltMag = Math.hypot(pCurr.tiltX || 0, pCurr.tiltY || 0);
-    const p = pCurr.pressure !== undefined ? pCurr.pressure : 0.5;
-    ctx.save();
-    if (tiltMag > 22) {
-      // Broad side-lead shading: uses butt caps to prevent overlapping dark nodes
-      const tiltSpread = Math.min(3.2, 1.0 + (tiltMag - 22) * 0.08);
-      ctx.globalAlpha = Math.min(0.65, 0.22 + p * 0.38);
-      ctx.strokeStyle = color;
-      ctx.lineWidth = stroke.baseSize * tiltSpread;
-      ctx.lineCap = 'butt';
-      ctx.beginPath();
-      ctx.moveTo(pPrev.x, pPrev.y);
-      ctx.lineTo(pCurr.x, pCurr.y);
-      ctx.stroke();
-    } else {
-      // Fine upright graphite tip: solid sharp contact
-      ctx.globalAlpha = 0.92;
-      ctx.strokeStyle = color;
-      ctx.lineWidth = Math.max(1.2, (stroke.baseSize * 0.12) + (p * stroke.baseSize * 0.25));
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.beginPath();
-      ctx.moveTo(pPrev.x, pPrev.y);
-      ctx.lineTo(pCurr.x, pCurr.y);
-      ctx.stroke();
-    }
-    ctx.restore();
-    return;
-  }
-
-  if (tool === 'fountain' || stroke.isEnglishFlex || tool === 'brush') {
-    // 4 & 5. Flexible Fountain Pen & Dynamic Calligraphy Brush
+  if (tool === 'reesha_tadhhib' || tool === 'brush') {
+    // Tadhhib & Hair Liner Brush: round tapered ribbon
     ctx.fillStyle = color;
     const rPrev = Math.max(pPrev.thickness / 2, 0.5);
     const rCurr = Math.max(pCurr.thickness / 2, 0.5);
@@ -2370,10 +2446,9 @@ function renderStrokeSegment(ctx, pPrev, pCurr, stroke) {
     const dy = pCurr.y - pPrev.y;
     const dist = Math.hypot(dx, dy);
 
-    if (dist > 0.01) {
+    if (dist > 0.001) {
       const nx = -dy / dist;
       const ny = dx / dist;
-
       ctx.beginPath();
       ctx.moveTo(pPrev.x + nx * rPrev, pPrev.y + ny * rPrev);
       ctx.lineTo(pPrev.x - nx * rPrev, pPrev.y - ny * rPrev);
@@ -2385,16 +2460,45 @@ function renderStrokeSegment(ctx, pPrev, pCurr, stroke) {
     return;
   }
 
-  // 6. Classical Chisel Qalam (Arabic Reed Ribbon Geometry)
-  // Lightning-fast ribbon polygon rendering without intermediate ellipse churn
+  if (tool === 'reesha_maadaniya' || tool === 'fountain' || tool === 'pencil' || tool === 'ballpoint' || stroke.isEnglishFlex) {
+    // Flexible Metallic Dip Nib: pressure spreads the tines
+    ctx.fillStyle = color;
+    const rPrev = Math.max(pPrev.thickness / 2, 0.5);
+    const rCurr = Math.max(pCurr.thickness / 2, 0.5);
+    const dx = pCurr.x - pPrev.x;
+    const dy = pCurr.y - pPrev.y;
+    const dist = Math.hypot(dx, dy);
+
+    if (dist > 0.001) {
+      const nx = -dy / dist;
+      const ny = dx / dist;
+      ctx.beginPath();
+      ctx.moveTo(pPrev.x + nx * rPrev, pPrev.y + ny * rPrev);
+      ctx.lineTo(pPrev.x - nx * rPrev, pPrev.y - ny * rPrev);
+      ctx.lineTo(pCurr.x - nx * rCurr, pCurr.y - ny * rCurr);
+      ctx.lineTo(pCurr.x + nx * rCurr, pCurr.y + ny * rCurr);
+      ctx.closePath();
+      ctx.fill();
+    }
+    return;
+  }
+
+  // Chisel Nibs: qalam_qasab, qalam_jawi, qalam_tomar, qalam
   ctx.fillStyle = color;
   const cosPrev = Math.cos(pPrev.angle);
   const sinPrev = Math.sin(pPrev.angle);
   const cosCurr = Math.cos(pCurr.angle);
   const sinCurr = Math.sin(pCurr.angle);
 
-  const halfWPrev = pPrev.thickness / 2;
-  const halfWCurr = pCurr.thickness / 2;
+  let wPrev = pPrev.thickness;
+  let wCurr = pCurr.thickness;
+  if (tool === 'qalam_jawi') {
+    wPrev *= 0.88; // Jawi is narrower and razor-sharp
+    wCurr *= 0.88;
+  }
+
+  const halfWPrev = wPrev / 2;
+  const halfWCurr = wCurr / 2;
 
   const uxPrev = halfWPrev * cosPrev;
   const uyPrev = halfWPrev * sinPrev;
@@ -2403,7 +2507,7 @@ function renderStrokeSegment(ctx, pPrev, pCurr, stroke) {
 
   const dx = pCurr.x - pPrev.x;
   const dy = pCurr.y - pPrev.y;
-  if (dx * dx + dy * dy > 0.04) {
+  if (dx * dx + dy * dy > 0.01) {
     ctx.beginPath();
     ctx.moveTo(pPrev.x - uxPrev, pPrev.y - uyPrev);
     ctx.lineTo(pPrev.x + uxPrev, pPrev.y + uyPrev);
@@ -2411,40 +2515,116 @@ function renderStrokeSegment(ctx, pPrev, pCurr, stroke) {
     ctx.lineTo(pCurr.x - uxCurr, pCurr.y - uyCurr);
     ctx.closePath();
     ctx.fill();
+
+    // Tomar broad nib ink slit effect
+    if (tool === 'qalam_tomar' && stroke.baseSize >= 28 && instantSpeed > 240) {
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.28)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(pPrev.x, pPrev.y);
+      ctx.lineTo(pCurr.x, pCurr.y);
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+}
+
+function renderStrokeSegment(ctx, pPrev, pCurr, stroke) {
+  renderMicroSegment(ctx, pPrev, pCurr, stroke);
+}
+
+function renderBezierSegment(ctx, pStart, pCtrl, pEnd, stroke) {
+  const dx1 = pCtrl.x - pStart.x;
+  const dy1 = pCtrl.y - pStart.y;
+  const dx2 = pEnd.x - pCtrl.x;
+  const dy2 = pEnd.y - pCtrl.y;
+  const chord = Math.hypot(pEnd.x - pStart.x, pEnd.y - pStart.y);
+  const netLen = Math.hypot(dx1, dy1) + Math.hypot(dx2, dy2);
+  const estLen = (chord + netLen) / 2;
+
+  if (estLen <= 2.0) {
+    renderMicroSegment(ctx, pStart, pEnd, stroke);
+    return;
+  }
+
+  const steps = Math.min(24, Math.max(2, Math.ceil(estLen / 2.0)));
+  let prevPt = pStart;
+
+  for (let i = 1; i <= steps; i++) {
+    const t = i / steps;
+    const invT = 1 - t;
+    const invT2 = invT * invT;
+    const twoInvTT = 2 * invT * t;
+    const t2 = t * t;
+
+    const currPt = {
+      x: invT2 * pStart.x + twoInvTT * pCtrl.x + t2 * pEnd.x,
+      y: invT2 * pStart.y + twoInvTT * pCtrl.y + t2 * pEnd.y,
+      thickness: invT * pStart.thickness + t * pEnd.thickness,
+      angle: invT * pStart.angle + t * pEnd.angle,
+      pressure: invT * (pStart.pressure || 0.5) + t * (pEnd.pressure || 0.5),
+      tiltX: invT * (pStart.tiltX || 0) + t * (pEnd.tiltX || 0),
+      tiltY: invT * (pStart.tiltY || 0) + t * (pEnd.tiltY || 0)
+    };
+
+    renderMicroSegment(ctx, prevPt, currPt, stroke);
+    prevPt = currPt;
   }
 }
 
 function renderStrokeToContext(ctx, stroke) {
   if (!stroke || !stroke.points || stroke.points.length === 0) return;
   const pts = stroke.points;
-  const ratio = stroke.ratio !== undefined ? stroke.ratio : 0.05;
-  const color = stroke.color || '#000000';
-  const tool = stroke.tool || 'qalam';
 
-  if (tool === 'fountain' || tool === 'brush' || stroke.isEnglishFlex) {
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(pts[0].x, pts[0].y, Math.max(pts[0].thickness / 2, 0.5), 0, 2 * Math.PI);
-    ctx.fill();
-  } else if (tool === 'ruling' || tool === 'ballpoint' || tool === 'pencil') {
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(pts[0].x, pts[0].y, Math.max(pts[0].thickness / 2, 0.5), 0, 2 * Math.PI);
-    ctx.fill();
-  } else {
-    drawNibCap(ctx, pts[0].x, pts[0].y, pts[0].angle, pts[0].thickness, ratio, color);
+  if (pts.length === 1) {
+    drawNibFootprint(ctx, pts[0], stroke);
+    return;
   }
 
-  for (let i = 1; i < pts.length; i++) {
-    renderStrokeSegment(ctx, pts[i - 1], pts[i], stroke);
+  drawNibFootprint(ctx, pts[0], stroke);
+
+  if (pts.length === 2) {
+    renderMicroSegment(ctx, pts[0], pts[1], stroke);
+    drawNibEndCap(ctx, pts[1], stroke);
+    return;
   }
 
-  // End cap for chisel qalam
-  if (tool === 'qalam' && pts.length > 1) {
-    const last = pts[pts.length - 1];
-    drawNibCap(ctx, last.x, last.y, last.angle, last.thickness, ratio, color);
+  // Midpoint Quadratic Bézier Spline over all recorded points
+  let mPrev = {
+    x: (pts[0].x + pts[1].x) / 2,
+    y: (pts[0].y + pts[1].y) / 2,
+    thickness: (pts[0].thickness + pts[1].thickness) / 2,
+    angle: (pts[0].angle + pts[1].angle) / 2,
+    pressure: ((pts[0].pressure || 0.5) + (pts[1].pressure || 0.5)) / 2,
+    tiltX: ((pts[0].tiltX || 0) + (pts[1].tiltX || 0)) / 2,
+    tiltY: ((pts[0].tiltY || 0) + (pts[1].tiltY || 0)) / 2
+  };
+
+  renderMicroSegment(ctx, pts[0], mPrev, stroke);
+
+  for (let i = 1; i < pts.length - 1; i++) {
+    const pCurrent = pts[i];
+    const pNext = pts[i + 1];
+    const mNext = {
+      x: (pCurrent.x + pNext.x) / 2,
+      y: (pCurrent.y + pNext.y) / 2,
+      thickness: (pCurrent.thickness + pNext.thickness) / 2,
+      angle: (pCurrent.angle + pNext.angle) / 2,
+      pressure: ((pCurrent.pressure || 0.5) + (pNext.pressure || 0.5)) / 2,
+      tiltX: ((pCurrent.tiltX || 0) + (pNext.tiltX || 0)) / 2,
+      tiltY: ((pCurrent.tiltY || 0) + (pNext.tiltY || 0)) / 2
+    };
+
+    renderBezierSegment(ctx, mPrev, pCurrent, mNext, stroke);
+    mPrev = mNext;
   }
+
+  const lastPt = pts[pts.length - 1];
+  renderMicroSegment(ctx, mPrev, lastPt, stroke);
+  drawNibEndCap(ctx, lastPt, stroke);
 }
+
 
 function redrawAllStrokes() {
   dCtx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
@@ -2529,6 +2709,52 @@ function renderHudDOM() {
   }
 }
 
+function updateTrainingGuideHUD() {
+  if (!trainingGuideBar || !isGuidedModeActive) return;
+
+  let targetDeg = -45;
+  if (templateLayout && templateLayout.font) {
+    const f = templateLayout.font;
+    if (f.includes('Amiri') || f.includes('Scheherazade')) targetDeg = -70;
+    else if (f.includes('Gulzar')) targetDeg = -55;
+    else if (f.includes('Rakkas')) targetDeg = -60;
+    else if (f.includes('Cairo') || f.includes('Reem')) targetDeg = 0;
+    else if (f.includes('MedievalSharp')) targetDeg = 45;
+  }
+
+  const currentDeg = Math.round(defaultNibAngle * (180 / Math.PI));
+  const angleDiff = Math.abs(currentDeg - targetDeg);
+
+  if (tguideAngleVal) {
+    tguideAngleVal.textContent = `${currentDeg}°`;
+  }
+  if (tguideAngleStatus) {
+    if (angleDiff <= 6) {
+      tguideAngleStatus.textContent = 'مثالي 🎯';
+      tguideAngleStatus.className = 'tguide-stat-indicator ok';
+    } else if (angleDiff <= 16) {
+      tguideAngleStatus.textContent = 'انحراف طفيف ⚠️';
+      tguideAngleStatus.className = 'tguide-stat-indicator warn';
+    } else {
+      tguideAngleStatus.textContent = `عدّل (${targetDeg}°) 🛑`;
+      tguideAngleStatus.className = 'tguide-stat-indicator err';
+    }
+  }
+
+  if (tguideSpeedVal) {
+    if (instantSpeed < 50) {
+      tguideSpeedVal.textContent = 'هادئ / متزن ✨';
+      tguideSpeedVal.style.color = '#059669';
+    } else if (instantSpeed <= 550) {
+      tguideSpeedVal.textContent = 'انسيابي ممتاز 🌊';
+      tguideSpeedVal.style.color = '#2563eb';
+    } else {
+      tguideSpeedVal.textContent = 'سريع جداً ⚡';
+      tguideSpeedVal.style.color = '#d97706';
+    }
+  }
+}
+
 function updateHudLive(e, pt) {
   metrics.totalPoints++;
   metrics.pointerTypesSeen.add(e.pointerType);
@@ -2563,6 +2789,9 @@ function updateHudLive(e, pt) {
   currentTiltX = e.tiltX || 0;
   currentTiltY = e.tiltY || 0;
   currentPointerType = e.pointerType;
+
+  // Update in-canvas guided training HUD
+  updateTrainingGuideHUD();
 
   // Render HUD DOM only when visible and throttled to display frames
   if (!hudRafScheduled && stylusHud && !stylusHud.classList.contains('hidden')) {
@@ -2610,24 +2839,19 @@ function addPointToStroke(e, pt, prevPt = null, targetCtx = dCtx) {
   pressure = Math.max(0.001, Math.min(1, pressure));
 
   let thickness = bSize;
-  if (tool === 'fountain' || (currentStroke && currentStroke.isEnglishFlex)) {
-    thickness = bSize * (0.35 + Math.pow(pressure, 1.2) * 2.2);
-    if (instantSpeed > 600) thickness *= 0.85; // capillary thinning
-  } else if (tool === 'brush') {
-    thickness = bSize * (0.15 + Math.pow(pressure, 0.85) * 3.5);
-  } else if (tool === 'ballpoint') {
-    thickness = Math.max(1.5, bSize * 0.25 + pressure * 1.8);
-  } else if (tool === 'pencil') {
-    const tiltMag = Math.hypot(e.tiltX || 0, e.tiltY || 0);
-    if (tiltMag > 22) {
-      thickness = bSize * Math.min(3.5, 1.0 + (tiltMag - 22) * 0.08);
-    } else {
-      thickness = Math.max(1.2, bSize * 0.2 + pressure * 2.0);
-    }
-  } else if (tool === 'ruling') {
+  if (tool === 'qalam_jawi') {
+    thickness = bSize * 0.85;
+  } else if (tool === 'qalam_tomar') {
+    thickness = bSize * 1.35;
+  } else if (tool === 'qalam_meqatt' || tool === 'ruling') {
     thickness = bSize;
+  } else if (tool === 'reesha_tadhhib' || tool === 'brush') {
+    thickness = Math.max(1.2, bSize * (0.12 + Math.pow(pressure, 1.4) * 2.8));
+  } else if (tool === 'reesha_maadaniya' || tool === 'fountain' || tool === 'pencil' || tool === 'ballpoint' || (currentStroke && currentStroke.isEnglishFlex)) {
+    thickness = Math.max(1.5, bSize * (0.3 + Math.pow(pressure, 1.1) * 2.2));
+    if (instantSpeed > 600) thickness *= 0.88;
   } else {
-    // qalam: fixed chisel reed width
+    // qalam_qasab / qalam: fixed chisel reed width
     thickness = bSize;
   }
 
@@ -2648,21 +2872,57 @@ function addPointToStroke(e, pt, prevPt = null, targetCtx = dCtx) {
   updateHudLive(e, rawPt);
 
   if (!prevPt) {
-    if (tool === 'fountain' || tool === 'brush' || (currentStroke && currentStroke.isEnglishFlex)) {
-      targetCtx.fillStyle = currentStroke ? currentStroke.color : colorPicker.value;
-      targetCtx.beginPath();
-      targetCtx.arc(pt.x, pt.y, Math.max(thickness / 2, 0.5), 0, 2 * Math.PI);
-      targetCtx.fill();
-    } else if (tool === 'ruling' || tool === 'ballpoint' || tool === 'pencil') {
-      targetCtx.fillStyle = currentStroke ? currentStroke.color : colorPicker.value;
-      targetCtx.beginPath();
-      targetCtx.arc(pt.x, pt.y, Math.max(thickness / 2, 0.5), 0, 2 * Math.PI);
-      targetCtx.fill();
-    } else {
-      drawNibCap(targetCtx, pt.x, pt.y, angle, thickness, currentStroke ? currentStroke.ratio : 0.05, currentStroke ? currentStroke.color : '#000000');
+    drawNibFootprint(targetCtx, rawPt, currentStroke || { tool, baseSize: bSize, color: colorPicker.value, ratio: 0.04 });
+    if (currentStroke) {
+      currentStroke.slidingBuffer = [rawPt];
     }
   } else {
-    renderStrokeSegment(targetCtx, prevPt, rawPt, currentStroke);
+    if (currentStroke) {
+      if (!currentStroke.slidingBuffer) currentStroke.slidingBuffer = [prevPt];
+      const buf = currentStroke.slidingBuffer;
+      buf.push(rawPt);
+
+      if (buf.length === 2) {
+        const m1 = {
+          x: (buf[0].x + buf[1].x) / 2,
+          y: (buf[0].y + buf[1].y) / 2,
+          thickness: (buf[0].thickness + buf[1].thickness) / 2,
+          angle: (buf[0].angle + buf[1].angle) / 2,
+          pressure: (buf[0].pressure + buf[1].pressure) / 2,
+          tiltX: (buf[0].tiltX + buf[1].tiltX) / 2,
+          tiltY: (buf[0].tiltY + buf[1].tiltY) / 2
+        };
+        renderMicroSegment(targetCtx, buf[0], m1, currentStroke);
+        buf.prevM = m1;
+      } else if (buf.length >= 3) {
+        const pCurrent = buf[buf.length - 2];
+        const pNext = buf[buf.length - 1];
+        const mNext = {
+          x: (pCurrent.x + pNext.x) / 2,
+          y: (pCurrent.y + pNext.y) / 2,
+          thickness: (pCurrent.thickness + pNext.thickness) / 2,
+          angle: (pCurrent.angle + pNext.angle) / 2,
+          pressure: (pCurrent.pressure + pNext.pressure) / 2,
+          tiltX: (pCurrent.tiltX + pNext.tiltX) / 2,
+          tiltY: (pCurrent.tiltY + pNext.tiltY) / 2
+        };
+        const mPrev = buf.prevM || {
+          x: (buf[buf.length - 3].x + pCurrent.x) / 2,
+          y: (buf[buf.length - 3].y + pCurrent.y) / 2,
+          thickness: (buf[buf.length - 3].thickness + pCurrent.thickness) / 2,
+          angle: (buf[buf.length - 3].angle + pCurrent.angle) / 2,
+          pressure: (buf[buf.length - 3].pressure + pCurrent.pressure) / 2,
+          tiltX: (buf[buf.length - 3].tiltX + pCurrent.tiltX) / 2,
+          tiltY: (buf[buf.length - 3].tiltY + pCurrent.tiltY) / 2
+        };
+
+        renderBezierSegment(targetCtx, mPrev, pCurrent, mNext, currentStroke);
+        buf.prevM = mNext;
+        if (buf.length > 5) buf.shift();
+      }
+    } else {
+      renderMicroSegment(targetCtx, prevPt, rawPt, { tool, baseSize: bSize, color: colorPicker.value, defaultNibAngle: angle });
+    }
   }
   return rawPt;
 }
@@ -2752,15 +3012,16 @@ workspace.addEventListener('pointerdown', (e) => {
   const pt = getPointerPos(e);
   currentStroke = {
     id: 'stroke_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
-    rendererVersion: 1,
+    rendererVersion: 2,
     tool: currentPenType,
     color: colorPicker.value,
     baseSize: baseSize,
-    ratio: currentPenType === 'qalam' ? 0.05 : 0.2,
+    ratio: currentPenType === 'qalam_jawi' ? 0.02 : 0.04,
     defaultNibAngle: defaultNibAngle,
-    isEnglishFlex: isEnglishFlex || currentPenType === 'fountain',
+    isEnglishFlex: isEnglishFlex || currentPenType === 'reesha_maadaniya',
     startTime: Date.now(),
-    points: []
+    points: [],
+    slidingBuffer: []
   };
   strokes.push(currentStroke);
   undoneStrokes = [];
@@ -2843,8 +3104,9 @@ function removePointer(e) {
       if (e.type === 'pointerup') {
         const pt = getPointerPos(e);
         lastPt = addPointToStroke(e, pt, lastPt, dCtx);
-        if (currentStroke && currentStroke.tool === 'qalam' && lastPt) {
-          drawNibCap(dCtx, lastPt.x, lastPt.y, lastPt.angle, lastPt.thickness, currentStroke.ratio || 0.05, currentStroke.color || '#000000');
+        if (currentStroke && currentStroke.slidingBuffer && currentStroke.slidingBuffer.prevM && lastPt) {
+          renderMicroSegment(dCtx, currentStroke.slidingBuffer.prevM, lastPt, currentStroke);
+          drawNibEndCap(dCtx, lastPt, currentStroke);
         }
       }
       aCtx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
@@ -3103,12 +3365,72 @@ sampleChips.forEach((chip) => {
     invalidateScore();
     updateTemplateLayout();
     drawGrid();
+    updateTrainingGuideHUD();
 
     drawer.classList.remove('open');
     setStatusMessage(`✨ تم تحميل تمرين: "${sText}"`, false);
     playSound('star');
   });
 });
+
+// ==========================================
+// 12. In-Canvas Guided Training Controller
+// ==========================================
+if (toggleGuidedModeBtn) {
+  toggleGuidedModeBtn.addEventListener('click', () => {
+    isGuidedModeActive = !isGuidedModeActive;
+    toggleGuidedModeBtn.classList.toggle('active', isGuidedModeActive);
+    if (guidedStatusText) guidedStatusText.textContent = isGuidedModeActive ? 'مفعّل' : 'معطّل';
+    renderTemplate();
+    updateTrainingGuideHUD();
+    setStatusMessage(isGuidedModeActive ? '🎯 تم تفعيل وضع التدريب الموجه وميزان النقط' : 'تم إيقاف التدريب الموجه', false);
+    playSound('tap');
+  });
+}
+
+if (tguideToggleGhostBtn) {
+  tguideToggleGhostBtn.addEventListener('click', () => {
+    isGhostVisible = !isGhostVisible;
+    tguideToggleGhostBtn.classList.toggle('active', isGhostVisible);
+    renderTemplate();
+    setStatusMessage(isGhostVisible ? '👁️ تم إظهار القالب التوجيهي' : 'تم إخفاء القالب التوجيهي', false);
+    playSound('tap');
+  });
+}
+
+if (tguideToggleDotsBtn) {
+  tguideToggleDotsBtn.addEventListener('click', () => {
+    showRhombicDotsOnCanvas = !showRhombicDotsOnCanvas;
+    tguideToggleDotsBtn.classList.toggle('active', showRhombicDotsOnCanvas);
+    renderTemplate();
+    setStatusMessage(showRhombicDotsOnCanvas ? '📐 تم إظهار ميزان النقط المعيّنة' : 'تم إخفاء ميزان النقط', false);
+    playSound('tap');
+  });
+}
+
+if (tguideRetryBtn) {
+  tguideRetryBtn.addEventListener('click', () => {
+    strokes = [];
+    undoneStrokes = [];
+    currentStroke = null;
+    redrawAllStrokes();
+    invalidateScore();
+    setStatusMessage('🔄 تم مسح اللوحة، أعد كتابة الحرف بميزان النقط', false);
+    playSound('trash');
+  });
+}
+
+if (tguideNextLessonBtn) {
+  tguideNextLessonBtn.addEventListener('click', () => {
+    const chips = Array.from(document.querySelectorAll('.sample-chip'));
+    if (chips.length === 0) return;
+    const currentText = practiceTextInput.value.trim();
+    const currentIndex = chips.findIndex(c => c.getAttribute('data-text') === currentText);
+    const nextIndex = (currentIndex + 1) % chips.length;
+    chips[nextIndex].click();
+  });
+}
+
 
 // HUD Controls & Performance Diagnostics
 if (hudToggleBtn) {
