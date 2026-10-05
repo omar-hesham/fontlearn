@@ -9,29 +9,237 @@
 <body>
 <div id="layout-root">
 <div id="topBar">
-<div class="primary-controls">
-<button id="menuBtn">☰ الأدوات والخطوط</button>
-<button id="fitViewBtn">تصغير للملائمة</button>
+<!-- Pod 1: Active Pen & Instrument Pod (Click opens floating flyout with 6 pens, size, angle, colors) -->
+<div class="pod-wrapper" id="penPodWrapper">
+  <button id="penPodBtn" class="pod-btn pen-pod-btn" title="تخصيص القلم والسن واللون">
+    <span id="activePenIcon">✒️</span>
+    <span id="activePenLabel">قصبة عربي</span>
+    <span id="activePenSizeBadge" class="pod-badge">20px</span>
+    <span class="pod-arrow">▾</span>
+  </button>
+  
+  <!-- Popover for Pen settings -->
+  <div id="penPopover" class="popover-card hidden">
+    <div class="popover-section">
+      <div class="popover-label">أداة الرسم والتحبير الفيزيائية:</div>
+      <div class="pen-selector-grid" id="penToolsGroup">
+        <button class="pen-tool-btn active" data-pen="qalam">
+          <span class="pen-icon">✒️</span>
+          <div class="pen-texts">
+            <span class="pen-name">قصبة عربي</span>
+            <span class="pen-desc">سن مشطوف تراثي</span>
+          </div>
+        </button>
+        <button class="pen-tool-btn" data-pen="ruling">
+          <span class="pen-icon">📏</span>
+          <div class="pen-texts">
+            <span class="pen-name">مسطرة هندسي</span>
+            <span class="pen-desc">خط موحد ثابت</span>
+          </div>
+        </button>
+        <button class="pen-tool-btn" data-pen="fountain">
+          <span class="pen-icon">🖋️</span>
+          <div class="pen-texts">
+            <span class="pen-name">حبر سائل</span>
+            <span class="pen-desc">ريشة مرنة متدفقة</span>
+          </div>
+        </button>
+        <button class="pen-tool-btn" data-pen="ballpoint">
+          <span class="pen-icon">🖊️</span>
+          <div class="pen-texts">
+            <span class="pen-name">قلم جاف</span>
+            <span class="pen-desc">0.8 مم كتابة حرة</span>
+          </div>
+        </button>
+        <button class="pen-tool-btn" data-pen="pencil">
+          <span class="pen-icon">✏️</span>
+          <div class="pen-texts">
+            <span class="pen-name">رصاص فني</span>
+            <span class="pen-desc">تظليل بميل القلم</span>
+          </div>
+        </button>
+        <button class="pen-tool-btn" data-pen="brush">
+          <span class="pen-icon">🖌️</span>
+          <div class="pen-texts">
+            <span class="pen-name">فرشاة حرة</span>
+            <span class="pen-desc">انسيابية مائية</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="popover-divider"></div>
+
+    <!-- Size section -->
+    <div class="popover-section">
+      <div class="popover-row-between">
+        <label for="brushSize" class="popover-label">عرض السن: <span id="brushSizeDisplay">20px</span></label>
+        <div class="preset-chips">
+          <button class="size-chip" data-size="8">8</button>
+          <button class="size-chip" data-size="14">14</button>
+          <button class="size-chip active" data-size="20">20</button>
+          <button class="size-chip" data-size="32">32</button>
+          <button class="size-chip" data-size="48">48</button>
+        </div>
+      </div>
+      <input type="range" id="brushSize" min="3" max="60" value="20" class="styled-slider" />
+    </div>
+
+    <div class="popover-divider"></div>
+
+    <!-- Angle section -->
+    <div class="popover-section" id="penAngleSection">
+      <div class="popover-row-between">
+        <label for="nibAngleSlider" class="popover-label">زاوية شطف السن: <span id="angleDisplay">-45°</span></label>
+        <div class="angle-presets">
+          <button class="angle-chip" data-angle="-45">رقعة (-45°)</button>
+          <button class="angle-chip" data-angle="-70">نسخ (-70°)</button>
+          <button class="angle-chip" data-angle="-60">ديواني (-60°)</button>
+          <button class="angle-chip" data-angle="0">كوفي (0°)</button>
+          <button class="angle-chip" data-angle="45">Gothic (45°)</button>
+        </div>
+      </div>
+      <div class="compass-slider-row">
+        <input type="range" id="nibAngleSlider" min="-90" max="90" value="-45" step="1" class="styled-slider" />
+        <div class="mini-angle-compass" id="miniAngleCompass" title="بوصلة الزاوية الحية">
+          <div class="compass-needle" id="compassNeedle"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popover-divider"></div>
+
+    <!-- Ink Color Palette -->
+    <div class="popover-section">
+      <div class="popover-label">ألوان الأحبار التراثية:</div>
+      <div class="ink-palette">
+        <button class="ink-swatch active" data-color="#000000" style="background:#000000;" title="حبر أسود دمشقي"></button>
+        <button class="ink-swatch" data-color="#1e293b" style="background:#1e293b;" title="كربون فحمي"></button>
+        <button class="ink-swatch" data-color="#451a03" style="background:#451a03;" title="حبر جوزي بني"></button>
+        <button class="ink-swatch" data-color="#991b1b" style="background:#991b1b;" title="حبر أحمر قرمزي"></button>
+        <button class="ink-swatch" data-color="#1e3a8a" style="background:#1e3a8a;" title="حبر كحلي ملكي"></button>
+        <button class="ink-swatch" data-color="#065f46" style="background:#065f46;" title="حبر زمردي أندلسي"></button>
+        <button class="ink-swatch" data-color="#b45309" style="background:#b45309;" title="حبر عسلي"></button>
+        <button class="ink-swatch" data-color="#d97706" style="background:#d97706;" title="حبر ذهبي مذهّب"></button>
+        <div class="custom-color-picker-wrap" title="اختيار لون مخصص">
+          <input type="color" id="colorPicker" value="#000000" />
+          <span class="custom-color-icon">🎨</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="compass" id="compass">زاوية القلم: <span id="angleDisplay">45°</span></div>
-<div class="brush-settings">
-<input type="color" id="colorPicker" value="#000000" title="لون الحبر" />
-<label>حجم السن:</label>
-<input type="range" id="brushSize" min="5" max="60" value="20" />
+
+<!-- Pod 2: Script & Exercises Pod -->
+<button id="menuBtn" class="pod-btn script-pod-btn" title="فتح مكتبة النماذج والخطوط">
+  <span class="pod-icon">📜</span>
+  <span id="activeScriptLabel">خط الرقعة</span>
+  <span class="pod-arrow">▾</span>
+</button>
+
+<!-- Pod 3: Interactive Learning Engine Pod -->
+<div class="learning-pod-group">
+  <button id="interactiveDemoBtn" class="action-highlight-btn" title="🎬 العرض التفاعلي الحي: رسم الحرف خطوة بخطوة بالسن ونقط الميزان">
+    <span class="btn-icon">🎬</span>
+    <span class="btn-text">العرض التفاعلي</span>
+  </button>
+  <button id="teacherHintBtn" class="hint-btn" title="💡 تلميح الأستاذ وميزان النقط">
+    <span class="btn-icon">💡</span>
+    <span class="btn-text">نصائح الأستاذ</span>
+  </button>
 </div>
-<div class="actions">
-<button id="resetViewBtn">حجم طبيعي 100%</button>
-<button id="clearBtn" class="danger">مسح</button>
-<button id="scoreBtn" class="primary" title="التطابق الحراري" disabled>خريطة التطابق</button>
+
+<!-- Pod 4: Player Profile Pod -->
+<button id="playerProfileBtn" class="pod-btn profile-pod-btn" title="تبديل اللاعب وسجل المتدرب">
+  <span id="playerAvatarIcon">✍️</span>
+  <span id="playerNameLabel">متدرب 1</span>
+  <span class="mini-lvl-badge" id="playerMiniLevel">Lv.1</span>
+  <span class="pod-arrow">▾</span>
+</button>
+
+<!-- Pod 5: Gamification mini streak -->
+<div class="gamify-mini" id="gamifyMini" title="حماس المشق المستمر">
+  <span class="mini-streak">🔥 <span id="streakCount">0</span></span>
+  <div class="mini-xp-wrap">
+    <div class="mini-xp-bar"><div class="mini-xp-fill" id="xpBarFill" style="width:0%;"></div></div>
+    <span class="mini-xp-txt" id="xpText">0 XP</span>
+  </div>
+</div>
+
+<!-- Pod 6: Quick Actions Group -->
+<div class="actions-pod-group">
+  <button id="undoBtn" class="action-btn" title="تراجع عن آخر حركة">↩</button>
+  <button id="clearBtn" class="action-btn danger" title="مسح اللوحة بالكامل">🗑️</button>
+  <button id="fitViewBtn" class="action-btn" title="تصغير لملائمة الشاشة">⛶</button>
+  <button id="gameModeBtn" class="action-btn challenge-btn" title="🏆 التحديات والمسابقات">🏆</button>
+  <button id="hudToggleBtn" class="action-btn hud-btn" title="🔍 فحص أداء القلم">🔍</button>
+  <button id="soundToggleBtn" class="action-btn icon-btn" title="المؤثرات الصوتية">🔔</button>
+  <button id="scoreBtn" class="action-btn score-btn" title="خريطة التطابق الحراري" disabled>🎯 تقييم</button>
 </div>
 </div>
 <div id="main-area">
 <div id="workspace">
 <div id="statusMessage" aria-live="polite" class="status-message" style="position: absolute; top: 10px; width: 100%; text-align: center; z-index: 10; pointer-events: none; font-weight: bold; color: #d32f2f; background: rgba(255,255,255,0.9); padding: 4px 0; display: none;"></div>
+<div id="stylusHud" class="stylus-hud hidden">
+  <div class="hud-header" id="hudDragHandle" title="اضغط واسحب النافذة إلى أي مكان تريده">
+    <span>✋ تشخيص M-Pencil (اسحبني)</span>
+    <button id="closeHudBtn" class="close-hud-btn">✕</button>
+  </div>
+  <div class="hud-grid">
+    <div class="hud-item">
+      <span class="hud-label">نوع الأداة:</span>
+      <span id="hudToolType" class="hud-val">—</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">سرعة القلم:</span>
+      <span id="hudSpeedVal" class="hud-val highlight">0 px/s</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">معدل التحديث:</span>
+      <span id="hudRateVal" class="hud-val highlight">120 Hz</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">زمن الاستجابة:</span>
+      <span id="hudLatencyVal" class="hud-val ok">&lt; 0.05 ms</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">الضغط:</span>
+      <div class="hud-bar-container">
+        <div id="hudPressureBar" class="hud-bar"></div>
+      </div>
+      <span id="hudPressureVal" class="hud-val">0.000</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">الميل X / Y:</span>
+      <span id="hudTiltVal" class="hud-val">0° / 0°</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">راحة اليد:</span>
+      <span id="hudPalmStatus" class="hud-val ok">محمية ✅</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">العينات المدمجة:</span>
+      <span id="hudCoalescedCount" class="hud-val">0</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">إجمالي النقاط:</span>
+      <span id="hudPointsCount" class="hud-val">0</span>
+    </div>
+  </div>
+  <div class="hud-actions">
+    <button id="hudGenReportBtn" class="hud-action-btn primary">📋 تقرير الأداء</button>
+    <button id="hudResetMetricsBtn" class="hud-action-btn secondary">تصفير</button>
+  </div>
+  <div id="hudReportBox" class="hud-report-box hidden">
+    <textarea id="hudReportText" readonly></textarea>
+    <button id="hudCopyReportBtn" class="hud-action-btn copy">نسخ التقرير</button>
+  </div>
+</div>
 <div id="canvasContainer" data-world-width="1200" data-world-height="800">
 <canvas id="gridCanvas"></canvas>
 <canvas id="templateCanvas"></canvas>
 <canvas id="drawingCanvas"></canvas>
+<canvas id="activeCanvas"></canvas>
 <canvas id="heatmapCanvas"></canvas>
 </div>
 </div>
@@ -59,20 +267,443 @@
 </select>
 </div>
 <hr>
-<h3>أنواع الخطوط:</h3>
-<button class="template-btn active" data-font="Aref Ruqaa" data-lang="ar" data-angle="-45" data-flex="false">خط الرقعة (سن 45°)</button>
-<button class="template-btn" data-font="Amiri" data-lang="ar" data-angle="-70" data-flex="false">خط النسخ (سن 70°)</button>
-<button class="template-btn" data-font="Reem Kufi" data-lang="ar" data-angle="0" data-flex="false">الخط الكوفي (سن مستقيم)</button>
-<button class="template-btn" data-font="Dancing Script" data-lang="en" data-angle="0" data-flex="true">English Cursive (ريشة مرنة)</button>
+<div class="sample-library-section">
+  <div class="section-subtitle">📚 مكتبة النماذج والتمارين (اضغط للتحميل المباشر):</div>
+  
+  <div class="section-subtitle" style="font-size: 11px;">🔤 مفردات الحروف:</div>
+  <div class="sample-chips-row">
+    <button class="sample-chip" data-text="ا" data-font="Aref Ruqaa" data-angle="-45">ا (ألف)</button>
+    <button class="sample-chip" data-text="ب" data-font="Aref Ruqaa" data-angle="-45">ب (باء)</button>
+    <button class="sample-chip" data-text="ج" data-font="Amiri" data-angle="-70">ج (جيم)</button>
+    <button class="sample-chip" data-text="د" data-font="Aref Ruqaa" data-angle="-45">د (دال)</button>
+    <button class="sample-chip" data-text="ر" data-font="Aref Ruqaa" data-angle="-45">ر (راء)</button>
+    <button class="sample-chip" data-text="س" data-font="Amiri" data-angle="-70">س (سين)</button>
+    <button class="sample-chip" data-text="ص" data-font="Amiri" data-angle="-70">ص (صاد)</button>
+    <button class="sample-chip" data-text="ط" data-font="Amiri" data-angle="-70">ط (طاء)</button>
+    <button class="sample-chip" data-text="ع" data-font="Aref Ruqaa" data-angle="-45">ع (عين)</button>
+    <button class="sample-chip" data-text="ف" data-font="Aref Ruqaa" data-angle="-45">ف (فاء)</button>
+    <button class="sample-chip" data-text="ق" data-font="Amiri" data-angle="-70">ق (قاف)</button>
+    <button class="sample-chip" data-text="ك" data-font="Amiri" data-angle="-70">ك (كاف)</button>
+    <button class="sample-chip" data-text="ل" data-font="Aref Ruqaa" data-angle="-45">ل (لام)</button>
+    <button class="sample-chip" data-text="م" data-font="Aref Ruqaa" data-angle="-45">م (ميم)</button>
+    <button class="sample-chip" data-text="ن" data-font="Amiri" data-angle="-70">ن (نون)</button>
+    <button class="sample-chip" data-text="و" data-font="Rakkas" data-angle="-60">و (واو)</button>
+    <button class="sample-chip" data-text="ي" data-font="Amiri" data-angle="-70">ي (ياء)</button>
+  </div>
+
+  <div class="section-subtitle" style="font-size: 11px;">✨ كلمات شهيرة وتراكيب:</div>
+  <div class="sample-chips-row">
+    <button class="sample-chip phrase" data-text="سلام" data-font="Aref Ruqaa" data-angle="-45">سلام</button>
+    <button class="sample-chip phrase" data-text="نور" data-font="Gulzar" data-angle="-55">نور</button>
+    <button class="sample-chip phrase" data-text="أمل" data-font="Rakkas" data-angle="-60">أمل</button>
+    <button class="sample-chip phrase" data-text="جمال" data-font="Scheherazade New" data-angle="-65">جمال</button>
+    <button class="sample-chip phrase" data-text="حق" data-font="Amiri" data-angle="-70">حق</button>
+    <button class="sample-chip phrase" data-text="صبر" data-font="Aref Ruqaa" data-angle="-45">صبر</button>
+    <button class="sample-chip phrase" data-text="إبداع" data-font="Cairo" data-angle="0">إبداع</button>
+  </div>
+
+  <div class="section-subtitle" style="font-size: 11px;">📜 روائع الخط العربي والآيات:</div>
+  <div class="sample-chips-row">
+    <button class="sample-chip phrase" data-text="بسم الله الرحمن الرحيم" data-font="Scheherazade New" data-angle="-65">البسملة الكبرى</button>
+    <button class="sample-chip phrase" data-text="وقل رب زدني علماً" data-font="Amiri" data-angle="-70">وقل رب زدني علماً</button>
+    <button class="sample-chip phrase" data-text="العلم نور" data-font="Gulzar" data-angle="-55">العلم نور (نستعليق)</button>
+    <button class="sample-chip phrase" data-text="فصبر جميل" data-font="Aref Ruqaa" data-angle="-45">فصبر جميل (رقعة)</button>
+    <button class="sample-chip phrase" data-text="ن والقلم وما يسطرون" data-font="Scheherazade New" data-angle="-65">ن والقلم وما يسطرون</button>
+    <button class="sample-chip phrase" data-text="كن جميلاً ترى الوجود جميلاً" data-font="Rakkas" data-angle="-60">كن جميلاً (ديواني)</button>
+  </div>
+
+  <div class="section-subtitle" style="font-size: 11px;">✒️ English & Latin Calligraphy:</div>
+  <div class="sample-chips-row">
+    <button class="sample-chip phrase" data-text="Calligraphy" data-font="MedievalSharp" data-lang="en" data-angle="45">Gothic: Calligraphy</button>
+    <button class="sample-chip phrase" data-text="Art & Soul" data-font="Great Vibes" data-lang="en" data-angle="0" data-flex="true">Flourish: Art & Soul</button>
+    <button class="sample-chip phrase" data-text="Carpe Diem" data-font="MedievalSharp" data-lang="en" data-angle="45">Gothic: Carpe Diem</button>
+    <button class="sample-chip phrase" data-text="Perfection" data-font="Alex Brush" data-lang="en" data-angle="0" data-flex="true">Brush: Perfection</button>
+    <button class="sample-chip phrase" data-text="HARMONY" data-font="Cinzel Decorative" data-lang="en" data-angle="30">Roman: HARMONY</button>
+  </div>
+</div>
+
+<hr>
+<h3>أنواع الخطوط العربية الأصيلة:</h3>
+<div class="font-list-group">
+  <button class="template-btn active" data-font="Aref Ruqaa" data-lang="ar" data-angle="-45" data-flex="false">
+    <div class="font-meta">
+      <span class="font-title">خط الرقعة</span>
+      <span class="font-badge">سن مشطوف -45° | رشيق وسريع</span>
+    </div>
+    <span>✍️</span>
+  </button>
+  <button class="template-btn" data-font="Amiri" data-lang="ar" data-angle="-70" data-flex="false">
+    <div class="font-meta">
+      <span class="font-title">خط النسخ التراثي</span>
+      <span class="font-badge">سن مشطوف -70° | ميزان كلاسيكي</span>
+    </div>
+    <span>📜</span>
+  </button>
+  <button class="template-btn" data-font="Scheherazade New" data-lang="ar" data-angle="-65" data-flex="false">
+    <div class="font-meta">
+      <span class="font-title">خط النسخ القرآني</span>
+      <span class="font-badge">سن مشطوف -65° | وضوح وهيبة المصاحف</span>
+    </div>
+    <span>📖</span>
+  </button>
+  <button class="template-btn" data-font="Gulzar" data-lang="ar" data-angle="-55" data-flex="false">
+    <div class="font-meta">
+      <span class="font-title">خط النستعليق (الفارسي)</span>
+      <span class="font-badge">سن انسيابي -55° | ميلان شعري متدفق</span>
+    </div>
+    <span>🌸</span>
+  </button>
+  <button class="template-btn" data-font="Rakkas" data-lang="ar" data-angle="-60" data-flex="false">
+    <div class="font-meta">
+      <span class="font-title">الخط الديواني (الرقّاس)</span>
+      <span class="font-badge">سن مشطوف -60° | حركات وزخرفة ملكية</span>
+    </div>
+    <span>👑</span>
+  </button>
+  <button class="template-btn" data-font="Reem Kufi" data-lang="ar" data-angle="0" data-flex="false">
+    <div class="font-meta">
+      <span class="font-title">الخط الكوفي التراثي</span>
+      <span class="font-badge">سن مستقيم 0° | أصل الخط العربي</span>
+    </div>
+    <span>🏛️</span>
+  </button>
+  <button class="template-btn" data-font="Cairo" data-lang="ar" data-angle="0" data-flex="false">
+    <div class="font-meta">
+      <span class="font-title">الخط الكوفي الهندسي</span>
+      <span class="font-badge">سن مستقيم 0° | زوايا معمارية حديثة</span>
+    </div>
+    <span>📐</span>
+  </button>
+  <button class="template-btn" data-font="Marhey" data-lang="ar" data-angle="-45" data-flex="false">
+    <div class="font-meta">
+      <span class="font-title">الخط الحر المعاصر (Freeform)</span>
+      <span class="font-badge">سن مرن حر | حركة عفوية ملهمة</span>
+    </div>
+    <span>🎨</span>
+  </button>
+</div>
+
+<hr>
+<h3>Latin & English Calligraphy Fonts:</h3>
+<div class="font-list-group">
+  <button class="template-btn" data-font="MedievalSharp" data-lang="en" data-angle="45" data-flex="false">
+    <div class="font-meta">
+      <span class="font-title">Gothic Blackletter</span>
+      <span class="font-badge">Chisel Nib 45° | Medieval Manuscripts</span>
+    </div>
+    <span>⚔️</span>
+  </button>
+  <button class="template-btn" data-font="Great Vibes" data-lang="en" data-angle="0" data-flex="true">
+    <div class="font-meta">
+      <span class="font-title">Copperplate Flourish</span>
+      <span class="font-badge">Flexible Nib | Dramatic Thick & Thin</span>
+    </div>
+    <span>✒️</span>
+  </button>
+  <button class="template-btn" data-font="Alex Brush" data-lang="en" data-angle="0" data-flex="true">
+    <div class="font-meta">
+      <span class="font-title">Calligraphy Brush Script</span>
+      <span class="font-badge">Brush Nib | Smooth Casual Flow</span>
+    </div>
+    <span>🖌️</span>
+  </button>
+  <button class="template-btn" data-font="Cinzel Decorative" data-lang="en" data-angle="30" data-flex="false">
+    <div class="font-meta">
+      <span class="font-title">Roman Imperial Capitals</span>
+      <span class="font-badge">Chisel 30° | Lapidary Monumental</span>
+    </div>
+    <span>🏛️</span>
+  </button>
+  <button class="template-btn" data-font="Dancing Script" data-lang="en" data-angle="0" data-flex="true">
+    <div class="font-meta">
+      <span class="font-title">Cursive Modern</span>
+      <span class="font-badge">Flex Nib | Bouncy Dynamic</span>
+    </div>
+    <span>💫</span>
+  </button>
+  <button class="template-btn" data-font="Playball" data-lang="en" data-angle="0" data-flex="true">
+    <div class="font-meta">
+      <span class="font-title">Retro Script Calligraphy</span>
+      <span class="font-badge">Flex Nib | Athletic Elegance</span>
+    </div>
+    <span>⚾</span>
+  </button>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="scorePopup" class="hidden">
+<div id="scoreStarContainer" class="score-stars">⭐⭐⭐</div>
 <h3>دقة المحاكاة: <span id="scoreValue">0</span>%</h3>
 <p id="scoreMessage"></p>
+<div id="scoreXpTag" class="score-xp-tag">+50 XP</div>
 <button id="closeScoreBtn">إغلاق</button>
 </div>
+
+<div id="challengePopup" class="challenge-popup hidden">
+  <div class="challenge-card">
+    <div class="challenge-header">
+      <h3>🏆 تحديات ومسابقات مدرسة الخط</h3>
+      <button id="closeChallengeBtn" class="close-challenge-btn">✕</button>
+    </div>
+    <div class="challenge-list" id="challengeList">
+      <div class="challenge-item" data-text="ا" data-font="Aref Ruqaa" data-angle="-45" data-xp="50">
+        <div class="ch-info">
+          <h4><span class="ch-badge easy">مبتدئ</span>تحدي 1: حرف الألف (خط الرقعة)</h4>
+          <p>اكتب حرف الألف مستقيماً بزاوية -45° وبطول 3 نقاط بدقة عالية.</p>
+        </div>
+        <button class="ch-start-btn">ابدأ (+50 XP ⭐)</button>
+      </div>
+      <div class="challenge-item" data-text="ب" data-font="Aref Ruqaa" data-angle="-45" data-xp="75">
+        <div class="ch-info">
+          <h4><span class="ch-badge easy">مبتدئ</span>تحدي 2: حرف الباء (خط الرقعة)</h4>
+          <p>البداية بالسن المائل ثم السحب باتجاه اليسار والارتكاز على السطر.</p>
+        </div>
+        <button class="ch-start-btn">ابدأ (+75 XP ⭐)</button>
+      </div>
+      <div class="challenge-item" data-text="ن" data-font="Amiri" data-angle="-70" data-xp="100">
+        <div class="ch-info">
+          <h4><span class="ch-badge medium">متوسط</span>تحدي 3: كاسة النون (خط النسخ)</h4>
+          <p>ارسم كاسة النون بنصف دائرة دقيقة مع وضع النقطة في مركزها التوازني.</p>
+        </div>
+        <button class="ch-start-btn">ابدأ (+100 XP ⭐⭐)</button>
+      </div>
+      <div class="challenge-item" data-text="و" data-font="Rakkas" data-angle="-60" data-xp="125">
+        <div class="ch-info">
+          <h4><span class="ch-badge medium">متوسط</span>تحدي 4: انسيابية الواو (الخط الديواني)</h4>
+          <p>استدارة رأس الواو وانحدار الذيل برقة وسرعة سحب متقنة.</p>
+        </div>
+        <button class="ch-start-btn">ابدأ (+125 XP ⭐⭐)</button>
+      </div>
+      <div class="challenge-item" data-text="العلم نور" data-font="Gulzar" data-angle="-55" data-xp="150">
+        <div class="ch-info">
+          <h4><span class="ch-badge hard">متقدم</span>تحدي 5: سطر النستعليق ("العلم نور")</h4>
+          <p>النزول المائل المتناغم الخاص بالخط الفارسي وارتكاز الراء على السطر.</p>
+        </div>
+        <button class="ch-start-btn">ابدأ (+150 XP ⭐⭐⭐)</button>
+      </div>
+      <div class="challenge-item" data-text="Calligraphy" data-font="MedievalSharp" data-angle="45" data-lang="en" data-xp="150">
+        <div class="ch-info">
+          <h4><span class="ch-badge hard">متقدم</span>تحدي 6: Gothic Blackletter Art</h4>
+          <p>السن المشطوف القوطي 45° مع الإيقاع العمودي الدقيق للمخطوطات القديمة.</p>
+        </div>
+        <button class="ch-start-btn">ابدأ (+150 XP ⭐⭐⭐)</button>
+      </div>
+      <div class="challenge-item" data-text="Art & Soul" data-font="Great Vibes" data-angle="0" data-lang="en" data-flex="true" data-xp="175">
+        <div class="ch-info">
+          <h4><span class="ch-badge hard">متقدم</span>تحدي 7: Copperplate Script Flourish</h4>
+          <p>الضغط الحساس للريشة المرنة مع التدرج السلس بين الخطوط الدقيقة والعريضة.</p>
+        </div>
+        <button class="ch-start-btn">ابدأ (+175 XP ⭐⭐⭐)</button>
+      </div>
+      <div class="challenge-item" data-text="الله" data-font="Scheherazade New" data-angle="-65" data-xp="250">
+        <div class="ch-info">
+          <h4><span class="ch-badge master">خبير</span>تحدي 8: لفظ الجلالة (النسخ القرآني)</h4>
+          <p>الميزان الذهبي للألف واللامات والهاء بدقة تطابق تتجاوز 85%.</p>
+        </div>
+        <button class="ch-start-btn">ابدأ (+250 XP 👑)</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Teacher's Hint & Classical Pedagogy Modal -->
+<div id="teacherHintModal" class="app-modal hidden">
+  <div class="modal-card teacher-card">
+    <div class="modal-header teacher-header">
+      <div class="teacher-title-wrap">
+        <span class="teacher-avatar">🎓</span>
+        <div>
+          <h3>مجلس الأستاذ وميزان الحروف</h3>
+          <p id="teacherScriptSubtitle">قواعد الخط المنسوب لابن مقلة وياقوت المستعصمي</p>
+        </div>
+      </div>
+      <button id="closeTeacherHintBtn" class="modal-close-btn">✕</button>
+    </div>
+    <div class="modal-body teacher-body">
+      <!-- Voice of the Master Calligrapher -->
+      <div class="teacher-speech-box">
+        <span class="speech-quote">“</span>
+        <p id="teacherVoiceText">يا بني، اعلم أن حسن الخط مخفي في تعليم الأستاذ، وقوامه في كثرة المشق، ودوامه على ترك المنكرات. ابدأ الحرف بوضع السن بكامل عرضه ثم تدرج بسحبه بانسيابية وثبات دون تردد.</p>
+      </div>
+
+      <!-- Pedagogical Rules Grid -->
+      <div class="teacher-rules-grid">
+        <div class="rule-card">
+          <div class="rule-icon">📐</div>
+          <div class="rule-content">
+            <h4>ميزان النقط المعيّنة</h4>
+            <p id="teacherDotRule">ارتفاع الألف 3 نقاط، واتساع الباء 3 نقاط بنقطة مربعة مشطوفة متساوية الأضلاع.</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon">🧭</div>
+          <div class="rule-content">
+            <h4>زاوية السن وحركة اليد</h4>
+            <p id="teacherAngleRule">زاوية سن القلم: -45°. حركة السحب تعتمد على حركة الأصابع والمعصم مع ثبات اتجاه القصبة.</p>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-icon">✒️</div>
+          <div class="rule-content">
+            <h4>القلم والتسطير الموصى به</h4>
+            <p id="teacherPenRule">القلم: قصبة الخط العربي التقليدية | حجم السن 20px | شبكة تسطير مائلة.</p>
+          </div>
+        </div>
+        <div class="rule-card warning">
+          <div class="rule-icon">⚠️</div>
+          <div class="rule-content">
+            <h4>أخطاء شائعة احذرها</h4>
+            <p id="teacherMistakesRule">احذر لف القلم بين أصابعك أثناء السحب؛ ثبات زاوية القصبة هو سر توازن الخط وجماله!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Dot Visualizer -->
+      <div class="dot-scale-visualizer">
+        <span class="dot-scale-label">تمثيل ميزان النقط التناغمي للحرف الحالي:</span>
+        <div id="dotScaleContainer" class="dot-scale-row"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="applyTeacherSettingsBtn" class="modal-action-btn primary">✨ تطبيق إعدادات الأستاذ (الزاوية والقلم)</button>
+      <button id="closeTeacherModalBottomBtn" class="modal-action-btn secondary">إغلاق ومتابعة التمرين</button>
+    </div>
+  </div>
+</div>
+
+<!-- Multi-Player Profile Modal -->
+<div id="playerModal" class="app-modal hidden">
+  <div class="modal-card player-card">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <span class="modal-avatar">👥</span>
+        <div>
+          <h3>سجل المتدربين واللاعبين</h3>
+          <p>سجل مستقل لكل متدرب لتتبع المستوى ونقاط الخبرة والدرجات</p>
+        </div>
+      </div>
+      <button id="closePlayerModalBtn" class="modal-close-btn">✕</button>
+    </div>
+    <div class="modal-body player-body">
+      <!-- Active player highlight card -->
+      <div class="active-player-banner" id="activePlayerBanner">
+        <div class="ap-avatar" id="apBannerAvatar">✍️</div>
+        <div class="ap-details">
+          <div class="ap-name-row">
+            <h4 id="apBannerName">المتدرب الأول</h4>
+            <span class="ap-level-badge" id="apBannerLevel">المستوى 1</span>
+          </div>
+          <p id="apBannerStats">الخبرة: 0 XP | الحماس المتتالي: 🔥 1 | التمارين المنجزة: 0</p>
+        </div>
+      </div>
+
+      <!-- Profiles List -->
+      <h4 class="players-section-title">اختر متدرباً لمتابعة تمارينه:</h4>
+      <div class="players-grid" id="playersGrid">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Create New Player Form -->
+      <div class="new-player-section">
+        <h4 class="players-section-title">تسجيل لاعب / متدرب جديد:</h4>
+        <div class="new-player-form">
+          <div class="input-row">
+            <input type="text" id="newPlayerNameInput" placeholder="اكتب اسم المتدرب أو الخطاط..." maxlength="24" />
+            <button id="createNewPlayerBtn" class="modal-action-btn primary">+ تسجيل وبدء التحدي</button>
+          </div>
+          <div class="avatar-picker-label">اختر الشارة الرمزية:</div>
+          <div class="avatar-picker-row" id="avatarPickerRow">
+            <button class="avatar-opt-btn active" data-avatar="✍️">✍️</button>
+            <button class="avatar-opt-btn" data-avatar="👑">👑</button>
+            <button class="avatar-opt-btn" data-avatar="🎨">🎨</button>
+            <button class="avatar-opt-btn" data-avatar="📜">📜</button>
+            <button class="avatar-opt-btn" data-avatar="🦅">🦅</button>
+            <button class="avatar-opt-btn" data-avatar="🌟">🌟</button>
+            <button class="avatar-opt-btn" data-avatar="🦁">🦁</button>
+            <button class="avatar-opt-btn" data-avatar="💎">💎</button>
+            <button class="avatar-opt-btn" data-avatar="🧙‍♂️">🧙‍♂️</button>
+            <button class="avatar-opt-btn" data-avatar="🎯">🎯</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Interactive Demonstration & Animated Calligraphy Tracer Modal -->
+<div id="interactiveDemoModal" class="app-modal hidden">
+  <div class="modal-card interactive-demo-card">
+    <div class="modal-header demo-header">
+      <div class="demo-title-wrap">
+        <span class="demo-badge">🎬 درس تفاعلي حي</span>
+        <h3 id="demoLetterTitle">مسار رسم حرف الألف (خط الرقعة)</h3>
+        <p id="demoScriptDesc">شاهد حركة سن القلم المشطوف بزاوية حية وميزان النقط المعيّنة التناغمي</p>
+      </div>
+      <button id="closeInteractiveDemoBtn" class="modal-close-btn">✕</button>
+    </div>
+
+    <div class="modal-body demo-body">
+      <!-- Interactive Animation Stage -->
+      <div class="demo-stage-wrapper">
+        <canvas id="demoCanvas" width="600" height="300"></canvas>
+        <div id="demoNibCursor" class="demo-nib-cursor">
+          <div class="nib-blade" id="demoNibBlade"></div>
+          <span class="nib-angle-tag" id="demoNibAngleTag">-45°</span>
+        </div>
+      </div>
+
+      <!-- Step-by-step master breakdown -->
+      <div class="demo-steps-cards">
+        <div class="demo-step-card active" id="demoStep1">
+          <div class="step-num">1</div>
+          <div class="step-info">
+            <h4 id="demoStep1Title">نقطة الارتكاز والترويس</h4>
+            <p id="demoStep1Desc">وضع سن القصبة بكامل عرضه بزاوية -45° في أعلى اليمين بثبات تام.</p>
+          </div>
+        </div>
+        <div class="demo-step-card" id="demoStep2">
+          <div class="step-num">2</div>
+          <div class="step-info">
+            <h4 id="demoStep2Title">حركة السحب والانحدار</h4>
+            <p id="demoStep2Desc">السحب للأسفل بميلان يسير نحو اليسار مع الحفاظ على الزاوية دون لف القلم.</p>
+          </div>
+        </div>
+        <div class="demo-step-card" id="demoStep3">
+          <div class="step-num">3</div>
+          <div class="step-info">
+            <h4 id="demoStep3Title">ميزان النقط والاستقرار</h4>
+            <p id="demoStep3Desc">طول الألف يعادل تماماً 3 نقاط مربعة معينة، واستقرار ناعم على السطر.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Letter Selector Chips -->
+      <div class="demo-letter-selector">
+        <span class="demo-sel-label">اختر حرفاً أو كلمة للمشاهدة:</span>
+        <div class="demo-chips-row" id="demoChipsRow">
+          <!-- Dynamically populated or rich letters -->
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer demo-footer">
+      <div class="demo-controls-row">
+        <button id="demoPlayPauseBtn" class="demo-ctrl-btn primary">⏸️ إيقاف مؤقت</button>
+        <button id="demoReplayBtn" class="demo-ctrl-btn secondary">🔄 إعادة المشهد</button>
+        <div class="speed-toggle-group">
+          <button class="speed-btn" data-speed="0.5">0.5x</button>
+          <button class="speed-btn active" data-speed="1">1x</button>
+          <button class="speed-btn" data-speed="1.5">1.5x</button>
+        </div>
+      </div>
+      <button id="demoPracticeNowBtn" class="modal-action-btn primary large-btn">✍️ تمرّن على هذا الحرف الآن</button>
+    </div>
+  </div>
+</div>
+
+<canvas id="fxCanvas"></canvas>
 <script type="module" src="main.js"></script>
 </body>
 </html>

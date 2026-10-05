@@ -5,3 +5,4 @@ android/app/build/
 android/.gradle/
 android/app/.cxx/
 android/.idea/
+scratch_*.cjs
